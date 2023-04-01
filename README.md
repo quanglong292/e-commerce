@@ -17,7 +17,7 @@ Server:
 
 Client:
  - Technologies: **React.18, JS, Antd, SASS, react-hook-form, lodash, ESlint**
- - Deployment: **Vite build, Vercel**
+ - Deployment: https://e-commerce-two-rho.vercel.app/app **(Vite build, Vercel)**
  - Run the source: `localhost:<random>` 
 ```
   cd client
