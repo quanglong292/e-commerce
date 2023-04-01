@@ -5,17 +5,19 @@ MERN stack E-Commerce application with Admin page (CMS) allow to let owner creat
 - User features: Browse products, manage cart/whish list, view order history, tracking shipping status. 
 
 Server: 
- - Technologies: ExpressJS, MongoDB, Redis, TypeScript, Docker, K8S, ESlint
+ - Technologies: **ExpressJS, MongoDB, Redis, TypeScript, Docker, K8S, ESlint**
  - Run the source: `localhost:5555` 
 ```
+  cd server
   npm i
   npm run start
 ```
 
 Client:
- - Technologies: React.18, Antd, SASS, react-hook-form, ESlint
+ - Technologies: **React.18, JS, Antd, SASS, react-hook-form, lodash, ESlint**
  - Run the source: `localhost:<random>` 
 ```
+  cd client
   npm i
   npm run dev
 ```
