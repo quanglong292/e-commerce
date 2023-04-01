@@ -4,12 +4,7 @@ import ProductCard from "./elements/ProductCard";
 import { useResolvedPath } from "react-router-dom";
 
 const ViewProducts = () => {
-  // console.log("ITEMS", SHOE_ITEMS);
   const { pathname } = useResolvedPath();
-  console.log(
-    "🚀 ~ file: ViewProducts.jsx:9 ~ ViewProducts ~ pathname:",
-    pathname
-  );
   const filterItems = useMemo(() => {
     return {
       ...SHOE_ITEMS,
@@ -18,10 +13,6 @@ const ViewProducts = () => {
       ),
     };
   }, [pathname]);
-  console.log(
-    "🚀 ~ file: ViewProducts.jsx:10 ~ filterItems ~ filterItems:",
-    filterItems
-  );
 
   return (
     <div className="w-full grid grid-cols-3 gap-4">

@@ -4,14 +4,17 @@ import { createBrowserRouter } from "react-router-dom";
 // Components
 import RootViewLayout from "./components/layout/RootViewLayout";
 import ViewAppProductLayout from "./components/layout/ViewAppProductLayout";
-import ErrorPage from "./views/ErrorPage";
-import ViewRootProducts from "./views/admin/viewProduct/ViewRootProducts";
-import { APP_NAVIGATIONS } from "./utils/constants/sidebar.constant";
+const ErrorPage = lazy(() => import("./views/ErrorPage"));
+const ViewRootProducts = lazy(() =>
+  import("./views/admin/viewProduct/ViewRootProducts")
+);
+const ViewDashBoard = lazy(() => import("./views/ViewDashboard"));
+const ViewProducts = lazy(() =>
+  import("./views/app/ViewProducts/ViewProducts.jsx")
+);
 
-export const lazyLoad = (path) => {
-  const Component = lazy(() => import(`./${path}`));
-  return <Component />;
-};
+// Const
+import { APP_NAVIGATIONS } from "./utils/constants/sidebar.constant";
 
 const router = createBrowserRouter([
   {
@@ -21,12 +24,8 @@ const router = createBrowserRouter([
     children: [
       {
         path: "dashboard",
-        element: () => lazyLoad("views/ViewDashboard"),
+        element: <ViewDashBoard />,
       },
-      // {
-      //   path: "user",
-      //   element: <ViewRootProducts />,
-      // },
       {
         path: "product",
         element: <ViewRootProducts />,
@@ -39,7 +38,7 @@ const router = createBrowserRouter([
           return {
             ...i,
             path: i.path.split("/")[1],
-            element: lazyLoad("views/app/ViewProducts/ViewProducts.jsx"),
+            element: <ViewProducts />,
           };
         }),
       },
