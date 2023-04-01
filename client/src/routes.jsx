@@ -3,8 +3,8 @@ import { createBrowserRouter } from "react-router-dom";
 
 // Components
 import RootViewLayout from "./components/layout/RootViewLayout";
+import ErrorPage from "./views/ErrorPage";
 import ViewAppProductLayout from "./components/layout/ViewAppProductLayout";
-const ErrorPage = lazy(() => import("./views/ErrorPage"));
 const ViewRootProducts = lazy(() =>
   import("./views/admin/viewProduct/ViewRootProducts")
 );
