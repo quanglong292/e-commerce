@@ -111,12 +111,17 @@ const ProductLayout = (props) => {
     });
   }
 
+  function handleAssignListData(arrayData) {
+    if (typeof arrayData !== "array") setDataSource([]);
+    if (arrayData?.length) setDataSource(data);
+  }
+
   useEffect(() => {
     fetcherHook(requets.GET_TABLE_ITEMS);
   }, []);
 
   useEffect(() => {
-    if (data?.length) setDataSource(data);
+    handleAssignListData(data);
   }, [data]);
 
   return (
@@ -128,7 +133,7 @@ const ProductLayout = (props) => {
         </CButton>
         <CTable
           columns={[...columns, actionColumn]}
-          dataSource={!dataSource.length ? data : dataSource}
+          dataSource={dataSource}
           loading={loading}
         />
         <Modal

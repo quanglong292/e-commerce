@@ -5,8 +5,7 @@ import { ProductSchema } from "./product";
 export const CategorySchema = new Schema({
     id: String,
     name: String,
-    group: [CategoryGroupSchema.id],
-    products: [ProductSchema],
+    groups: [String],
 })
 
 export default model("Category", CategorySchema)

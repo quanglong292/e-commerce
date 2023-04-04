@@ -1,4 +1,4 @@
-import { Checkbox, Input } from "antd";
+import { Checkbox, Input, Select } from "antd";
 import React, { memo } from "react";
 import { Controller, useForm } from "react-hook-form";
 import CButton from "./CButton";
@@ -21,7 +21,7 @@ const FormBuilder = memo((props) => {
             let className = "flex flex-col justify-between h-[70px]";
             if (type === "Text") TypeInput = Input;
             if (type === "CheckBox") TypeInput = Checkbox;
-
+            if (type === "Select") TypeInput = Select
             return (
               <div className={className}>
                 <div className="flex flex-col">
@@ -30,7 +30,7 @@ const FormBuilder = memo((props) => {
                     name={i.field}
                     control={control}
                     rules={{ required: true }}
-                    render={({ field }) => <TypeInput {...field} />}
+                    render={({ field }) => <TypeInput {...field} {...i} />}
                   />
                 </div>
                 {errors[i.field] && (
