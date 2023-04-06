@@ -6,6 +6,10 @@
 - **CRM**: Create order, build, payment, print build, search stock, manage warehouse for business. [pending]
 
 ### How to run this source locally:
+**Infra**:
+ - Architecture: **Monolith, mono-repo**
+ - CI/CD: **Github Actions**
+
 **Server**: 
  - Technologies: **ExpressJS, MongoDB, Redis, TypeScript, ESlint**
  - Deployment: **Docker, K8S**
