@@ -23,7 +23,7 @@
 **Client**:
  - Technologies: **React.18, JS, Antd, SASS, react-hook-form, lodash, ESlint**
  - Testing: **Cypress (E2E, Unit)**
- - Deployment: https://e-commerce-two-rho.vercel.app/app **(Vite build, Vercel)**
+ - Deployment: **Vite build, Vercel** (https://e-commerce-two-rho.vercel.app) 
  - Run the source: `localhost:<random>` 
 ```
   cd client
