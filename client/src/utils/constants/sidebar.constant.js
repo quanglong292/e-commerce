@@ -14,11 +14,6 @@ export const SIDE_BAR_ITEMS = [
     path: "product",
     key: "product",
   },
-  {
-    label: "Move to Client App",
-    path: "/app",
-    key: "app",
-  },
 ];
 
 export const APP_NAVIGATIONS = [

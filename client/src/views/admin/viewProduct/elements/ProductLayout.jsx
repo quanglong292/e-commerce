@@ -112,8 +112,8 @@ const ProductLayout = (props) => {
   }
 
   function handleAssignListData(arrayData) {
-    if (typeof arrayData !== "array") setDataSource([]);
     if (arrayData?.length) setDataSource(data);
+    else setDataSource([]);
   }
 
   useEffect(() => {

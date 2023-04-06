@@ -42,6 +42,11 @@ const router = createBrowserRouter([
           };
         }),
       },
+      // APP routes
+      {
+        path: "crm/",
+        element: <ViewAppProductLayout />,
+      },
     ],
   },
   {

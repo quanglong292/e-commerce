@@ -1,24 +1,51 @@
-import { Button, Input } from "antd";
+import { Button, Dropdown, Input } from "antd";
 import { ShoppingCartOutlined, HeartOutlined } from "@ant-design/icons";
 import React, { useMemo } from "react";
-import { MenuOutlined } from "@ant-design/icons";
 import Logo from "../../assets/icons/Logo";
 import {
   APP_NAVIGATIONS,
   SIDE_BAR_ITEMS,
 } from "../../utils/constants/sidebar.constant";
 import { useNavigate, useResolvedPath } from "react-router-dom";
+import CButton from "./CButton";
 
 const { Search } = Input;
 
+const AppNavigateButton = () => {
+  const navigate = useNavigate();
+
+  return (
+    <div className="w-[25%] flex justify-end">
+      <Dropdown
+        menu={{
+          items: [
+            {
+              label: <div onClick={() => navigate("/app")}>Distribution</div>,
+              key: "0",
+            },
+            {
+              label: <div onClick={() => navigate("/crm/")}>CRM</div>,
+              key: "1",
+            },
+            {
+              label: <div onClick={() => navigate("/")}>Admin</div>,
+              key: "2",
+            },
+          ],
+        }}
+        trigger={["click"]}
+        placement="bottomRight"
+      >
+        <CButton type="primary">Apps</CButton>
+      </Dropdown>
+    </div>
+  );
+};
+
 const AdditionNavs = (props) => {
   const { isClientApp } = props;
-  console.log(
-    "🚀 ~ file: Navigation.jsx:16 ~ AdditionNavs ~ isClientApp:",
-    isClientApp
-  );
 
-  if (!isClientApp) return <></>;
+  if (!isClientApp) return <AppNavigateButton />;
 
   function onSearch(e) {
     console.log("🚀 ~ file: Navigation.jsx:17 ~ onSearch ~ e:", e);
@@ -29,6 +56,7 @@ const AdditionNavs = (props) => {
       <Search placeholder="Search" onSearch={onSearch} style={{ width: 200 }} />
       <Button shape="circle" icon={<HeartOutlined />} />
       <Button shape="circle" icon={<ShoppingCartOutlined />} />
+      <AppNavigateButton />
     </div>
   );
 };
@@ -36,10 +64,6 @@ const AdditionNavs = (props) => {
 const Navigation = () => {
   const navigate = useNavigate();
   const { pathname } = useResolvedPath();
-  console.log(
-    "🚀 ~ file: Navigation.jsx:36 ~ Navigation ~ pathname:",
-    pathname
-  );
   const isClientApp = useMemo(() => pathname.includes("app"), [pathname]);
   const SCHEMA = useMemo(() => {
     return !isClientApp ? SIDE_BAR_ITEMS : APP_NAVIGATIONS;
