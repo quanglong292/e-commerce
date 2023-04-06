@@ -1,9 +1,9 @@
 # E-Commerce
-MERN stack E-Commerce application with Admin page (ERP) allow to let owner create their own products, categories, manage their users, track and analyze user behavior.
+**MERN stack** E-Commerce application with Admin page (ERP) allow to let owner create their own products, categories, manage their users, track and analyze user behavior.
 
-- Admin ERP: CRUD manage categories, products, users, tracking user history behavior, data visualation, export/import xlsx documents.
-- Distribution: Browse products, manage cart/whish list, view order history, tracking shipping status.
-- CRM: Create order, build, payment, print build, search stock. [pending]
+- **Admin ERP**: CRUD manage categories, products, users, tracking user history behavior, data visualation, export/import xlsx documents.
+- **Distribution**: Browse products, manage cart/whish list, view order history, tracking shipping status.
+- **CRM**: Create order, build, payment, print build, search stock. [pending]
 
 ### How to run this source locally:
 **Server**: 
