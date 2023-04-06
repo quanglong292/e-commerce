@@ -18,6 +18,7 @@
 
 **Client**:
  - Technologies: **React.18, JS, Antd, SASS, react-hook-form, lodash, ESlint**
+ - Testing: **Cypress (E2E, Unit)** (`https://www.cypress.io`)
  - Deployment: https://e-commerce-two-rho.vercel.app/app **(Vite build, Vercel)**
  - Run the source: `localhost:<random>` 
 ```
