@@ -1,11 +1,15 @@
 # E-Commerce
-**MERN stack** E-Commerce application with Admin page (ERP) allow to let owner create their own products, categories, manage their users, track and analyze user behavior.
+**MERN stack white-label E-Commerce application** with Admin page (ERP) allow to let owner create their own brand, products, categories, manage their users, track and analyze user behavior.
 
 - **Admin ERP**: CRUD manage categories, products, users, tracking user history behavior, data visualation, export/import xlsx documents.
 - **Distribution**: Browse products, manage cart/whish list, view order history, tracking shipping status.
-- **CRM**: Create order, build, payment, print build, search stock. [pending]
+- **CRM**: Create order, build, payment, print build, search stock, manage warehouse for business. [pending]
 
 ### How to run this source locally:
+**Infra**:
+ - Architecture: **Monolith, mono-repo**
+ - CI/CD: **Github Actions**
+
 **Server**: 
  - Technologies: **ExpressJS, MongoDB, Redis, TypeScript, ESlint**
  - Deployment: **Docker, K8S**
@@ -18,7 +22,8 @@
 
 **Client**:
  - Technologies: **React.18, JS, Antd, SASS, react-hook-form, lodash, ESlint**
- - Deployment: https://e-commerce-two-rho.vercel.app/app **(Vite build, Vercel)**
+ - Testing: **Cypress (E2E, Unit)**
+ - Deployment: **Vite build, Vercel** (https://e-commerce-two-rho.vercel.app) 
  - Run the source: `localhost:<random>` 
 ```
   cd client
