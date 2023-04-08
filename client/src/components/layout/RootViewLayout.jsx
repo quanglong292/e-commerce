@@ -8,10 +8,10 @@ const RootViewLayout = () => {
   return (
     <div className="w-full">
       <Navigation />
-      <div id="sidebar" className="flex items-start w-full">
+      <div id="sidebar" className="flex items-start w-full max-w-[1440px] m-auto">
         <div
           id="detail"
-          className="overflow-y-auto overflow-x-hidden bg-slate-100 w-full p-2"
+          className="overflow-y-auto overflow-x-hidden w-full p-2"
         >
           <Suspense fallback={<ComponentLoading />}>
             <Outlet />

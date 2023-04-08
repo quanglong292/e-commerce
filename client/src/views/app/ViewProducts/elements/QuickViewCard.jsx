@@ -1,10 +1,21 @@
 import { Modal } from "antd";
-import React, { memo, useEffect, useState } from "react";
+import React, {
+  memo,
+  useContext,
+  useEffect,
+  useReducer,
+  useState,
+} from "react";
 import "./cardModal.scss";
 import CButton from "../../../../components/core/CButton";
+import StoreContext, { useStore } from "../../../../store";
+import { ORDER_WISH_ACTION_TYPES } from "../../../../store/types";
 
 const QuickViewCard = memo((props) => {
   const { item, isShow, onCancel } = props;
+  const { storeState, dispatch } = useStore();
+
+  // local state
   const [selected, setSelected] = useState([]);
 
   function handleSelect(id) {
@@ -14,12 +25,15 @@ const QuickViewCard = memo((props) => {
       i.id === id ? { ...i, count: i.count + 1 } : i
     );
     setSelected(!selected.length ? [newItem] : map);
-    console.log("🚀 ~ file: QuickViewCard.jsx:17 ~ handleSelect ~ id:", id);
   }
 
   function findSelect(id) {
     return selected.find((i) => i.id === id);
   }
+
+  useEffect(() => {
+    console.log("storeState", storeState);
+  }, [storeState]);
 
   return (
     <Modal
@@ -57,7 +71,12 @@ const QuickViewCard = memo((props) => {
                 >
                   {i}
                   {findSelect(i) && (
-                    <div className="absolute top-[-12px] right-[-4px] bg-red-400 w-[24px] h-[24px] flex justify-center items-center rounded-full text-white">
+                    <div
+                      onClick={() => {
+                        setSelected(selected.filter((i) => i.id !== i));
+                      }}
+                      className="absolute top-[-12px] right-[-4px] bg-red-400 w-[24px] h-[24px] flex justify-center items-center rounded-full text-white hover:bg-red-300 z-20"
+                    >
                       {findSelect(i)?.count}
                     </div>
                   )}
@@ -67,8 +86,30 @@ const QuickViewCard = memo((props) => {
           </div>
           <div className="mt-4 flex gap-2 justify-end">
             <CButton>Add to cart</CButton>
-            <CButton type="primary">Add to cart: {selected.reduce((a, b) => a + b.count ,0)}</CButton>
-            <CButton type="primary">Add to whish list</CButton>
+            <CButton
+              type="primary"
+              onClick={() => {
+                setSelected([]);
+                dispatch({
+                  type: ORDER_WISH_ACTION_TYPES.ADD_ORDER,
+                  payload: selected,
+                });
+              }}
+            >
+              Add to cart: {selected.reduce((a, b) => a + b.count, 0)}
+            </CButton>
+            <CButton
+              onClick={() => {
+                setSelected([]);
+                dispatch({
+                  type: ORDER_WISH_ACTION_TYPES.ADD_WISH,
+                  payload: selected,
+                });
+              }}
+              type="primary"
+            >
+              Add to whish list
+            </CButton>
           </div>
         </div>
       </div>

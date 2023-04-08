@@ -9,9 +9,8 @@ const ViewRootProducts = lazy(() =>
   import("./views/admin/viewProduct/ViewRootProducts")
 );
 const ViewDashBoard = lazy(() => import("./views/ViewDashboard"));
-const ViewProducts = lazy(() =>
-  import("./views/app/ViewProducts/ViewProducts.jsx")
-);
+import ViewProducts from "./views/app/ViewProducts/ViewProducts.jsx";
+import ViewCart from "./views/app/ViewCart/ViewCart";
 
 // Const
 import { APP_NAVIGATIONS } from "./utils/constants/sidebar.constant";
@@ -34,15 +33,21 @@ const router = createBrowserRouter([
       {
         path: "app/",
         element: <ViewAppProductLayout />,
-        children: APP_NAVIGATIONS.map((i) => {
-          return {
-            ...i,
-            path: i.path.split("/")[1],
-            element: <ViewProducts />,
-          };
-        }),
+        children: [
+          ...APP_NAVIGATIONS.map((i) => {
+            return {
+              ...i,
+              path: i.path.split("/")[1],
+              element: <ViewProducts />,
+            };
+          }),
+        ],
       },
-      // APP routes
+      {
+        path: "app/cart",
+        element: <ViewCart />,
+      },
+      // CRM routes
       {
         path: "crm/",
         element: <ViewAppProductLayout />,

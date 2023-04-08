@@ -4,9 +4,12 @@ import "antd/dist/reset.css";
 import "./index.css";
 import router from "./routes";
 import { RouterProvider } from "react-router-dom";
+import { StateProvider } from "./store";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <StateProvider>
+      <RouterProvider router={router} />
+    </StateProvider>
   </React.StrictMode>
 );

@@ -8,8 +8,8 @@ const ViewProducts = () => {
   const filterItems = useMemo(() => {
     return {
       ...SHOE_ITEMS,
-      sneakers: SHOE_ITEMS.sneakers.filter((i) =>
-        i.gender.includes(pathname.split("/")[2])
+      sneakers: SHOE_ITEMS.sneakers.filter((i, idx) =>
+        i.gender.includes(pathname.split("/")[2]) && idx < 15
       ),
     };
   }, [pathname]);

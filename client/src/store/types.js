@@ -1,0 +1,9 @@
+export const ORDER_WISH_ACTION_TYPES = {
+  FILTER_TYPE: ["ORDER", "WISH"],
+  // Order
+  ADD_ORDER: "ADD_ORDER",
+  REMOVE_ORDER: "REMOVE_ORDER",
+  // Wish list
+  ADD_WISH: "ADD_WISH",
+  REMOVE_WISH: "REMOVE_WISH",
+};
