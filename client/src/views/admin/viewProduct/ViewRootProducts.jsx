@@ -15,6 +15,9 @@ const ADD_NEW_GROUP_CATEGORY_SCHEMA = [
     label: "Group name",
     type: "Text",
     field: "name",
+    rules: { required: true },
+    wrapClassName: "h-[70px]",
+    className: "flex-col",
   },
 ];
 
@@ -23,11 +26,17 @@ const ADD_NEW_CATEGORY_SCHEMA = [
     label: "Name",
     type: "Text",
     field: "name",
+    rules: { required: true },
+    wrapClassName: "h-[70px]",
+    className: "flex-col",
   },
   {
     label: "Category groups",
     type: "Select",
     field: "groups",
+    rules: { required: true },
+    wrapClassName: "h-[70px]",
+    className: "flex-col",
     options: [
       {
         value: "jack",

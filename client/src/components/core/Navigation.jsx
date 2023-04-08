@@ -6,7 +6,7 @@ import {
   APP_NAVIGATIONS,
   SIDE_BAR_ITEMS,
 } from "../../utils/constants/sidebar.constant";
-import { useNavigate, useResolvedPath } from "react-router-dom";
+import { NavLink, useNavigate, useResolvedPath } from "react-router-dom";
 import CButton from "./CButton";
 import { useStore } from "../../store";
 
@@ -99,7 +99,7 @@ const Navigation = () => {
         <Badge count={reduceListCount(storeState?.ordersList)}>
           <Button
             onClick={() => {
-              navigate("/app/cart")
+              navigate("/app/cart");
             }}
             shape="circle"
             icon={<ShoppingCartOutlined />}
@@ -117,13 +117,19 @@ const Navigation = () => {
       </div>
       <div className="flex gap-4 items-center">
         {SCHEMA.map((i) => (
-          <div
+          <NavLink
             key={i.key}
-            onClick={() => navigate(i.path)}
-            className="hover:text-blue-400 cursor-pointer text-sm ease-out duration-300"
+            to={`${i.path}`}
+            className={({ isActive, isPending }) =>
+              isActive
+                ? "text-blue-400 cursor-pointer text-sm ease-out duration-300 border-b-2 border-blue-400"
+                : isPending
+                ? "hover:text-blue-400 cursor-pointer text-sm ease-out duration-300"
+                : "hover:text-blue-400 cursor-pointer text-sm ease-out duration-300"
+            }
           >
             {i.label}
-          </div>
+          </NavLink>
         ))}
       </div>
       <AdditionNavs isClientApp={isClientApp} />

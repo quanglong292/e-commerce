@@ -17,7 +17,7 @@ const ViewProducts = () => {
   return (
     <div className="w-full grid grid-cols-3 gap-4">
       {!filterItems.sneakers.length ? (
-        <div>No item found!</div>
+        <div>No item found! Please checkout other views (Men, Women).</div>
       ) : (
         filterItems.sneakers.map((i) => <ProductCard key={i.id} item={i} />)
       )}

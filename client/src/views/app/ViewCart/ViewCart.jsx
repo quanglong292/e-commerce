@@ -41,6 +41,7 @@ const ViewCart = () => {
       {/* ITEMS */}
       <div className="w-2/3">
         <p>BAG</p>
+        {!storeState.ordersList.lenght && <p className="text-sm text-gray-500 font-semibold">No item found!</p>}
         {storeState.ordersList.map((i) => (
           <ItemDetail item={i} />
         ))}

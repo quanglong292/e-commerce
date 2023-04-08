@@ -4,7 +4,7 @@ import { createBrowserRouter } from "react-router-dom";
 // Components
 import RootViewLayout from "./components/layout/RootViewLayout";
 import ErrorPage from "./views/ErrorPage";
-import ViewAppProductLayout from "./components/layout/ViewAppProductLayout";
+import ViewAppProductLayout from "./views/app/ViewProducts/elements/ViewAppProductLayout";
 const ViewRootProducts = lazy(() =>
   import("./views/admin/viewProduct/ViewRootProducts")
 );
