@@ -19,7 +19,7 @@ export const SIDE_BAR_ITEMS = [
 export const APP_NAVIGATIONS = [
   {
     label: "New & Featured",
-    path: "app/newFeatures",
+    path: "app/",
     key: "newFeatures",
   },
   {

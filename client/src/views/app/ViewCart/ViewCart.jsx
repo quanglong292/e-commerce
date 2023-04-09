@@ -9,7 +9,7 @@ const ViewCart = () => {
   const ItemDetail = (item) => {
     const { name } = item;
     return (
-      <div className="w-full flex gap-4">
+      <div className="w-full flex gap-4 my-2">
         <img
           src="https://secure-images.nike.com/is/image/DotCom/DR0453_001?align=0,1&cropN=0,0,0,0&resMode=sharp&bgc=f5f5f5&wid=150&fmt=jpg"
           alt=""

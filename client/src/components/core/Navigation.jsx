@@ -1,5 +1,10 @@
-import { Badge, Button, Dropdown, Input } from "antd";
-import { ShoppingCartOutlined, HeartOutlined } from "@ant-design/icons";
+import { Badge, Button, Divider, Dropdown, Input } from "antd";
+import {
+  ShoppingCartOutlined,
+  HeartOutlined,
+  SearchOutlined,
+  MenuOutlined,
+} from "@ant-design/icons";
 import React, { useContext, useEffect, useMemo, useReducer } from "react";
 import Logo from "../../assets/icons/Logo";
 import {
@@ -68,7 +73,7 @@ const Navigation = () => {
     }
 
     return (
-      <div className="flex gap-2 w-[25%] justify-end">
+      <div className="hidden lg:flex gap-2 w-[25%] justify-end">
         <Search
           placeholder="Search"
           onSearch={onSearch}
@@ -115,7 +120,7 @@ const Navigation = () => {
       <div className="cursor-pointer w-[25%]" onClick={() => navigate("/")}>
         <Logo />
       </div>
-      <div className="flex gap-4 items-center">
+      <div className="hidden lg:flex gap-4 items-center">
         {SCHEMA.map((i) => (
           <NavLink
             key={i.key}
@@ -133,6 +138,41 @@ const Navigation = () => {
         ))}
       </div>
       <AdditionNavs isClientApp={isClientApp} />
+      <div className="lg:hidden flex items-center justify-between gap-4">
+        <Dropdown
+          menu={{
+            items: [
+              ...SCHEMA.map((i) => ({
+                label: i.label,
+                key: i.key,
+              })),
+              ...[
+                {
+                  label: <Divider />,
+                  key: "a1",
+                },
+                {
+                  label: <CButton className="w-full">Wish list</CButton>,
+                  key: "a2",
+                },
+                {
+                  label: <CButton className="w-full">Cart</CButton>,
+                  key: "a3",
+                },
+                {
+                  label: <CButton className="w-full">User</CButton>,
+                  key: "a4",
+                },
+              ],
+            ],
+          }}
+          trigger={["click"]}
+          placement="bottomRight"
+        >
+          <CButton icon={<MenuOutlined />}></CButton>
+        </Dropdown>
+        <AppNavigateButton />
+      </div>
     </div>
   );
 };

@@ -9,7 +9,7 @@ const RootViewLayout = () => {
   const { pathname } = useResolvedPath();
 
   useEffect(() => {
-    if (["/app"].includes(pathname)) navigate("/app/men");
+    // if (["/app"].includes(pathname)) navigate("/app/men");
     if (["/"].includes(pathname)) navigate("/product");
   }, [pathname]);
 
