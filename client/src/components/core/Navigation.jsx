@@ -4,6 +4,7 @@ import {
   HeartOutlined,
   SearchOutlined,
   MenuOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
 import React, { useContext, useEffect, useMemo, useReducer } from "react";
 import Logo from "../../assets/icons/Logo";
@@ -17,11 +18,12 @@ import { useStore } from "../../store";
 
 const { Search } = Input;
 
-const AppNavigateButton = () => {
+const AppNavigateButton = (props) => {
+  const { className } = props;
   const navigate = useNavigate();
 
   return (
-    <div className="w-[25%] flex justify-end">
+    <div className={"w-[25%] justify-end " + className}>
       <Dropdown
         menu={{
           items: [
@@ -66,7 +68,7 @@ const Navigation = () => {
     list.reduce((sum, i) => (sum += i.count), 0);
 
   const AdditionNavs = () => {
-    if (!isClientApp) return <AppNavigateButton />;
+    if (!isClientApp) return <AppNavigateButton className="hidden lg:flex" />;
 
     function onSearch(e) {
       console.log("🚀 ~ file: Navigation.jsx:17 ~ onSearch ~ e:", e);
@@ -110,6 +112,26 @@ const Navigation = () => {
             icon={<ShoppingCartOutlined />}
           />
         </Badge>
+        <Dropdown
+          menu={{
+            items: [
+              {
+                label: "Detail",
+                path: "app/user/detail",
+              },
+              {
+                label: "Log out",
+                path: "",
+              },
+            ].map((i) => ({
+              label: <NavLink to={`${i.path}`}>{i.label}</NavLink>,
+              key: i.id,
+            })),
+          }}
+          placement="bottomRight"
+        >
+          <Button shape="circle" icon={<UserOutlined />} />
+        </Dropdown>
         <AppNavigateButton />
       </div>
     );
@@ -138,12 +160,18 @@ const Navigation = () => {
         ))}
       </div>
       <AdditionNavs isClientApp={isClientApp} />
+
+      {/* MOBILE */}
       <div className="lg:hidden flex items-center justify-between gap-4">
         <Dropdown
           menu={{
             items: [
               ...SCHEMA.map((i) => ({
-                label: i.label,
+                label: (
+                  <NavLink to={`${i.path}`} className="w-full">
+                    {i.label}
+                  </NavLink>
+                ),
                 key: i.key,
               })),
               ...[
@@ -156,11 +184,18 @@ const Navigation = () => {
                   key: "a2",
                 },
                 {
-                  label: <CButton className="w-full">Cart</CButton>,
+                  label: (
+                    <CButton
+                      onClick={() => navigate("app/cart")}
+                      className="w-full"
+                    >
+                      Cart
+                    </CButton>
+                  ),
                   key: "a3",
                 },
                 {
-                  label: <CButton className="w-full">User</CButton>,
+                  label: <CButton onClick={() => navigate("app/user/detail")} className="w-full">User</CButton>,
                   key: "a4",
                 },
               ],

@@ -26,7 +26,7 @@ const ViewLanding = memo(() => {
           renderItem={(i) => (
             <div
               onClick={() => navigate("/app/men")}
-              className="w-full h-auto mx-4 bg-slate-100 rounded-md hover:bg-slate-200 cursor-pointer"
+              className="w-full h-auto bg-slate-100 rounded-md hover:bg-slate-200 cursor-pointer"
             >
               <img src={i.main_picture_url} alt="" className="max-w-full" />
             </div>
@@ -43,7 +43,7 @@ const ViewLanding = memo(() => {
           renderItem={(i) => (
             <div
               onClick={() => navigate("/app/men")}
-              className="w-full h-[75px] mx-4 bg-slate-100 rounded-md hover:bg-slate-200 cursor-pointer flex justify-center items-center font-semibold"
+              className="w-full h-[75px] bg-slate-100 rounded-md hover:bg-slate-200 cursor-pointer flex justify-center items-center font-semibold"
             >
               {i}
             </div>

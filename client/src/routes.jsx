@@ -14,6 +14,7 @@ import ViewCart from "./views/app/ViewCart/ViewCart";
 
 // Const
 import { APP_NAVIGATIONS } from "./utils/constants/sidebar.constant";
+import ViewUserDetail from "./views/app/ViewUser/ViewUserDetail";
 
 const router = createBrowserRouter([
   {
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
       {
         path: "app/cart",
         element: <ViewCart />,
+      },
+      {
+        path: "app/user/detail",
+        element: <ViewUserDetail />,
       },
       // CRM routes
       {

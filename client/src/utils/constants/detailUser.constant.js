@@ -1,0 +1,35 @@
+export const USER_DETAIL_SHCEMA = [
+  "w-full flex flex-wrap gap-4",
+  {
+    label: "Full Name",
+    type: "Text",
+    field: "fullName",
+    rules: {},
+    wrapClassName: "",
+    className: "flex-col w-full",
+  },
+  {
+    label: "Phone",
+    type: "Text",
+    field: "phone",
+    rules: {},
+    wrapClassName: "",
+    className: "flex-col w-full",
+  },
+  {
+    label: "Birth Date",
+    type: "Text",
+    field: "birth",
+    rules: {},
+    wrapClassName: "",
+    className: "flex-col w-full",
+  },
+  {
+    label: "E-Mail",
+    type: "Text",
+    field: "mail",
+    rules: {},
+    wrapClassName: "",
+    className: "flex-col w-full",
+  },
+];
