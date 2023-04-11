@@ -1,9 +1,9 @@
-const BASE_URL = import.meta.env.PROD
-  ? import.meta.env.VITE_PROD_BASE_URL1
-  : import.meta.env.VITE_BASE_URL;
+const BASE_URL_DEV = import.meta.env.VITE_BASE_URL;
+const BASE_URL_PROD = import.meta.env.VITE_BASE_URL_2;
 
 export default async function (requestParams, body) {
   const [urlPath, method] = requestParams;
+  let BASE_URL = import.meta.env.PROD ? BASE_URL_PROD : BASE_URL_DEV;
   const data = await fetch(BASE_URL + urlPath, {
     method,
     headers: {
