@@ -86,7 +86,6 @@ const ProductLayout = (props) => {
 
   function validateDataBeforeCallAPI(e) {
     const isExistName = dataSource.findIndex((i) => i?.name === e?.name);
-
     if (isExistName < 0) return true;
 
     throw {

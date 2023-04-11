@@ -9,6 +9,7 @@ export default async function (requestParams, body) {
     },
     body: JSON.stringify(body),
   }).then((res) => res.json());
+  console.log("data2", data);
 
   return data;
 }

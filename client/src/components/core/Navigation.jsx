@@ -76,11 +76,6 @@ const Navigation = () => {
 
     return (
       <div className="hidden lg:flex gap-2 w-[25%] justify-end">
-        <Search
-          placeholder="Search"
-          onSearch={onSearch}
-          style={{ width: 200 }}
-        />
         <Dropdown
           menu={{
             items: storeState?.wishList.map((i) => ({

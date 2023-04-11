@@ -37,6 +37,8 @@ const ADD_NEW_CATEGORY_SCHEMA = [
     rules: { required: true },
     wrapClassName: "h-[70px]",
     className: "flex-col",
+    mode: "multiple",
+    fetchValue: REQUEST_PARAMS.GET_CATEGORY_GROUP,
     options: [
       {
         value: "jack",
@@ -77,7 +79,7 @@ const VIEW_SCHEMAS = {
       columns: CATEGORY_GROUP_TABLE_COLUMN,
       formSchema: ADD_NEW_CATEGORY_SCHEMA,
       requets: {
-        GET_TABLE_ITEMS: REQUEST_PARAMS.ADD_CATEGORY,
+        GET_TABLE_ITEMS: REQUEST_PARAMS.GET_CATEGORY,
         ADD_TABLE_ITEM: REQUEST_PARAMS.ADD_CATEGORY,
         DELETE_TABLE_ITEM: REQUEST_PARAMS.DELETE_CATEGORY,
       },

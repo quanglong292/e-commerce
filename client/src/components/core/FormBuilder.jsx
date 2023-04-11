@@ -1,19 +1,47 @@
 import { Checkbox, Input, Select } from "antd";
-import React, { memo } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import CButton from "./CButton";
 import "../../assets/styles/formBuilder.scss";
+import fetcher from "../../utils/functions/fetcher";
 
 const FormBuilder = memo((props) => {
-  const { onSubmit, schema, loading } = props;
+  const { onSubmit, loading } = props;
   const {
     handleSubmit,
     control,
     formState: { errors },
   } = useForm();
+  const [schema, setSchema] = useState(props.schema);
+  const [isFetchedOptions, setIsFetchedOptions] = useState(false)
+
   const isShowSubmit = !(
     typeof schema[0] === "string" && schema[0].includes("filterForm")
   );
+
+  const handleFetchOptionValue = async (schema) => {
+    let newSchema = [];
+
+    for (let i of schema) {
+      if (i.fetchValue && i.type === "Select" && !isFetchedOptions) {
+        const data = await fetcher(i.fetchValue);
+        newSchema = [
+          ...newSchema,
+          {
+            ...i,
+            options: data.map((j) => ({ ...j, value: j.id, label: j.name })),
+          },
+        ];
+      } else newSchema.push(i);
+    }
+
+    setSchema(newSchema);
+    setIsFetchedOptions(true)
+  };
+
+  useEffect(() => {
+    handleFetchOptionValue(props.schema);
+  }, [props.schema]);
 
   return (
     <div className="form-builder">
