@@ -1,5 +1,5 @@
 const BASE_URL_DEV = import.meta.env.VITE_BASE_URL;
-const BASE_URL_PROD = import.meta.env.VITE_BASE_URL_2;
+const BASE_URL_PROD = process?.env?.VITE_BASE_URL_2;
 
 export default async function (requestParams, body) {
   const [urlPath, method] = requestParams;
