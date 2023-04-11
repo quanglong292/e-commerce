@@ -28,6 +28,7 @@
     "morgan": "^1.10.0",
     "nodemon": "^2.0.20",
     "redis": "^4.6.5",
+    "ts-node": "^10.9.1",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
