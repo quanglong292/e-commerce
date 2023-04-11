@@ -18,13 +18,44 @@ router.get("/", async (red: Request, res: Response) => {
 })
 
 router.post("/", async (red: Request, res: Response) => {
-    const { body: {name, groups, products, ...restBody} } = red
+    const { body: {name, groups, ...restBody} } = red
     
     try {
+        if (!groups?.length || !name) throw ""
         const data = await Category.create({
             id: uuidv4(),
             name: name,
-            group: groups,
+            groups,
+        })
+    
+        res.json(data)
+    } catch (err) {
+        res.status(404)
+    }
+})
+
+router.delete("/", async (red: Request, res: Response) => {
+    const { body: {id} } = red
+
+    try {
+        if (!id) throw ""
+        const data = await Category.deleteOne({
+            id
+        })
+    
+        res.json(data)
+    } catch (err) {
+        res.status(404)
+    }
+})
+
+router.post("/delMany", async (red: Request, res: Response) => {
+    // const { body: {name, groups, ...restBody} } = red
+    
+    try {
+        // if (!groups?.length || !name) throw ""
+        const data = await Category.deleteMany({
+            groups: [],
         })
     
         res.json(data)
