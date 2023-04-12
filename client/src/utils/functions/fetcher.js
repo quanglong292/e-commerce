@@ -3,7 +3,7 @@ const BASE_URL_PROD = import.meta.env.VITE_BASE_URL_2;
 
 export default async function (requestParams, body) {
   const [urlPath, method] = requestParams;
-  let BASE_URL_2 = import.meta.env.PROD ? BASE_URL_PROD : BASE_URL_DEV;
+  let BASE_URL_2 = import.meta.env.PROD ? "https://e-commerce-production-67aa.up.railway.app/" : BASE_URL_DEV;
   console.log("fetcher", {
     BASE_URL_2,
     BASE_URL_DEV,
