@@ -4,7 +4,7 @@ const CommentSchema = new Schema({
     id: String,
     content: String,
     rating: Number,
-    images: Image,
+    images: [String],
     videoUrl: String,
 })
 

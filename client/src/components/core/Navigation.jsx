@@ -71,7 +71,6 @@ const Navigation = () => {
     if (!isClientApp) return <AppNavigateButton className="hidden lg:flex" />;
 
     function onSearch(e) {
-      console.log("🚀 ~ file: Navigation.jsx:17 ~ onSearch ~ e:", e);
     }
 
     return (

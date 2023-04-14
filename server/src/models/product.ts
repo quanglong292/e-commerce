@@ -6,22 +6,26 @@ import { CategorySchema } from "./category";
 import { CategoryGroupSchema } from "./categoryGroup";
 
 export const ProductSchema = new Schema({
-    id: String,
-    group: CategoryGroupSchema,
-    category: CategorySchema,
-    type: String,
+    id: Schema.Types.UUID,
     name: String,
-    brand: {
-        name: String,
-        image: Image,
-    },
+    shortName: String,
+    group: Schema.Types.UUID,
+    category: Schema.Types.UUID,
+    brand: String,
     price: Number,
     available: Boolean,
     stock: {
-        available: Number,
-        sold: Number
+        sold: Number,
+        amount: Number,
     },
-    comunity: ComunitySchema,
+    size: [String],
+    subType: [{
+        name: String,
+        value: [String]
+    }],
+    detailImages: [String],
+    bannerImage: String,
+    description: String,
     fields: String
 })
 

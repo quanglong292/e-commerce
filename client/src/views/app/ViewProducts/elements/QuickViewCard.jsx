@@ -31,10 +31,6 @@ const QuickViewCard = memo((props) => {
     return selected.find((i) => i.id === id);
   }
 
-  useEffect(() => {
-    console.log("storeState", storeState);
-  }, [storeState]);
-
   return (
     <Modal
       open={Boolean(isShow)}

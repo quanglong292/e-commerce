@@ -1,21 +1,19 @@
-import mongoose from "mongoose";
+import {model, Schema} from "mongoose";
 
 // Relations
-import { ProductSchema } from "./product";
 import { CategorySchema } from "./category";
 
-export const BrandSchema = new mongoose.Schema({
+export const BrandSchema = new Schema({
     id: String,
     name: String,
     image: String,
     description: String,
-    categories: [CategorySchema],
+    categories: [String],
     stock: {
         available: Number,
         sold: Number,
     },
-    products: [ProductSchema],
     fields: String
 })
 
-export default mongoose.model('Brand', BrandSchema);
+export default model('Brand', BrandSchema);

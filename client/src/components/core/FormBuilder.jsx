@@ -1,9 +1,10 @@
-import { Checkbox, Input, Select } from "antd";
+import { Checkbox, Input, Select, Switch } from "antd";
 import React, { memo, useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import CButton from "./CButton";
 import "../../assets/styles/formBuilder.scss";
 import fetcher from "../../utils/functions/fetcher";
+import TextArea from "antd/es/input/TextArea";
 
 const FormBuilder = memo((props) => {
   const { onSubmit, loading } = props;
@@ -13,7 +14,7 @@ const FormBuilder = memo((props) => {
     formState: { errors },
   } = useForm();
   const [schema, setSchema] = useState(props.schema);
-  const [isFetchedOptions, setIsFetchedOptions] = useState(false)
+  const [isFetchedOptions, setIsFetchedOptions] = useState(false);
 
   const isShowSubmit = !(
     typeof schema[0] === "string" && schema[0].includes("filterForm")
@@ -35,8 +36,9 @@ const FormBuilder = memo((props) => {
       } else newSchema.push(i);
     }
 
+
     setSchema(newSchema);
-    setIsFetchedOptions(true)
+    setIsFetchedOptions(true);
   };
 
   useEffect(() => {
@@ -60,9 +62,11 @@ const FormBuilder = memo((props) => {
             let TypeInput = Input;
             let className =
               "flex flex-col justify-between h-[70px] " + i.wrapClassName;
-            if (type === "Text") TypeInput = Input;
             if (type === "CheckBox") TypeInput = Checkbox;
             if (type === "Select") TypeInput = Select;
+            if (type === "Switch") TypeInput = Switch;
+            if (["TextArea"].includes(type)) TypeInput = Input[type];
+
             return (
               <div className={className}>
                 <div className={"flex " + i.className}>
