@@ -1,10 +1,10 @@
 import React from "react";
-import { useStore } from "../../../store";
 import CButton from "../../../components/core/CButton";
+import useProductStore from "../../../store/product.zustand";
 
 const ViewCart = () => {
   // Store
-  const { storeState, dispatch } = useStore();
+  const productStore = useProductStore((state) => state);
 
   const ItemDetail = (item) => {
     const { name } = item;
@@ -41,8 +41,10 @@ const ViewCart = () => {
       {/* ITEMS */}
       <div className="w-2/3">
         <p>BAG</p>
-        {!storeState.ordersList.lenght && <p className="text-sm text-gray-500 font-semibold">No item found!</p>}
-        {storeState.ordersList.map((i) => (
+        {!productStore.ordersList.lenght && (
+          <p className="text-sm text-gray-500 font-semibold">No item found!</p>
+        )}
+        {productStore.ordersList.map((i) => (
           <ItemDetail item={i} />
         ))}
       </div>

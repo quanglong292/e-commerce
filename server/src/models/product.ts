@@ -21,7 +21,8 @@ export const ProductSchema = new Schema({
     size: [String],
     subType: [{
         name: String,
-        value: [String]
+        value: [String],
+        stock: Number,
     }],
     detailImages: [String],
     bannerImage: String,

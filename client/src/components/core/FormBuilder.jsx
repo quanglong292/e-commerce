@@ -1,4 +1,4 @@
-import { Checkbox, Input, Select, Switch } from "antd";
+import { Checkbox, Input, Radio, Select, Switch } from "antd";
 import React, { memo, useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import CButton from "./CButton";
@@ -7,7 +7,7 @@ import fetcher from "../../utils/functions/fetcher";
 import TextArea from "antd/es/input/TextArea";
 
 const FormBuilder = memo((props) => {
-  const { onSubmit, loading } = props;
+  const { onSubmit, onChange, loading } = props;
   const {
     handleSubmit,
     control,
@@ -35,7 +35,6 @@ const FormBuilder = memo((props) => {
         ];
       } else newSchema.push(i);
     }
-
 
     setSchema(newSchema);
     setIsFetchedOptions(true);
@@ -75,7 +74,33 @@ const FormBuilder = memo((props) => {
                     name={i.field}
                     control={control}
                     rules={i.rules ?? {}}
-                    render={({ field }) => <TypeInput {...field} {...i} />}
+                    render={({ field }) => {
+                      // console.log("field", field);
+                      // if (type === "Radio") {
+                      //   return (
+                      //     <Radio.Group
+                      //       {...field}
+                      //       {...i}
+                      //       onChange={(e) => {
+                      //         field.onChange(e.target.value)
+                      //         onChange(e)
+                      //       }}
+                      //     >
+                      //       {i.options?.map((k) => (
+                      //         <Radio value={k.value}>{k.label}</Radio>
+                      //       ))}
+                      //     </Radio.Group>
+                      //   );
+                      // }
+
+                      return (
+                        <TypeInput
+                          {...field}
+                          {...i}
+                          onChange={(e) => Boolean(oncancel) ? onChange(e) : field.onChange(e)}
+                        />
+                      );
+                    }}
                   />
                 </div>
                 {errors[i.field] && (

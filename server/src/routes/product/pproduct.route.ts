@@ -1,5 +1,6 @@
 import ProductModel from "@/models/product";
 import { Request, Response, Router } from "express";
+import { v4 } from "uuid";
 
 const router = Router()
 
@@ -14,6 +15,8 @@ router.get("/", async (red: Request, res: Response) => {
 }).post("/", async ({body}: Request, res: Response) => {
     try {
         const data = await ProductModel.create({
+            id: v4(),
+            available: true,
             ...body
         })
 

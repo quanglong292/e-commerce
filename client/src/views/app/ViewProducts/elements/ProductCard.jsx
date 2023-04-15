@@ -53,6 +53,8 @@ const cloneItem = {
 
 const ProductCard = (props) => {
   const { item } = props;
+  console.log("🚀 ~ file: ProductCard.jsx:56 ~ ProductCard ~ item:", item);
+  // const item = cloneItem
   const [isHover, setHover] = useState(false);
   const [quickViewId, setQuickViewId] = useState(null);
 
@@ -69,8 +71,10 @@ const ProductCard = (props) => {
           className="w-full relative"
         >
           <img
-            src={item.main_picture_url}
-            className="max-w-full bg-slate-50 rounded-md hover:bg-slate-300 cursor-pointer relative"
+            width={300}
+            height={250}
+            src={item.bannerImage}
+            className="w-[300px] h-[250px] mx-auto rounded-md hover:bg-slate-300 cursor-pointer relative object-contain"
           />
           {isHover && (
             <div className="w-full h-full absolute top-0 left-0 bg-slate-300/50 rounded-md">
@@ -94,15 +98,15 @@ const ProductCard = (props) => {
             </div>
           )}
         </div>
-        <div className="w-full">
+        <div className="w-full mt-2">
           <p className="font-semibold">{item.name}</p>
           <p
             className={
               "italic text-sm " +
-              (item.has_stock ? "text-green-500" : "text-yellow-500")
+              (item.available ? "text-green-500" : "text-yellow-500")
             }
           >
-            {item.has_stock ? "Available" : "Out of stock"}
+            {item.available ? "Available" : "Out of stock"}
           </p>
         </div>
       </div>

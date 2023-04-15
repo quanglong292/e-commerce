@@ -2,7 +2,6 @@ import React, { Suspense, useState } from "react";
 import { Outlet, useResolvedPath } from "react-router-dom";
 import FilterBar from "../elements/FilterBar";
 import FilterBarController from "../elements/FilterBarController";
-import CCarousel from "../../../../components/core/CCarousel";
 import ViewLanding from "../elements/ViewLanding";
 import Footer from "../../../../components/layout/Footer";
 

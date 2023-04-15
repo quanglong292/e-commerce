@@ -14,7 +14,7 @@ import {
 } from "../../utils/constants/sidebar.constant";
 import { NavLink, useNavigate, useResolvedPath } from "react-router-dom";
 import CButton from "./CButton";
-import { useStore } from "../../store";
+import useProductStore from "../../store/product.zustand";
 
 const { Search } = Input;
 
@@ -55,7 +55,7 @@ const Navigation = () => {
   const { pathname } = useResolvedPath();
 
   // Store
-  const { storeState, dispatch } = useStore();
+  const productStore = useProductStore(state => state)
 
   // Memo data
   const isClientApp = useMemo(() => pathname.includes("app"), [pathname]);
@@ -77,7 +77,7 @@ const Navigation = () => {
       <div className="hidden lg:flex gap-2 w-[25%] justify-end">
         <Dropdown
           menu={{
-            items: storeState?.wishList.map((i) => ({
+            items: productStore?.wishList.map((i) => ({
               label: (
                 <div className="flex items-center gap-4">
                   <div className="flex">
@@ -93,11 +93,11 @@ const Navigation = () => {
           }}
           placement="bottomRight"
         >
-          <Badge count={reduceListCount(storeState?.wishList)}>
+          <Badge count={reduceListCount(productStore?.wishList)}>
             <Button shape="circle" icon={<HeartOutlined />} />
           </Badge>
         </Dropdown>
-        <Badge count={reduceListCount(storeState?.ordersList)}>
+        <Badge count={reduceListCount(productStore?.ordersList)}>
           <Button
             onClick={() => {
               navigate("/app/cart");

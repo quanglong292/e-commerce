@@ -1,19 +1,12 @@
 import { Modal } from "antd";
-import React, {
-  memo,
-  useContext,
-  useEffect,
-  useReducer,
-  useState,
-} from "react";
+import React, { memo, useState } from "react";
 import "./cardModal.scss";
 import CButton from "../../../../components/core/CButton";
-import StoreContext, { useStore } from "../../../../store";
-import { ORDER_WISH_ACTION_TYPES } from "../../../../store/types";
+import useProductStore from "../../../../store/product.zustand";
 
 const QuickViewCard = memo((props) => {
   const { item, isShow, onCancel } = props;
-  const { storeState, dispatch } = useStore();
+  const { mutateList } = useProductStore((state) => state);
 
   // local state
   const [selected, setSelected] = useState([]);
@@ -31,6 +24,11 @@ const QuickViewCard = memo((props) => {
     return selected.find((i) => i.id === id);
   }
 
+  const getSize = (size) => {
+    if (!size[0]) return []
+    return size[0]?.split(";")
+  }
+
   return (
     <Modal
       open={Boolean(isShow)}
@@ -40,26 +38,26 @@ const QuickViewCard = memo((props) => {
       className="max-w-[80%] p-0"
     >
       <div className="w-full h-full lg:flex">
-        <div className="h-1/2 lg:h-auto lg:w-1/2 flex justify-center bg-gray-200">
+        <div className="h-1/2 lg:h-auto lg:w-1/2 flex justify-center p-4">
           <img
-            src={item.main_picture_url}
-            className="max-w-full lg:rounded-l-md"
+            src={item.bannerImage}
+            className="object-contain lg:rounded-l-md"
           />
         </div>
         <div className="max-h-1/2 overflow-y-auto lg:h-auto lg:w-1/2 p-3">
           <h1 className="text-xl font-semibold">{item.name}</h1>
-          <h3 className="text-base">{item.designer}</h3>
+          <h3 className="text-base">{item.shortName}</h3>
           <h3 className="text-base mt-2">
             {new Intl.NumberFormat("en-IN", {
               maximumFractionDigits: 0,
               currency: "USD",
               style: "currency",
-            }).format(item.retail_price_cents)}
+            }).format(item.price)}
           </h3>
           <div className="mt-4 text font-semibold">
             <p className="mb-3">Select size</p>
             <div className="grid grid-cols-6 gap-1 gap-y-3">
-              {item.size_range.map((i) => (
+              {getSize(item.size)?.map((i) => (
                 <div
                   key={i}
                   className="p-2 rounded-lg border-[1px] flex justify-center hover:bg-slate-50 cursor-pointer relative"
@@ -86,8 +84,7 @@ const QuickViewCard = memo((props) => {
               type="primary"
               onClick={() => {
                 setSelected([]);
-                dispatch({
-                  type: ORDER_WISH_ACTION_TYPES.ADD_ORDER,
+                mutateList("ordersList", {
                   payload: selected,
                 });
               }}
@@ -97,8 +94,7 @@ const QuickViewCard = memo((props) => {
             <CButton
               onClick={() => {
                 setSelected([]);
-                dispatch({
-                  type: ORDER_WISH_ACTION_TYPES.ADD_WISH,
+                mutateList("wishList", {
                   payload: selected,
                 });
               }}
