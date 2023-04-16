@@ -12,7 +12,8 @@ const QuickViewCard = memo((props) => {
   const [selected, setSelected] = useState([]);
 
   function handleSelect(id) {
-    const newItem = { id, count: 1 };
+    // console.log("handleSelect", id, item);
+    const newItem = { id, count: 1, product: item };
     if (!findSelect(id)) return setSelected([...selected, newItem]);
     const map = selected.map((i) =>
       i.id === id ? { ...i, count: i.count + 1 } : i
@@ -25,9 +26,9 @@ const QuickViewCard = memo((props) => {
   }
 
   const getSize = (size) => {
-    if (!size[0]) return []
-    return size[0]?.split(";")
-  }
+    if (!size[0]) return [];
+    return size[0]?.split(";");
+  };
 
   return (
     <Modal

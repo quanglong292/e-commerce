@@ -25,7 +25,6 @@ const useProductStore = create((set) => ({
     }),
   fetch: async () => {
     const response = await fetcher(REQUEST_PARAMS.GET_PRODUCT);
-    console.log("🚀 ~ file: product.zustand.js:27 ~ fetch: ~ response:", response)
     set({ products: response });
   },
 }));

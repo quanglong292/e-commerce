@@ -15,6 +15,7 @@ import {
 import { NavLink, useNavigate, useResolvedPath } from "react-router-dom";
 import CButton from "./CButton";
 import useProductStore from "../../store/product.zustand";
+import useGlobalStore from "../../store/global.zustand";
 
 const { Search } = Input;
 
@@ -55,7 +56,10 @@ const Navigation = () => {
   const { pathname } = useResolvedPath();
 
   // Store
-  const productStore = useProductStore(state => state)
+  const { wishList, ordersList } = useProductStore((state) => state);
+  const { tkn, handleLogin, toggleLoginModal } = useGlobalStore(
+    (state) => state
+  );
 
   // Memo data
   const isClientApp = useMemo(() => pathname.includes("app"), [pathname]);
@@ -67,17 +71,23 @@ const Navigation = () => {
   const reduceListCount = (list = []) =>
     list.reduce((sum, i) => (sum += i.count), 0);
 
+  const handleClickLogo = () => {
+    if (pathname.includes("app")) navigate("app")
+    else navigate("/")
+  }
+
+
+  // Sub-component
   const AdditionNavs = () => {
     if (!isClientApp) return <AppNavigateButton className="hidden lg:flex" />;
 
-    function onSearch(e) {
-    }
+    function onSearch(e) {}
 
     return (
       <div className="hidden lg:flex gap-2 w-[25%] justify-end">
         <Dropdown
           menu={{
-            items: productStore?.wishList.map((i) => ({
+            items: wishList.map((i) => ({
               label: (
                 <div className="flex items-center gap-4">
                   <div className="flex">
@@ -93,11 +103,11 @@ const Navigation = () => {
           }}
           placement="bottomRight"
         >
-          <Badge count={reduceListCount(productStore?.wishList)}>
+          <Badge count={reduceListCount(wishList)}>
             <Button shape="circle" icon={<HeartOutlined />} />
           </Badge>
         </Dropdown>
-        <Badge count={reduceListCount(productStore?.ordersList)}>
+        <Badge count={reduceListCount(ordersList)}>
           <Button
             onClick={() => {
               navigate("/app/cart");
@@ -108,17 +118,34 @@ const Navigation = () => {
         </Badge>
         <Dropdown
           menu={{
-            items: [
-              {
-                label: "Detail",
-                path: "app/user/detail",
-              },
-              {
-                label: "Log out",
-                path: "",
-              },
-            ].map((i) => ({
-              label: <NavLink to={`${i.path}`}>{i.label}</NavLink>,
+            items: (!tkn
+              ? [
+                  {
+                    label: "Login",
+                    path: "",
+                  },
+                ]
+              : [
+                  {
+                    label: "Detail",
+                    path: "app/user/detail",
+                  },
+                  {
+                    label: "Log out",
+                    path: "",
+                  },
+                ]
+            ).map((i) => ({
+              label: (
+                <p
+                  onClick={() => {
+                    if (i.label === "Login") toggleLoginModal();
+                    else navigate(i.path);
+                  }}
+                >
+                  {i.label}
+                </p>
+              ),
               key: i.id,
             })),
           }}
@@ -133,7 +160,7 @@ const Navigation = () => {
 
   return (
     <div className="w-full h-[56px] shadow-md bg-white mb-2 px-4 py-2 flex justify-between items-center">
-      <div className="cursor-pointer w-[25%]" onClick={() => navigate("/")}>
+      <div className="cursor-pointer w-[25%]" onClick={handleClickLogo}>
         <Logo />
       </div>
       <div className="hidden lg:flex gap-4 items-center">
@@ -189,7 +216,16 @@ const Navigation = () => {
                   key: "a3",
                 },
                 {
-                  label: <CButton onClick={() => navigate("app/user/detail")} className="w-full">User</CButton>,
+                  label: (
+                    <CButton
+                      onClick={() => {
+                        navigate("app/user/detail");
+                      }}
+                      className="w-full"
+                    >
+                      User
+                    </CButton>
+                  ),
                   key: "a4",
                 },
               ],

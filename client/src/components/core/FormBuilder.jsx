@@ -64,7 +64,7 @@ const FormBuilder = memo((props) => {
             if (type === "CheckBox") TypeInput = Checkbox;
             if (type === "Select") TypeInput = Select;
             if (type === "Switch") TypeInput = Switch;
-            if (["TextArea"].includes(type)) TypeInput = Input[type];
+            if (["TextArea", "Password"].includes(type)) TypeInput = Input[type];
 
             return (
               <div className={className}>
@@ -75,7 +75,6 @@ const FormBuilder = memo((props) => {
                     control={control}
                     rules={i.rules ?? {}}
                     render={({ field }) => {
-                      // console.log("field", field);
                       // if (type === "Radio") {
                       //   return (
                       //     <Radio.Group

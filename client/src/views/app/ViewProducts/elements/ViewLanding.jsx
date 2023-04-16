@@ -1,11 +1,19 @@
-import React, { memo } from "react";
+import React, { memo, useEffect } from "react";
 import CCarousel from "../../../../components/core/CCarousel";
-import SHOE_ITEMS from "../../../../utils/constants/shoes.constant.json";
 import { useNavigate } from "react-router-dom";
 import Footer from "../../../../components/layout/Footer";
+import useProductStore from "../../../../store/product.zustand";
 
 const ViewLanding = memo(() => {
   const navigate = useNavigate();
+  const { products, fetch } = useProductStore((state) => state);
+
+  useEffect(() => {
+    if (!products.length) {
+      fetch();
+    }
+  }, []);
+
   return (
     <div className="w-full h-full mb-12">
       <iframe
@@ -26,12 +34,16 @@ const ViewLanding = memo(() => {
           renderItem={(i) => (
             <div
               onClick={() => navigate("/app/men")}
-              className="w-full h-auto bg-slate-100 rounded-md hover:bg-slate-200 cursor-pointer"
+              className="w-[200px] h-[250px] rounded-md cursor-pointer flex justify-center items-center m-auto"
             >
-              <img src={i.main_picture_url} alt="" className="max-w-full" />
+              <img
+                src={i.bannerImage}
+                alt=""
+                className="max-w-full object-contain"
+              />
             </div>
           )}
-          items={SHOE_ITEMS.sneakers.filter((i, idx) => idx < 5)}
+          items={products.filter((i, idx) => idx < 5)}
         />
       </div>
       <div className="mt-24">

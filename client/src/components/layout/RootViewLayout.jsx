@@ -2,11 +2,16 @@ import { Outlet, useNavigate, useResolvedPath } from "react-router-dom";
 import Navigation from "../core/Navigation";
 import { Suspense, useEffect } from "react";
 import ComponentLoading from "./ComponentLoading";
+import ViewLogin from "../../views/ViewLogin";
+import useGlobalStore from "../../store/global.zustand";
 // import Sidebar from "../core/Sidebar";
 
 const RootViewLayout = () => {
   const navigate = useNavigate();
   const { pathname } = useResolvedPath();
+
+  // Store
+  const {  } = useGlobalStore((state) => state);
 
   useEffect(() => {
     // if (["/app"].includes(pathname)) navigate("/app/men");
@@ -29,6 +34,7 @@ const RootViewLayout = () => {
           </Suspense>
         </div>
       </div>
+      <ViewLogin />
     </div>
   );
 };

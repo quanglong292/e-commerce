@@ -1,11 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import FormBuilder from "../../../components/core/FormBuilder";
 import { USER_DETAIL_SHCEMA } from "../../../utils/constants/detailUser.constant";
 import { Avatar, Divider } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import UserHistory from "./elements/UserHistory";
+import useGlobalStore from "../../../store/global.zustand";
+import { useNavigate } from "react-router-dom";
 
 const ViewUserDetail = () => {
+  const navigate = useNavigate();
+  const { tkn, toggleLoginModal } = useGlobalStore((state) => state);
+
+  useEffect(() => {
+    if (!tkn) {
+      toggleLoginModal();
+      navigate("/app");
+    }
+  }, []);
+
   return (
     <div className="w-full bg-white shadow-2xl rounded-lg p-4">
       <p className="text-2xl uppercase font-semibold">User detail</p>

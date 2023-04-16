@@ -53,7 +53,6 @@ const cloneItem = {
 
 const ProductCard = (props) => {
   const { item } = props;
-  console.log("🚀 ~ file: ProductCard.jsx:56 ~ ProductCard ~ item:", item);
   // const item = cloneItem
   const [isHover, setHover] = useState(false);
   const [quickViewId, setQuickViewId] = useState(null);
