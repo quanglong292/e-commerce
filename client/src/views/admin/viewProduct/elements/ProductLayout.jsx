@@ -20,6 +20,7 @@ const ProductLayout = (props) => {
 
   const [openForm, setOpenForm] = useState(false);
   const [dataSource, setDataSource] = useState([]);
+  const [updateCell, setUpdateCell] = useState(null);
 
   const actionColumn = {
     title: "Action",
@@ -28,7 +29,9 @@ const ProductLayout = (props) => {
     width: "120px",
     render: (_, record) => (
       <div className="flex gap-2">
-        <CButton size="small">Edit</CButton>
+        <CButton onClick={() => handleEditCell(record)} size="small">
+          Edit
+        </CButton>
         <Popconfirm
           title="Delete item"
           description="Are you sure to delete this item?"
@@ -54,9 +57,12 @@ const ProductLayout = (props) => {
 
   const toggleForm = () => setOpenForm(!openForm);
   function handleCancel() {
+    console.log("vo day");
     toggleForm();
+    setUpdateCell(null)
   }
   async function handleOk(e) {
+    console.log("handleOk", e);
     try {
       validateDataBeforeCallAPI(e);
       await fetcher(ADD_TABLE_ITEM, e);
@@ -82,6 +88,11 @@ const ProductLayout = (props) => {
     } finally {
       // toggleForm();
     }
+  }
+
+  function handleEditCell(record) {
+    setOpenForm(true);
+    setUpdateCell(record);
   }
 
   function validateDataBeforeCallAPI(e) {
@@ -137,15 +148,16 @@ const ProductLayout = (props) => {
         />
         <Modal
           open={openForm}
-          title={"Add new " + viewName}
+          title={(updateCell ? "Update " : "Add new ") + viewName}
           onCancel={handleCancel}
           onDelete={handleDeleteItem}
           footer={<></>}
-          width="80%"
-          className="max-w-[80%]"
+          width={"90%"}
+          className="max-w-[1440px]"
         >
           <FormBuilder
             schema={formSchema}
+            formValue={updateCell}
             onSubmit={handleOk}
             loading={loading}
           />

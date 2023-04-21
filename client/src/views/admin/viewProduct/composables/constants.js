@@ -136,6 +136,7 @@ const ADD_NEW_PRODUCT_SCHEMA = [
     rules: { required: true },
     wrapClassName: "h-[70px]",
     className: "flex-col",
+    mode: "multiple",
     fetchValue: REQUEST_PARAMS.GET_CATEGORY_GROUP,
     options: [
       {
@@ -163,6 +164,7 @@ const ADD_NEW_PRODUCT_SCHEMA = [
     rules: { required: true },
     wrapClassName: "h-[70px]",
     className: "flex-col",
+    mode: "multiple",
     fetchValue: REQUEST_PARAMS.GET_CATEGORY,
     options: [
       {
@@ -220,20 +222,20 @@ const ADD_NEW_PRODUCT_SCHEMA = [
   },
   {
     label: "Stock amount",
-    type: "Number",
-    field: "stock.amount",
-    rules: { required: true },
-    wrapClassName: "h-[70px]",
-    className: "flex-col",
-  },
-  {
-    label: "Size",
     type: "Array",
-    field: "size",
+    field: "stocks",
     rules: { required: true },
     wrapClassName: "h-[70px]",
     className: "flex-col",
   },
+  // {
+  //   label: "Size",
+  //   type: "Array",
+  //   field: "size",
+  //   rules: { required: true },
+  //   wrapClassName: "h-[70px]",
+  //   className: "flex-col",
+  // },
   {
     label: "Detail Image",
     type: "Array",

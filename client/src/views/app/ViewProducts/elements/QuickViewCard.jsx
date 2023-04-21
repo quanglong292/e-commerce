@@ -12,7 +12,6 @@ const QuickViewCard = memo((props) => {
   const [selected, setSelected] = useState([]);
 
   function handleSelect(id) {
-    // console.log("handleSelect", id, item);
     const newItem = { id, count: 1, product: item };
     if (!findSelect(id)) return setSelected([...selected, newItem]);
     const map = selected.map((i) =>
@@ -25,9 +24,9 @@ const QuickViewCard = memo((props) => {
     return selected.find((i) => i.id === id);
   }
 
-  const getSize = (size) => {
-    if (!size[0]) return [];
-    return size[0]?.split(";");
+  const getSize = (stocks) => {
+    if (!stocks.length) return [];
+    return stocks.map((i) => ({ ...i, label: i.name, id: i.name }));
   };
 
   return (
@@ -58,21 +57,21 @@ const QuickViewCard = memo((props) => {
           <div className="mt-4 text font-semibold">
             <p className="mb-3">Select size</p>
             <div className="grid grid-cols-6 gap-1 gap-y-3">
-              {getSize(item.size)?.map((i) => (
+              {getSize(item.stocks)?.map((i) => (
                 <div
-                  key={i}
+                  key={i.id}
                   className="p-2 rounded-lg border-[1px] flex justify-center hover:bg-slate-50 cursor-pointer relative"
-                  onClick={() => handleSelect(i)}
+                  onClick={() => handleSelect(i.id)}
                 >
-                  {i}
-                  {findSelect(i) && (
+                  {i.name}
+                  {findSelect(i.id) && (
                     <div
                       onClick={() => {
-                        setSelected(selected.filter((i) => i.id !== i));
+                        setSelected(selected.filter((j) => j.id !== i.id));
                       }}
                       className="absolute top-[-12px] right-[-4px] bg-red-400 w-[24px] h-[24px] flex justify-center items-center rounded-full text-white hover:bg-red-300 z-20"
                     >
-                      {findSelect(i)?.count}
+                      {findSelect(i.id)?.count}
                     </div>
                   )}
                 </div>
