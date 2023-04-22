@@ -1,13 +1,18 @@
+import { IFilterOptions } from '@/types/product.type';
 import ProductModel from "@/models/product";
+import { productServices } from "@/services/products";
 import { Request, Response, Router } from "express";
 import { Schema } from "mongoose";
 import { v4 } from "uuid";
 
 const router = Router()
+const {generateFilterOptions} = productServices()
 
-router.get("/", async (red: Request, res: Response) => {
+router.get("/", async (req: Request<IFilterOptions>, res: Response) => {
+    const {query}: IFilterOptions | any = req
+    
     try {
-        const data = await ProductModel.find()
+        const data = await ProductModel.find(query)
 
         res.json(data)
     } catch(error) {

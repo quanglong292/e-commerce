@@ -12,10 +12,17 @@ import {
   APP_NAVIGATIONS,
   SIDE_BAR_ITEMS,
 } from "../../utils/constants/sidebar.constant";
-import { NavLink, useNavigate, useResolvedPath } from "react-router-dom";
+import {
+  NavLink,
+  useNavigate,
+  useParams,
+  useResolvedPath,
+} from "react-router-dom";
 import CButton from "./CButton";
 import useProductStore from "../../store/product.zustand";
 import useGlobalStore from "../../store/global.zustand";
+import sumAmount from "../../utils/helpers/sumAmount";
+import { FILTER_OPTIONS } from "../../utils/constants/navigation.constant";
 
 const { Search } = Input;
 
@@ -56,26 +63,51 @@ const Navigation = () => {
   const { pathname } = useResolvedPath();
 
   // Store
-  const { wishList, ordersList } = useProductStore((state) => state);
-  const { tkn, handleLogin, toggleLoginModal } = useGlobalStore(
-    (state) => state
-  );
+  const { wishList, setFilter, ordersList, categoryGroups, fetchInitData, fetch } =
+    useProductStore((state) => state);
+  const { tkn, toggleLoginModal } = useGlobalStore((state) => state);
 
   // Memo data
   const isClientApp = useMemo(() => pathname.includes("app"), [pathname]);
   const SCHEMA = useMemo(() => {
-    return !isClientApp ? SIDE_BAR_ITEMS : APP_NAVIGATIONS;
-  }, [pathname]);
+    return !isClientApp
+      ? SIDE_BAR_ITEMS
+      : [
+          APP_NAVIGATIONS[0],
+          ...categoryGroups.map((i) => ({
+            ...i,
+            label: i.name,
+            path: `app/${i.name.toLowerCase()}`,
+          })),
+        ];
+  }, [pathname, categoryGroups]);
 
   // Functions
-  const reduceListCount = (list = []) =>
-    list.reduce((sum, i) => (sum += i.count), 0);
-
   const handleClickLogo = () => {
-    if (pathname.includes("app")) navigate("app")
-    else navigate("/")
-  }
+    if (pathname.includes("app")) navigate("app");
+    else navigate("/");
+  };
 
+  const navChangeActions = (path) => {
+    path = path.split("/")[2];
+
+    if (!path) return fetch("all");
+
+    const value = categoryGroups.find((i) => i.name.toLowerCase() === path)?.id;
+    
+    if (!value) return;
+
+    setFilter(FILTER_OPTIONS.categoryGroup, value);
+  };
+
+  // Effects
+  useEffect(() => {
+    fetchInitData();
+  }, []);
+
+  useEffect(() => {
+    navChangeActions(pathname);
+  }, [pathname, SCHEMA]);
 
   // Sub-component
   const AdditionNavs = () => {
@@ -103,11 +135,11 @@ const Navigation = () => {
           }}
           placement="bottomRight"
         >
-          <Badge count={reduceListCount(wishList)}>
+          <Badge count={sumAmount(wishList)}>
             <Button shape="circle" icon={<HeartOutlined />} />
           </Badge>
         </Dropdown>
-        <Badge count={reduceListCount(ordersList)}>
+        <Badge count={sumAmount(ordersList)}>
           <Button
             onClick={() => {
               navigate("/app/cart");

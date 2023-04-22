@@ -6,7 +6,7 @@ import "../../assets/styles/formBuilder.scss";
 import fetcher from "../../utils/functions/fetcher";
 import TextArea from "antd/es/input/TextArea";
 import set from "lodash/set";
-import findPath from "../../utils/functions/findPath";
+import findPath from "../../utils/helpers/findPath";
 
 const getNewLineOfArrayFields = (field, idx) => {
   const fields = [
@@ -51,7 +51,6 @@ const generateEmptyFields = (schema) => {
     return newObj;
   } else {
     const clone = JSON.parse(JSON.stringify(schema));
-    console.log("schema", { clone, fields: Object.entries(clone) });
     Object.entries(clone).forEach(([key, value]) => {
       if (Object.keys(value).length) {
         const path = findPath(value);
@@ -98,7 +97,6 @@ const FormBuilder = memo((props) => {
     setValue,
     formState: { errors },
   } = useForm();
-  console.log("formValue", formValue);
   const [schema, setSchema] = useState(props.schema);
   const [isFetchedOptions, setIsFetchedOptions] = useState(false);
   const [arrayFields, setArrayFields] = useState([]);

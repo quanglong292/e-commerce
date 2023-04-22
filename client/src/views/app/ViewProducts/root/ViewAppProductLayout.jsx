@@ -1,9 +1,11 @@
-import React, { Suspense, useState } from "react";
+import React, { Suspense, lazy, useState } from "react";
 import { Outlet, useResolvedPath } from "react-router-dom";
 import FilterBar from "../elements/FilterBar";
 import FilterBarController from "../elements/FilterBarController";
-import ViewLanding from "../elements/ViewLanding";
 import Footer from "../../../../components/layout/Footer";
+import ComponentLoading from "../../../../components/layout/ComponentLoading";
+
+const ViewLanding = lazy(() => import("../elements/ViewLanding"))
 
 const ViewAppProductLayout = () => {
   const { pathname } = useResolvedPath();
@@ -20,7 +22,7 @@ const ViewAppProductLayout = () => {
           />
           <div className="flex">
             {isShowFilter && <FilterBar />}
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense fallback={<ComponentLoading />}>
               <Outlet />
             </Suspense>
           </div>

@@ -1,8 +1,10 @@
-.ant-modal-content {
-    padding: 0 !important;
-    border-radius: 6px;
+.quick-view-card {
+    .ant-modal-content {
+        padding: 0 !important;
+        border-radius: 6px;
 
-    button:first-child {
-        display: none !important;
+        button:first-child {
+            display: none !important;
+        }
     }
 }

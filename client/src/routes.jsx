@@ -35,13 +35,10 @@ const router = createBrowserRouter([
         path: "app/",
         element: <ViewAppProductLayout />,
         children: [
-          ...APP_NAVIGATIONS.map((i) => {
-            return {
-              ...i,
-              path: i.path.split("/")[1],
-              element: <ViewProducts />,
-            };
-          }),
+          {
+            path: ":group",
+            element: <ViewProducts />,
+          }
         ],
       },
       {
