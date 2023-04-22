@@ -26,7 +26,7 @@ const QuickViewCard = memo((props) => {
 
   const getSize = (stocks) => {
     if (!stocks.length) return [];
-    return stocks.map((i) => ({ ...i, label: i.name, id: i.name }));
+    return stocks.filter(i => i).map((i) => ({ ...i, label: i.name, id: i.name }));
   };
 
   return (
