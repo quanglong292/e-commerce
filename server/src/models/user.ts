@@ -1,7 +1,5 @@
 import mongoose from "mongoose";
 
-// Relations
-
 export const UserSchema = new mongoose.Schema({
     id: String,
     userName: String,
@@ -9,9 +7,13 @@ export const UserSchema = new mongoose.Schema({
     info: {
         name: String,
         phone: String,
-        avatar: String
+        avatar: String,
+        birthDate: Date,
+        mail: String,
     },
-    totalCart: Number,
+    carts: [String],
+    wishs: [String],
+    orderHistory: [String],
 })
 
 export default mongoose.model('User', UserSchema);

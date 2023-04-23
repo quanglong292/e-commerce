@@ -7,6 +7,7 @@ import fetcher from "../../utils/functions/fetcher";
 import TextArea from "antd/es/input/TextArea";
 import set from "lodash/set";
 import findPath from "../../utils/helpers/findPath";
+import isEqual from "lodash/isEqual";
 
 const getNewLineOfArrayFields = (field, idx) => {
   const fields = [
@@ -118,16 +119,16 @@ const FormBuilder = memo((props) => {
             options: data.map((j) => ({ ...j, value: j.id, label: j.name })),
           },
         ];
-      } else newSchema.push(i);
+      } else {
+        newSchema.push(i);
+      }
     }
-
     setSchema(newSchema);
     setIsFetchedOptions(true);
   };
 
   const handleResetFields = () => {
     const emptyFieldsForReset = generateEmptyFields(formValue ?? props.schema);
-    console.log("emptyFieldsForReset", emptyFieldsForReset);
     reset(emptyFieldsForReset);
   };
 
@@ -143,34 +144,27 @@ const FormBuilder = memo((props) => {
 
       return i;
     });
-    console.log("handleAddMoreField", newArray);
     setArrayFields(newArray);
   };
 
-  const handleInitValue = (values) => {
-    
-  }
+  const handleInitValue = (values) => {};
 
   useEffect(() => {
-    handleFetchOptionValue(props.schema);
-    setArrayFields(generateInitArrayFields(props.schema));
-    // console.log(
-    //   "generateInitArrayFields",
-    //   generateInitArrayFields(props.schema)
-    // );
-  }, [props.schema]);
+    // if (!isEqual(schema, props.schema)) {
+      handleFetchOptionValue(props.schema);
+      setArrayFields(generateInitArrayFields(props.schema));
+    // }
+  }, [props]);
 
-  useEffect(() => {
-    if (formValue) {
-      setValue("name", "123123")
-    }
-  }, [formValue])
+  // useEffect(() => {
+  //   if (formValue) {
+  //     setValue("name", "123123");
+  //   }
+  // }, [formValue]);
 
   return (
     <div className="form-builder">
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-      >
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div
           className={
             typeof schema[0] === "string"
@@ -253,9 +247,10 @@ const FormBuilder = memo((props) => {
                         <TypeInput
                           {...field}
                           {...i}
-                          onChange={(e) =>
-                            Boolean(oncancel) ? onChange(e) : field.onChange(e)
-                          }
+                          onChange={(e) => {
+                            field.onChange(e);
+                            onChange(e);
+                          }}
                         />
                       );
                     }}

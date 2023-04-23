@@ -2,7 +2,7 @@ export const FILTER_INPUT_SCHEMA = [
   {
     key: "3",
     panelContent: "Fit Types",
-    optionField: "useType",
+    optionField: "category",
     formSchema: [
         "grid grid-cols-1 py-2 pl-4 filterForm",
       {
@@ -27,7 +27,7 @@ export const FILTER_INPUT_SCHEMA = [
     panelContent: "Size",
     optionField: "size",
     formSchema: [
-      "grid grid-cols-1 py-2 pl-4 filterForm",
+      "grid grid-cols-1 py-2 pl-4 filterForm size",
       {
         label: "",
         type: "Select",

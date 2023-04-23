@@ -1,11 +1,12 @@
 import React, { Suspense, lazy, useState } from "react";
 import { Outlet, useResolvedPath } from "react-router-dom";
-import FilterBar from "../elements/FilterBar";
 import FilterBarController from "../elements/FilterBarController";
 import Footer from "../../../../components/layout/Footer";
 import ComponentLoading from "../../../../components/layout/ComponentLoading";
+import FilterBar from "../elements/FilterBar";
 
-const ViewLanding = lazy(() => import("../elements/ViewLanding"))
+// const FilterBar = lazy(() => import("../elements/FilterBar"));
+const ViewLanding = lazy(() => import("../elements/ViewLanding"));
 
 const ViewAppProductLayout = () => {
   const { pathname } = useResolvedPath();

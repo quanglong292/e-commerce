@@ -22,7 +22,6 @@ const findIsHasFilter = (options) => {
 
 const useProductStore = create((set, get) => ({
   loading: false,
-  bears: 0,
   categories: [],
   categoryGroups: [],
   products: [],
