@@ -1,10 +1,8 @@
 import Brand, {BrandSchema} from "@/models/brand";
 import { Router, Request, Response } from "express";
-import { validator } from "../composables/validate";
 import { v4 as uuidv4 } from 'uuid';
 
 const router = Router()
-const {validateBodyInput} = validator(BrandSchema)
 
 router.get("/", async (red: Request, res: Response) => {
     try {

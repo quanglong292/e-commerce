@@ -4,8 +4,9 @@ import cors from 'cors';
 import helmet from 'helmet';
 import compression from 'compression';
 import morgan from 'morgan'; 
+import mongoose from 'mongoose';
 
-// trigger env mode
+// env mode
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -15,11 +16,11 @@ tsconfigPaths.register();
 
 // Composables
 import useRoutes from '@/routes';
-import mongoose from 'mongoose';
 
 // Application initialize
 const app: Express = express();
 
+// Connect DB
 mongoose.connect(process.env.MONGO_CONNECT as string);
 
 app.use(bodyParser.json());

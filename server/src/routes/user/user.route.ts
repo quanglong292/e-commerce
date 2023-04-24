@@ -1,22 +1,31 @@
+import userControll, { generateToken } from '@/controllers/user.controll';
 import UserModel from '@/models/user';
+import { IUser } from '@/types/user.type';
 import { Request, Response, Router } from "express";
 import { v4 } from 'uuid';
 
+
 const router = Router()
+
+// controllers
+const {validateCreateUser} = userControll()
 
 router.get("/", async (req: Request, res: Response) => {
     const {query} = req
-
+    
     if (!query) res.status(404)
 
     try {
-        const data = await UserModel.find(query)
-
-        res.json(data)
+        const data: IUser | any = await UserModel.find(query)
+        const token = generateToken(data)
+    
+        res.json({token})
     } catch (err) {
-        res.status(404)
+        res.status(500)
     }
-}).post("/", async ({body}: Request, res: Response) => {
+})
+
+router.post("/", async ({body}: Request, res: Response) => {
     try {
         validateCreateUser(body)
         body = {
@@ -33,13 +42,16 @@ router.get("/", async (req: Request, res: Response) => {
             wishs: [],
             orderHistory: []
         }
+        
         const data = await UserModel.create(body)
 
         res.json(data)
-    } catch (err) {
+    } catch (err) { 
         res.status(404)
     }
-}).delete("/", async (req: Request, res: Response) => {
+})
+
+router.delete("/", async (req: Request, res: Response) => {
     try {
         const {} = req
     } catch (err) {
@@ -47,6 +59,4 @@ router.get("/", async (req: Request, res: Response) => {
     }
 })
 
-function validateCreateUser(body: any) {
-    if (!body.userName || !body.password) throw ""
-}
+export default router
