@@ -28,15 +28,16 @@ router.get("/", async (req: Request, res: Response) => {
 router.post("/", async ({body}: Request, res: Response) => {
     try {
         validateCreateUser(body)
-        body = {
-            ...body,
+        const {mail, passowrd, ...restBody} = body
+        body = { 
+            ...restBody,
             id: v4(),
             info: {
                 name: "",
                 phone: "",
                 avatar: "",
                 birthDay: "",
-                mail: "",
+                mail: mail || "",
             },
             carts: [],
             wishs: [],

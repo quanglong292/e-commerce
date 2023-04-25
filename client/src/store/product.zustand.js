@@ -1,14 +1,14 @@
 import { create } from "zustand";
 import { ORDER_WISH_ACTION_TYPES } from "./types";
 import { REQUEST_PARAMS } from "../utils/constants/urlPath.constant";
-import fetcher from "../utils/functions/fetcher";
+import fetcher from "../utils/helpers/fetcher";
 import { FILTER_OPTIONS } from "../utils/constants/navigation.constant";
 
 const handleAddNewList = (origin = [], update = []) => {
-  return [...origin, ...update].reduce((a, { id, count }) => {
+  return [...origin, ...update].reduce((a, { id, count, ...i }) => {
     const exist = a.find((j) => j.id === id);
     if (exist) exist.count += count;
-    else a.push({ id, count });
+    else a.push({ ...i, id, count });
 
     return a;
   }, []);

@@ -65,7 +65,7 @@ const Navigation = () => {
   // Store
   const { wishList, setFilter, ordersList, categoryGroups, fetchInitData, fetch } =
     useProductStore((state) => state);
-  const { tkn, toggleLoginModal } = useGlobalStore((state) => state);
+  const { token, toggleLoginModal } = useGlobalStore((state) => state);
 
   // Memo data
   const isClientApp = useMemo(() => pathname.includes("app"), [pathname]);
@@ -150,7 +150,7 @@ const Navigation = () => {
         </Badge>
         <Dropdown
           menu={{
-            items: (!tkn
+            items: (!token
               ? [
                   {
                     label: "Login",

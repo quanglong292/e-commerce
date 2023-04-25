@@ -29,6 +29,8 @@ const QuickViewCard = memo((props) => {
     return stocks.filter(i => i).map((i) => ({ ...i, label: i.name, id: i.name }));
   };
 
+  console.log({selected});
+
   return (
     <Modal
       open={Boolean(isShow)}

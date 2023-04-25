@@ -18,4 +18,9 @@ export const REQUEST_PARAMS = {
    GET_PRODUCT: ["product/", "GET"],
    ADD_PRODUCT: ["product/", "POST"],
    DELETE_PRODUCT: ["product/", "DELETE"],
+
+   // User
+   GET_USER: ["user/", "GET"],
+   ADD_USER: ["user/", "POST"],
+   DELETE_USER: ["user/", "DELETE"],
 };

@@ -9,10 +9,10 @@ import { useNavigate } from "react-router-dom";
 
 const ViewUserDetail = () => {
   const navigate = useNavigate();
-  const { tkn, toggleLoginModal } = useGlobalStore((state) => state);
+  const { token, toggleLoginModal } = useGlobalStore((state) => state);
 
   useEffect(() => {
-    if (!tkn) {
+    if (!token) {
       toggleLoginModal();
       navigate("/app");
     }

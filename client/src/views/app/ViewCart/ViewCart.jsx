@@ -1,61 +1,53 @@
 import React from "react";
 import CButton from "../../../components/core/CButton";
 import useProductStore from "../../../store/product.zustand";
-
-const ItemDetail = (item) => {
-  console.log("🚀 ~ file: ViewCart.jsx:6 ~ ItemDetail ~ item:", item)
-  const { name } = item;
-  return (
-    <div className="w-full flex gap-4 my-2">
-      <img
-        src="https://secure-images.nike.com/is/image/DotCom/DR0453_001?align=0,1&cropN=0,0,0,0&resMode=sharp&bgc=f5f5f5&wid=150&fmt=jpg"
-        alt=""
-        className="max-w-full"
-      />
-      <div className="w-full">
-        <div className="flex justify-between">
-          <p>{item.shortName}</p>
-          <p>$150.00</p>
-        </div>
-        <p className="text-gray-500 text-sm">Men's shoe</p>
-        <p className="text-gray-500 text-sm">Air Jordan 1</p>
-        <div className="flex gap-8">
-          <p className="text-gray-500 text-sm">Size 10.5</p>
-          <p className="text-gray-500 text-sm">
-            Quantity{" "}
-            <span>
-              <input type="number" defaultValue={5} max={10} />
-            </span>
-          </p>
-        </div>
-      </div>
-    </div>
-  );
-};
+import { Divider } from "antd";
+import fetcher from "../../../utils/helpers/fetcher";
+import { REQUEST_PARAMS } from "../../../utils/constants/urlPath.constant";
+import CartItem from "./elements/CartItem";
 
 const ViewCart = () => {
   // Store
-  const productStore = useProductStore((state) => state);
-  console.log("ordersList", productStore.ordersList);
+  const { ordersList } = useProductStore((state) => state);
+
+  // Functions
+  const getTotalAmount = (list) => {
+    const total = list.reduce((sum, i) => sum + i.count * i.product.price, 0);
+
+    return new Intl.NumberFormat("en-IN", {
+      style: "currency",
+      currency: "USD",
+    }).format(total);
+  };
+
+  const handlePayment = async () => {
+    try {
+      // const data = await fetcher(REQUEST_PARAMS)
+    } catch (error) {
+      
+    }
+  }
+
   return (
-    <div className="flex justify-between max-w-[900px] mx-auto gap-4">
+    <div className="lg:flex justify-between max-w-[940px] mx-auto gap-4">
       {/* ITEMS */}
-      <div className="w-2/3">
-        <p>BAG</p>
-        {!productStore.ordersList.lenght && (
+      <div className="lg:w-2/3 mb-4">
+        <p className="text-xl font-semibold text-gray-500 mb-4">BAG</p>
+        {!ordersList.length ? (
           <p className="text-sm text-gray-500 font-semibold">No item found!</p>
+        ) : (
+          ordersList.map((i, idx) => <CartItem key={idx} item={i} />)
         )}
-        {productStore.ordersList.map((i, idx) => (
-          <ItemDetail key={idx} item={i} />
-        ))}
       </div>
       {/* PAYMENT DETAIL */}
-      <div className="w-1/3 bg-slate-100 p-4">
+      <div className="w-full lg:w-1/3 bg-slate-100 p-4">
         <p>PAYMENT DETAIL</p>
-        <div className="font-semibold mb-4">Total: $150.00</div>
+        <div className="font-semibold mb-4">
+          Total: {getTotalAmount(ordersList)}{" "}
+        </div>
         <div className="flex flex-col gap-4">
-          <CButton>Checkout</CButton>
-          <CButton>Momo</CButton>
+          <CButton onClick={handlePayment} type="primary">Checkout</CButton>
+          <CButton type="primary">Momo</CButton>
         </div>
       </div>
     </div>

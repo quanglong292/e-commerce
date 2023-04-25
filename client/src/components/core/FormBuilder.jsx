@@ -3,7 +3,7 @@ import React, { memo, useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import CButton from "./CButton";
 import "../../assets/styles/formBuilder.scss";
-import fetcher from "../../utils/functions/fetcher";
+import fetcher from "../../utils/helpers/fetcher";
 import TextArea from "antd/es/input/TextArea";
 import set from "lodash/set";
 import findPath from "../../utils/helpers/findPath";
@@ -82,7 +82,7 @@ const getInputType = (type) => {
   if (type === "CheckBox") TypeInput = Checkbox;
   if (type === "Select") TypeInput = Select;
   if (type === "Switch") TypeInput = Switch;
-  // if (type === "Action") TypeInput = Button;
+  if (type === "Button") TypeInput = Button;
   if (["TextArea", "Password"].includes(type)) TypeInput = Input[type];
 
   return TypeInput;
@@ -249,7 +249,7 @@ const FormBuilder = memo((props) => {
                           {...i}
                           onChange={(e) => {
                             field.onChange(e);
-                            onChange(e);
+                            if (onChange) onChange(e);
                           }}
                         />
                       );
