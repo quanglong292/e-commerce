@@ -3,8 +3,8 @@ import { createContext, memo, useEffect, useMemo, useState } from "react";
 import CButton from "../../../../components/core/CButton";
 import CTable from "../../../../components/core/CTable";
 import FormBuilder from "../../../../components/core/FormBuilder";
-import fetcher from "../../../../utils/functions/fetcher";
 import useFetch from "../../../../utils/functions/useFetch";
+import fetcher from "../../../../utils/helpers/fetcher";
 
 const Context = createContext({
   name: "Default",

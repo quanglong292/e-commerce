@@ -1,5 +1,5 @@
 import { useState } from "react";
-import fetcher from "../functions/fetcher";
+import fetcher from "../helpers/fetcher";
 
 const useFetch = () => {
   const [loading, setLoading] = useState(false);
