@@ -1,32 +1,25 @@
 import React from "react";
 import CButton from "../../../components/core/CButton";
 import useProductStore from "../../../store/product.zustand";
-import { Divider } from "antd";
-import fetcher from "../../../utils/helpers/fetcher";
-import { REQUEST_PARAMS } from "../../../utils/constants/urlPath.constant";
+import useGlobalStore from "../../../store/global.zustand";
+import { Popconfirm } from "antd";
 import CartItem from "./elements/CartItem";
+import useCart from "../../../utils/composables/useCart";
 
 const ViewCart = () => {
   // Store
   const { ordersList } = useProductStore((state) => state);
+  const { token, user } = useGlobalStore((state) => state);
 
   // Functions
-  const getTotalAmount = (list) => {
-    const total = list.reduce((sum, i) => sum + i.count * i.product.price, 0);
-
-    return new Intl.NumberFormat("en-IN", {
-      style: "currency",
-      currency: "USD",
-    }).format(total);
-  };
+  const { amounts, createPayment } = useCart(ordersList, {
+    user,
+    token,
+  });
 
   const handlePayment = async () => {
-    try {
-      // const data = await fetcher(REQUEST_PARAMS)
-    } catch (error) {
-      
-    }
-  }
+    await createPayment();
+  };
 
   return (
     <div className="lg:flex justify-between max-w-[940px] mx-auto gap-4">
@@ -43,10 +36,12 @@ const ViewCart = () => {
       <div className="w-full lg:w-1/3 bg-slate-100 p-4">
         <p>PAYMENT DETAIL</p>
         <div className="font-semibold mb-4">
-          Total: {getTotalAmount(ordersList)}{" "}
+          Total: {amounts?.currencyPrice}
         </div>
         <div className="flex flex-col gap-4">
-          <CButton onClick={handlePayment} type="primary">Checkout</CButton>
+          <Popconfirm title="Confirm to order ?" onConfirm={handlePayment}>
+            <CButton type="primary">Checkout</CButton>
+          </Popconfirm>
           <CButton type="primary">Momo</CButton>
         </div>
       </div>

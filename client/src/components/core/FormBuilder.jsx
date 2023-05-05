@@ -45,7 +45,6 @@ const generateEmptyFields = (schema) => {
   if (Array.isArray(schema)) {
     const newObj = {};
     schema.forEach((i) => {
-      console.log("i.field", i.field);
       set(newObj, i.field, "");
     });
 

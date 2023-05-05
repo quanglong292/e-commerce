@@ -11,32 +11,34 @@ const ViewUserDetail = () => {
   const navigate = useNavigate();
   const { token, toggleLoginModal } = useGlobalStore((state) => state);
 
-  useEffect(() => {
-    if (!token) {
-      toggleLoginModal();
-      navigate("/app");
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (!token) {
+  //     toggleLoginModal();
+  //     navigate("/app");
+  //   }
+  // }, []);
 
   return (
-    <div className="w-full bg-white shadow-2xl rounded-lg p-4">
-      <p className="text-2xl uppercase font-semibold">User detail</p>
-      <div className="my-4 flex flex-col-reverse lg:flex-row gap-4">
-        <div className="w-full lg:w-1/2">
-          <p className="uppercase font-semibold">Order History</p>
-          <div>
-            <UserHistory />
+    <div className="w-full lg:p-12 pt-0">
+      <div className="bg-white shadow-lg rounded-lg p-4">
+        <p className="text-2xl uppercase font-semibold">User detail</p>
+        <div className="my-4 flex flex-col-reverse lg:flex-row gap-4">
+          <div className="w-full lg:w-1/2">
+            <p className="uppercase font-semibold">Order History</p>
+            <div>
+              <UserHistory />
+            </div>
           </div>
-        </div>
-        <Divider className="hidden lg:block" type="vertical" />
-        <div className="w-full lg:w-1/2">
-          <Avatar
-            shape="square"
-            size={64}
-            icon={<UserOutlined />}
-            className="mb-4"
-          />
-          <FormBuilder schema={USER_DETAIL_SHCEMA} />
+          <Divider className="hidden lg:block" type="vertical" />
+          <div className="w-full lg:w-1/2">
+            <Avatar
+              shape="square"
+              size={64}
+              icon={<UserOutlined />}
+              className="mb-4"
+            />
+            <FormBuilder schema={USER_DETAIL_SHCEMA} />
+          </div>
         </div>
       </div>
     </div>

@@ -1,10 +1,12 @@
+const TOKEN_NAME = "mikeToken";
+
 export default (inputToken) => {
   const decoded = parseJwt(inputToken);
   const token = getToken();
 
   function parseJwt(inputToken) {
     if (!inputToken) return "";
-    document.cookie = `token=${inputToken};`;
+    document.cookie = `${TOKEN_NAME}=${inputToken};`;
     const base64Url = inputToken.split(".")[1];
     const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
     const jsonPayload = decodeURIComponent(
@@ -23,15 +25,22 @@ export default (inputToken) => {
   function getToken() {
     const split = decodeURIComponent(document.cookie).split(";");
     let foundToken = split
-      .find((i) => i.trim().includes("token"))
-      ?.split("token=")?.[1];
+      .find((i) => i.trim().includes(TOKEN_NAME))
+      ?.split(TOKEN_NAME + "=")?.[1];
 
     return foundToken;
+  }
+
+  function logout() {
+    document.cookie = `${TOKEN_NAME}=;`;
+    location.reload();
   }
 
   return {
     decoded,
     token,
     parseJwt,
+    logout,
+    getToken,
   };
 };

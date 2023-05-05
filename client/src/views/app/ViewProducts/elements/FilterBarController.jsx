@@ -26,7 +26,6 @@ const FilterBarController = (props) => {
   const { clickShowFilter } = props;
 
   function onSearch(e) {
-    console.log("onSearch", e);
   }
 
   return (

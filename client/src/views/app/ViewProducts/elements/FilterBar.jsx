@@ -42,7 +42,6 @@ const FilterBar = () => {
   const handleSearch = () => {};
 
   const handleInitOptions = (products, categories) => {
-    // console.log("handleInitOptions", { products, categories });
     if (!products.length || !categories.length) return;
 
     const categoriesOptions = categories

@@ -57,12 +57,10 @@ const ProductLayout = (props) => {
 
   const toggleForm = () => setOpenForm(!openForm);
   function handleCancel() {
-    console.log("vo day");
     toggleForm();
     setUpdateCell(null)
   }
   async function handleOk(e) {
-    console.log("handleOk", e);
     try {
       validateDataBeforeCallAPI(e);
       await fetcher(ADD_TABLE_ITEM, e);

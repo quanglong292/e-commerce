@@ -14,8 +14,6 @@ const CategorySection = (props) => {
     [categoryGroups]
   );
 
-  console.log({mappedGroups});
-
   return (
     <div className="mt-24">
       <SectionHeader>category</SectionHeader>

@@ -11,12 +11,11 @@ const router = Router()
 const {validateCreateUser} = userControll()
 
 router.get("/", async (req: Request, res: Response) => {
-    const {query} = req
-    
+    const {query} = req    
     if (!query) res.status(404)
 
     try {
-        const data: IUser | any = await UserModel.find(query)
+        const data: IUser | any = await UserModel.find(query)        
         const token = generateToken(data)
     
         res.json({token})

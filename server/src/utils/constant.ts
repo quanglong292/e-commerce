@@ -6,3 +6,5 @@ export const HISTORY_TYPE = {
     RATING: "RATING",
     LOG_TIME: "LOG_TIME",
 }
+
+export const TIME_FORMAT = "YYYY-MM-DDTHH:mm:ssZ[Z]"

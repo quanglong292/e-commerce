@@ -1,5 +1,5 @@
-import { notification } from "antd";
-import useToken from "./useToken";
+import useToken from "../composables/useToken";
+import handleClientError from "./handleClientError";
 
 const BASE_URL_DEV = import.meta.env.VITE_BASE_URL;
 const BASE_URL_PROD = import.meta.env.VITE_BASE_URL_PROD;
@@ -15,16 +15,13 @@ export default async function (requestParams, body) {
       method,
       headers: {
         "Content-Type": "application/json",
-        "Authorization": useToken().token,
+        Authorization: useToken().token,
       },
       body: method !== "GET" ? JSON.stringify(body) : undefined,
     }).then((res) => res.json());
 
     return data;
   } catch (error) {
-    notification.error({
-      key: 1,
-      message: error.message,
-    });
+    handleClientError(error);
   }
 }

@@ -1,22 +1,28 @@
 import { create } from "zustand";
 import fetcher from "../utils/helpers/fetcher";
 import { REQUEST_PARAMS } from "../utils/constants/urlPath.constant";
-import useToken from "../utils/helpers/useToken";
+import useToken from "../utils/composables/useToken";
 
-const { token, parseJwt } = useToken();
+const { parseJwt, logout, getToken } = useToken();
 
 const useGlobalStore = create((set) => ({
   loading: false,
   token: null,
+  user: null,
   showLogin: false,
   toggleLoginModal: () => set((state) => ({ showLogin: !state.showLogin })),
   setToken: () => {
-    return set(() => ({ token: parseJwt(token) }));
+    return set(() => ({ token: parseJwt(getToken()) }));
+  },
+  handleLogout: () => {
+    logout();
+    return set(() => ({ token: null }));
   },
   handleRegister: async (body) => {
-    await fetcher(REQUEST_PARAMS.ADD_USER, body);
-
-    return true;
+    try {
+      await fetcher(REQUEST_PARAMS.ADD_USER, body);
+      return true;
+    } catch (error) {}
   },
   handleLogin: async ({ payload }) => {
     const data = await fetcher(REQUEST_PARAMS.GET_USER, payload);
@@ -24,7 +30,7 @@ const useGlobalStore = create((set) => ({
 
     return set((state) => {
       state.toggleLoginModal();
-      return { token: parseJwt(data.token) };
+      return { token: parseJwt(data.token), user: payload };
     });
   },
 }));

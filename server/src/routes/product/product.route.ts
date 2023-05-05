@@ -9,18 +9,16 @@ const router = Router()
 const {generateFilterOptions} = productServices()
 
 router.get("/", async (req: Request<IFilterOptions>, res: Response) => {
-    const {query}: IFilterOptions | any = req
+    const {query}: IFilterOptions | any = req    
     
     try {
-        const data = await ProductModel.find(query)
+        const data = await ProductModel.find(query)        
 
         res.json(data)
     } catch(error) {
         res.status(404)
     }
-}).post("/", async ({body}: Request, res: Response) => {
-    console.log("body", body);
-    
+}).post("/", async ({body}: Request, res: Response) => {    
     try {
         const data = await ProductModel.create({
             id: v4(),

@@ -65,7 +65,7 @@ const Navigation = () => {
   // Store
   const { wishList, setFilter, ordersList, categoryGroups, fetchInitData, fetch } =
     useProductStore((state) => state);
-  const { token, toggleLoginModal } = useGlobalStore((state) => state);
+  const { token, toggleLoginModal, handleLogout } = useGlobalStore((state) => state);
 
   // Memo data
   const isClientApp = useMemo(() => pathname.includes("app"), [pathname]);
@@ -74,7 +74,7 @@ const Navigation = () => {
       ? SIDE_BAR_ITEMS
       : [
           APP_NAVIGATIONS[0],
-          ...categoryGroups.map((i) => ({
+          ...categoryGroups?.map((i) => ({
             ...i,
             label: i.name,
             path: `app/${i.name.toLowerCase()}`,
@@ -172,6 +172,7 @@ const Navigation = () => {
                 <p
                   onClick={() => {
                     if (i.label === "Login") toggleLoginModal();
+                    else if (i.label === "Log out") handleLogout();
                     else navigate(i.path);
                   }}
                 >

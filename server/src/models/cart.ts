@@ -4,7 +4,7 @@ const CartSchema = new mongoose.Schema({
     id: String,
     creator: String,
     createDate: String,
-    totalPrice: String,
+    totalPrice: Number,
     products: [String],
 
 })
