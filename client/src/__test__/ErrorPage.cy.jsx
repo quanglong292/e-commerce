@@ -1,5 +1,5 @@
 import React from 'react'
-import ErrorPage from './ErrorPage'
+import ErrorPage from '../views/ErrorPage'
 
 describe('<ErrorPage />', () => {
   it('renders', () => {
