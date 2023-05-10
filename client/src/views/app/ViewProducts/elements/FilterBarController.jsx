@@ -27,7 +27,7 @@ const items = [
 
 const FilterBarController = (props) => {
   const { clickShowFilter } = props;
-  const { setFilter } = useProductStore((state) => state);
+  const { setFilter, fetch } = useProductStore((state) => state);
 
   function onSearch(e) {
     console.log({ onSearch: e });

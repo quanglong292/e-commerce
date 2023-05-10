@@ -120,11 +120,6 @@ const Navigation = () => {
   // Sub-component
   const AdditionNavs = () => {
     if (!isClientApp) return <AppNavigateButton className="hidden lg:flex" />;
-
-    function onSearch(e) {}
-
-    console.log({ wishList, ordersList });
-
     return (
       <div className="hidden lg:flex gap-2 w-[25%] justify-end">
         <Dropdown
