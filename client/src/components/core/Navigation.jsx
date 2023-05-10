@@ -63,9 +63,17 @@ const Navigation = () => {
   const { pathname } = useResolvedPath();
 
   // Store
-  const { wishList, setFilter, ordersList, categoryGroups, fetchInitData, fetch } =
-    useProductStore((state) => state);
-  const { token, toggleLoginModal, handleLogout } = useGlobalStore((state) => state);
+  const {
+    wishList,
+    setFilter,
+    ordersList,
+    categoryGroups,
+    fetchInitData,
+    fetch,
+  } = useProductStore((state) => state);
+  const { token, toggleLoginModal, handleLogout } = useGlobalStore(
+    (state) => state
+  );
 
   // Memo data
   const isClientApp = useMemo(() => pathname.includes("app"), [pathname]);
@@ -94,7 +102,7 @@ const Navigation = () => {
     if (!path) return fetch("all");
 
     const value = categoryGroups.find((i) => i.name.toLowerCase() === path)?.id;
-    
+
     if (!value) return;
 
     setFilter(FILTER_OPTIONS.categoryGroup, value);
@@ -114,6 +122,8 @@ const Navigation = () => {
     if (!isClientApp) return <AppNavigateButton className="hidden lg:flex" />;
 
     function onSearch(e) {}
+
+    console.log({ wishList, ordersList });
 
     return (
       <div className="hidden lg:flex gap-2 w-[25%] justify-end">

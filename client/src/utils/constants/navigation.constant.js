@@ -1,5 +1,5 @@
 export const FILTER_OPTIONS = {
-  search: "search",
+  search: "name",
   category: "category",
   categoryGroup: "group",
   brand: "brand",

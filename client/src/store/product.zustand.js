@@ -33,13 +33,21 @@ const useProductStore = create((set, get) => ({
       const newList = handleAddNewList(state[listName], payload);
       return { [listName]: newList };
     }),
-  setFilter: (field, value) =>
-    set((state) => {
-      return { filterOptions: { ...state.filterOptions, [field]: value } };
-    }),
+  setFilter: async (field, value) => {
+    const { filterOptions, fetch } = get();
+    // console.log({ filterOptions, field, value });
+    const updateFilter = { ...filterOptions, [field]: value };
+    // console.log({ updateFilter });
+
+    set(() => {
+      return { filterOptions: updateFilter };
+    });
+    fetch();
+  },
   toggleLoading: () => set((state) => ({ loading: !state.loading })),
   fetch: async (type) => {
     const { filterOptions, toggleLoading } = get();
+    console.log({ filterOptions });
     const isHasFilter = findIsHasFilter(filterOptions);
 
     if (isHasFilter || type === "all") {

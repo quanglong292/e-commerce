@@ -10,6 +10,7 @@ const {generateFilterOptions} = productServices()
 
 router.get("/", async (req: Request<IFilterOptions>, res: Response) => {
     const {query}: IFilterOptions | any = req    
+    console.log({query});
     
     try {
         const data = await ProductModel.find(query)        

@@ -5,13 +5,7 @@ import { useResolvedPath } from "react-router-dom";
 import ComponentLoading from "../../../components/layout/ComponentLoading";
 
 const ViewProducts = () => {
-  const { products, filterOptions, fetch, loading } = useProductStore(
-    (state) => state
-  );
-
-  useEffect(() => {
-    fetch();
-  }, [filterOptions]);
+  const { products, loading } = useProductStore((state) => state);
 
   if (loading) return <ComponentLoading />;
 

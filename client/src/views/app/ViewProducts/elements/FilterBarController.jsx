@@ -1,7 +1,10 @@
 import { DownOutlined, MenuFoldOutlined } from "@ant-design/icons";
-import { Dropdown, Space } from "antd";
-import Search from "antd/es/transfer/search";
+import { Dropdown, Input, Space } from "antd";
 import React from "react";
+import useProductStore from "../../../../store/product.zustand";
+import { FILTER_OPTIONS } from "../../../../utils/constants/navigation.constant";
+
+const { Search } = Input;
 
 const items = [
   {
@@ -24,19 +27,17 @@ const items = [
 
 const FilterBarController = (props) => {
   const { clickShowFilter } = props;
+  const { setFilter } = useProductStore((state) => state);
 
   function onSearch(e) {
+    console.log({ onSearch: e });
+    setFilter(FILTER_OPTIONS.search, e);
   }
 
   return (
     <div className="w-full flex justify-end mb-2 gap-4 items-center">
       <div className="w-[240px]">
-        <Search
-          placeholder="Search"
-          onSearch={onSearch}
-          className="w-full"
-          // style={{ width: 1000 }}
-        />
+        <Search placeholder="Search" onSearch={onSearch} className="w-full" />
       </div>
       <div
         onClick={clickShowFilter}
