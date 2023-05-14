@@ -35,9 +35,7 @@ const useProductStore = create((set, get) => ({
     }),
   setFilter: async (field, value) => {
     const { filterOptions, fetch } = get();
-    // console.log({ filterOptions, field, value });
     const updateFilter = { ...filterOptions, [field]: value };
-    // console.log({ updateFilter });
 
     set(() => {
       return { filterOptions: updateFilter };
@@ -47,7 +45,6 @@ const useProductStore = create((set, get) => ({
   toggleLoading: () => set((state) => ({ loading: !state.loading })),
   fetch: async (type) => {
     const { filterOptions, toggleLoading } = get();
-    console.log({ filterOptions });
     const isHasFilter = findIsHasFilter(filterOptions);
 
     if (isHasFilter || type === "all") {

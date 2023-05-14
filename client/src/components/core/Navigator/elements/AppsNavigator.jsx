@@ -17,12 +17,12 @@ const AppsNavigator = (props) => {
               key: "0",
             },
             {
-              label: <div onClick={() => navigate("/crm/")}>CRM</div>,
-              key: "1",
-            },
-            {
               label: <div onClick={() => navigate("/")}>Admin</div>,
               key: "2",
+            },
+            {
+              label: <div onClick={() => navigate("/crm/")}>CRM</div>,
+              key: "1",
             },
           ],
         }}

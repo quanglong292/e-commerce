@@ -15,9 +15,11 @@ import {
   ACCOUNT_LOGIN_OPTION,
   ACCOUNT_OPTIONS,
 } from "../../../../utils/constants/navigation.constant";
+import { useNavigate } from "react-router-dom";
 
 const AdditionNav = (props) => {
   const { isClientApp } = props;
+  const navigate = useNavigate()
   // Store
   const {
     wishList,
@@ -30,7 +32,12 @@ const AdditionNav = (props) => {
   const { token, toggleLoginModal, handleLogout } = useGlobalStore(
     (state) => state
   );
-  if (!isClientApp) return <AppsNavigator className="hidden lg:flex" />;
+  if (!isClientApp)
+    return (
+      <div className="w-full flex justify-end bg-[#313131] p-1 px-4">
+        <AppsNavigator className="hidden lg:flex" />;
+      </div>
+    );
 
   function onSearch(e) {}
 

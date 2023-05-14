@@ -57,7 +57,7 @@ const UserHistory = () => {
           </List.Item>
         )}
       />
-      <Button onClick={handleInitHistory}>asd</Button>
+      {/* <Button onClick={handleInitHistory}>asd</Button> */}
     </>
   );
 };
