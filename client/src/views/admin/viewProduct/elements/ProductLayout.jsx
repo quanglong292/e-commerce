@@ -151,7 +151,7 @@ const ProductLayout = (props) => {
           onDelete={handleDeleteItem}
           footer={<></>}
           width={"90%"}
-          className="max-w-[1440px]"
+          className="max-w-[1600px]"
         >
           <FormBuilder
             schema={formSchema}

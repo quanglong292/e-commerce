@@ -29,4 +29,13 @@ export const REQUEST_PARAMS = {
   ADD_CART: ["cart/", "POST"],
   DELETE_CART: ["cart/", "DELETE"],
   GET_CART_HISTORY: ["cart/history/", "GET"],
+
+  // Comment
+  GET_COMMENT: ["community/comment/", "GET"],
+  ADD_COMMENT: ["community/comment/", "POST"],
+  DELETE_COMMENT: ["community/", "DELETE"],
+  // Thread comment
+  GET_THREAD_COMMENT: ["community/thread/", "GET"],
+  ADD_THREAD_COMMENT: ["community/thread/", "POST"],
+  DELETE_THREAD_COMMENT: ["community/", "DELETE"],
 };

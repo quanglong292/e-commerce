@@ -7,6 +7,7 @@ import CartRoutes from "@/routes/cart/cart.route";
 import BrandRoutes from '@/routes/brand/brand.route';
 import ProductRoutes from '@/routes/product/product.route';
 import UserRoutes from '@/routes/user/user.route';
+import CommunityRoutes from './comunity/community.route';
 
 // Middlewares
 import authenticateToken from '@/middlewares/authenticateToken';
@@ -21,6 +22,7 @@ const useRoutes = (app: Express) => {
   app.use("/product", ProductRoutes)
   app.use("/cart", CartRoutes)
   app.use("/user", UserRoutes)
+  app.use("/community", CommunityRoutes)
 }
 
 export default useRoutes

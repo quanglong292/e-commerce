@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {
   useNavigate,
+  useParams,
   useResolvedPath,
   useSearchParams,
 } from "react-router-dom";
@@ -39,7 +40,9 @@ const FilterBar = () => {
     setSearchParams(obj);
   };
 
-  const handleSearch = () => {};
+  const handleSearch = () => {
+    
+  };
 
   const handleInitOptions = (products, categories) => {
     if (!products.length || !categories.length) return;

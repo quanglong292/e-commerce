@@ -1,5 +1,5 @@
 import { Outlet, useNavigate, useResolvedPath } from "react-router-dom";
-import Navigation from "../core/Navigation";
+import Navigation from "../core/Navigator/Navigation";
 import { Suspense, useEffect } from "react";
 import ComponentLoading from "./ComponentLoading";
 import ViewLogin from "../../views/ViewLogin";
@@ -23,7 +23,7 @@ const RootViewLayout = () => {
       <Navigation />
       <div
         id="sidebar"
-        className="flex items-start w-full max-w-[1440px] m-auto"
+        className="flex items-start w-full max-w-[1600px] m-auto"
       >
         <div
           id="detail"

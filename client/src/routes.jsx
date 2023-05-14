@@ -15,6 +15,8 @@ import ViewCart from "./views/app/ViewCart/ViewCart";
 // Const
 import { APP_NAVIGATIONS } from "./utils/constants/sidebar.constant";
 import ViewUserDetail from "./views/app/ViewUser/ViewUserDetail";
+import ViewProductDetail from "./views/app/ViewProductDetail/index";
+import ViewSearchProduct from "./views/app/ViewSearchProduct";
 
 const router = createBrowserRouter([
   {
@@ -38,7 +40,7 @@ const router = createBrowserRouter([
           {
             path: ":group",
             element: <ViewProducts />,
-          }
+          },
         ],
       },
       {
@@ -49,12 +51,21 @@ const router = createBrowserRouter([
         path: "app/user/detail",
         element: <ViewUserDetail />,
       },
+      {
+        path: "app/product/detail/:id",
+        element: <ViewProductDetail />,
+      },
       // CRM routes
       {
         path: "crm/",
         element: <ViewAppProductLayout />,
       },
     ],
+  },
+  {
+    path: "/app/search",
+    element: <ViewSearchProduct />,
+    errorElement: <ErrorPage />,
   },
 ]);
 

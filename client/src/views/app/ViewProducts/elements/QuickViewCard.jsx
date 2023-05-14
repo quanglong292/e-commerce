@@ -35,7 +35,7 @@ const QuickViewCard = memo((props) => {
       onCancel={onCancel}
       footer={<></>}
       width="80%"
-      className="quick-view-card max-w-[1440px] p-0"
+      className="quick-view-card max-w-[1600px] p-0"
     >
       <div className="w-full h-full lg:flex">
         <div className="h-1/2 lg:h-auto lg:w-1/2 flex justify-center p-4">
