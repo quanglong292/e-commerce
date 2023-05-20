@@ -8,27 +8,31 @@ import { v4 } from 'uuid';
 const router = Router()
 
 // controllers
-const {validateCreateUser} = userControll()
+const { validateCreateUser } = userControll()
 
 router.get("/", async (req: Request, res: Response) => {
-    const {query} = req    
+    const { query } = req
     if (!query) res.status(404)
 
     try {
-        const data: IUser | any = await UserModel.find(query)        
+        const data: IUser | any = await UserModel.find(query)
         const token = generateToken(data)
-    
-        res.json({token})
+
+        res.json({ token })
     } catch (err) {
         res.status(500)
     }
 })
 
-router.post("/", async ({body}: Request, res: Response) => {
+router.post("/", async ({ body }: Request, res: Response) => {
+    const isExist = await UserModel.find({ userName: body.userName })    
+
+    if (isExist.length) res.json(isExist[0])
+
     try {
         validateCreateUser(body)
-        const {mail, passowrd, ...restBody} = body
-        body = { 
+        const { mail, ...restBody } = body
+        body = {
             ...restBody,
             id: v4(),
             info: {
@@ -42,18 +46,18 @@ router.post("/", async ({body}: Request, res: Response) => {
             wishs: [],
             orderHistory: []
         }
-        
+
         const data = await UserModel.create(body)
 
         res.json(data)
-    } catch (err) { 
+    } catch (err) {
         res.status(404)
     }
 })
 
 router.delete("/", async (req: Request, res: Response) => {
     try {
-        const {} = req
+        const { } = req
     } catch (err) {
         res.status(404)
     }

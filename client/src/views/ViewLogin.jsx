@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { DoubleRightOutlined } from "@ant-design/icons";
 import useGlobalStore from "../store/global.zustand";
-import { Modal } from "antd";
+import { Modal, notification } from "antd";
 import FormBuilder from "../components/core/FormBuilder";
 
 const FORM_LOGIN = [
@@ -9,7 +9,7 @@ const FORM_LOGIN = [
   {
     label: "Username:",
     type: "Text",
-    field: "username",
+    field: "userName",
     rules: { required: true },
     wrapClassName: "h-[58px] items-start",
     className: "gap-2 items-center my-1",
@@ -29,7 +29,7 @@ const FORM_SIGN_UP = [
   {
     label: "Username:",
     type: "Text",
-    field: "username",
+    field: "userName",
     rules: { required: true },
     wrapClassName: "h-[58px] items-start",
     className: "gap-2 items-center my-1",
@@ -69,21 +69,25 @@ const VIEWS = [
 
 const ViewLogin = () => {
   // Store
-  const { showLogin, handleLogin, handleRegister } = useGlobalStore((state) => state);
+  const { showLogin, handleLogin, handleRegister, toggleLoginModal } =
+    useGlobalStore((state) => state);
   const [view, setView] = useState(VIEWS[0]);
 
   const handleSubmit = async (e) => {
     if (view.type === "login") handleLogin({ payload: e });
     else {
-      await handleRegister(e)
-      handleChangeForm("login")
+      await handleRegister(e);
+      notification.success({
+        message: "Success!",
+        placement: "bottomLeft",
+      });
+      handleChangeForm("login");
     }
   };
 
   const handleChangeForm = (nextType) => {
     setView(VIEWS.find((i) => i.type === nextType));
   };
-  
 
   return (
     <Modal
@@ -102,6 +106,7 @@ const ViewLogin = () => {
       open={showLogin}
       footer={<></>}
       centered
+      onCancel={toggleLoginModal}
     >
       <FormBuilder onSubmit={handleSubmit} schema={view.formSchema} />
     </Modal>
