@@ -25,7 +25,7 @@ router.post("/comment", async (req: Request, res: Response) => {
         const data = await handleCreateComment(body)
     
         res.json(data)
-    } catch (err) {
+    } catch (err) {     
         res.status(500)
     }
 })

@@ -1,9 +1,11 @@
 import React from "react";
 import useProductStore from "../../../../store/product.zustand";
 import ProductCard from "../../ViewProducts/elements/ProductCard";
+import { useParams } from "react-router-dom";
 
 const SuggestSection = () => {
   const { products } = useProductStore((state) => state);
+  const { id } = useParams();
   return (
     <div className="border-2 p-4 mt-4">
       <div className="text-2xl font-semibold mb-4">
@@ -12,6 +14,7 @@ const SuggestSection = () => {
       <div className="flex gap-4">
         {products
           ?.filter((_, idx) => idx < 5)
+          ?.filter((i) => i.id !== id)
           ?.map((i) => (
             <ProductCard key={i.name} item={i} />
           ))}

@@ -28,6 +28,7 @@ const useProductStore = create((set, get) => ({
   wishList: [],
   ordersList: [],
   filterOptions: {},
+  comments: [],
   mutateList: (listName, { payload }) =>
     set((state) => {
       const newList = handleAddNewList(state[listName], payload);
@@ -43,6 +44,16 @@ const useProductStore = create((set, get) => ({
     fetch();
   },
   toggleLoading: () => set((state) => ({ loading: !state.loading })),
+
+  // Asyncs
+  fetchComments: async (productId) => {
+    const { toggleLoading } = get();
+    toggleLoading();
+    // console.log("vo day");
+    const response = await fetcher(REQUEST_PARAMS.GET_COMMENT, { productId });
+    toggleLoading();
+    set({ comments: response });
+  },
   fetch: async (type) => {
     const { filterOptions, toggleLoading } = get();
     const isHasFilter = findIsHasFilter(filterOptions);

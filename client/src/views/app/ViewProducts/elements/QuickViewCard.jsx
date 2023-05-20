@@ -3,6 +3,7 @@ import React, { memo, useState } from "react";
 import "./cardModal.scss";
 import CButton from "../../../../components/core/CButton";
 import useProductStore from "../../../../store/product.zustand";
+import { getSizes } from "../../../../utils/composables/useProduct";
 
 const QuickViewCard = memo((props) => {
   const { item, isShow, onCancel } = props;
@@ -23,11 +24,6 @@ const QuickViewCard = memo((props) => {
   function findSelect(id) {
     return selected.find((i) => i.id === id);
   }
-
-  const getSize = (stocks) => {
-    if (!stocks.length) return [];
-    return stocks.filter(i => i).map((i) => ({ ...i, label: i.name, id: i.name }));
-  };
 
   return (
     <Modal
@@ -57,7 +53,7 @@ const QuickViewCard = memo((props) => {
           <div className="mt-4 text font-semibold">
             <p className="mb-3">Select size</p>
             <div className="grid grid-cols-6 gap-1 gap-y-3">
-              {getSize(item.stocks)?.map((i) => (
+              {getSizes(item.stocks)?.map((i) => (
                 <div
                   key={i.id}
                   className="p-2 rounded-lg border-[1px] flex justify-center hover:bg-slate-50 cursor-pointer relative"
