@@ -93,7 +93,8 @@ function DetailSection({ item = {} }) {
               {i.name}
               {findSelect(i.id) && (
                 <div
-                  onClick={() => {
+                  onClick={(e) => {
+                    e.stopPropagation()
                     setSelected(selected.filter((j) => j.id !== i.id));
                   }}
                   className="absolute top-[-12px] right-[-4px] bg-red-400 w-[24px] h-[24px] flex justify-center items-center rounded-full text-white hover:bg-red-300 z-20"
@@ -106,7 +107,7 @@ function DetailSection({ item = {} }) {
         </div>
       </div>
       <div
-        onClick={() => handleAddSelectedItems("orderList")}
+        onClick={() => handleAddSelectedItems("ordersList")}
         className="bg-black text-white cursor-pointer font-bold uppercase w-full py-2 text-center"
       >
         add to cart

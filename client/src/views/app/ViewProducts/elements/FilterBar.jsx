@@ -16,13 +16,18 @@ import ComponentLoading from "../../../../components/layout/ComponentLoading";
 const { Panel } = Collapse;
 
 const FilterBar = () => {
-  const path = useResolvedPath();
+  const { pathname } = useResolvedPath();
   const navigate = useNavigate();
 
   // Store
-  const { products, categories, filterOptions } = useProductStore(
-    (state) => state
-  );
+  const {
+    allProducts,
+    products,
+    categoryGroups,
+    categories,
+    filterOptions,
+    mutateList,
+  } = useProductStore((state) => state);
 
   // Route State
   let [searchParams, setSearchParams] = useSearchParams();
@@ -40,8 +45,22 @@ const FilterBar = () => {
     setSearchParams(obj);
   };
 
-  const handleSearch = () => {
-    
+  const handleSearch = async (type) => {
+    if (type === "clear") {
+      setFilter({});
+      setSearchParams({});
+      const category =
+        categoryGroups.find(
+          (i) => i.name.toLowerCase() === pathname.split("/")[2]
+        ) ?? {};
+
+      console.log({ allProducts, category });
+      mutateList("products", {
+        payload: allProducts.filter((i) =>
+          Boolean(i.group.find((j) => j === category.id))
+        ),
+      });
+    }
   };
 
   const handleInitOptions = (products, categories) => {
@@ -84,8 +103,26 @@ const FilterBar = () => {
 
   // Effects
   useEffect(() => {
-    handleInitOptions(products, categories);
-  }, [products, categories]);
+    handleInitOptions(allProducts, categories);
+  }, [allProducts, categories]);
+
+  useEffect(() => {
+    const size = searchParams.get("size");
+    const category = searchParams.get("category");
+
+    if (size)
+      mutateList("products", {
+        payload: allProducts.filter((i) =>
+          Boolean(i.stocks.find((j) => j.name == size))
+        ),
+      });
+    if (category)
+      mutateList("products", {
+        payload: allProducts.filter((i) =>
+          Boolean(i.category.find((j) => j == category))
+        ),
+      });
+  }, [searchParams]);
 
   return (
     <div className="min-w-fit w-[20%] mr-4">
@@ -112,7 +149,11 @@ const FilterBar = () => {
         <CButton type="primary" className="w-1/2" onClick={handleSearch}>
           Search
         </CButton>
-        <CButton type="default" className="w-1/2" onClick={handleSearch}>
+        <CButton
+          type="default"
+          className="w-1/2"
+          onClick={() => handleSearch("clear")}
+        >
           Clear
         </CButton>
       </div>

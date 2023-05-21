@@ -1,6 +1,7 @@
 import React, { lazy, useState } from "react";
 import CButton from "../../../../components/core/CButton";
 import { useNavigate } from "react-router-dom";
+import formatPrice from "../../../../utils/helpers/formatPrice";
 
 const QuickViewCard = lazy(() => import("./QuickViewCard"));
 
@@ -54,14 +55,18 @@ const ProductCard = (props) => {
         </div>
         <div className="w-full mt-2">
           <p className="font-semibold">{item.name}</p>
-          <p
-            className={
-              "italic text-sm " +
-              (item.available ? "text-green-500" : "text-yellow-500")
-            }
-          >
-            {item.available ? "Available" : "Out of stock"}
-          </p>
+          <div className="flex gap-2 items-end">
+            <p>{formatPrice(item.price)}</p>
+            <p>-</p>
+            <p
+              className={
+                "italic text-sm " +
+                (item.available ? "text-green-500" : "text-yellow-500")
+              }
+            >
+              {item.available ? "Available" : "Out of stock"}
+            </p>
+          </div>
         </div>
       </div>
       {quickViewId && (

@@ -5,6 +5,7 @@ import Footer from "../../../../components/layout/Footer";
 import ComponentLoading from "../../../../components/layout/ComponentLoading";
 import FilterBar from "../elements/FilterBar";
 import useGlobalStore from "../../../../store/global.zustand";
+import useProductStore from "../../../../store/product.zustand";
 
 const ViewLanding = lazy(() => import("../elements/ViewLanding"));
 
@@ -12,6 +13,7 @@ const ViewAppProductLayout = () => {
   const { pathname } = useResolvedPath();
   // Store
   const { setToken } = useGlobalStore((state) => state);
+  const fetchProduct = useProductStore((state) => state.fetch);
 
   // State
   const [isShowFilter, setIsShowFilter] = useState(true);
@@ -25,6 +27,7 @@ const ViewAppProductLayout = () => {
   // Function
   const handleInitApp = () => {
     setToken();
+    fetchProduct("all");
   };
 
   // Effect

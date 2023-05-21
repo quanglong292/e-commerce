@@ -1,8 +1,10 @@
+import { FILTER_OPTIONS } from "../../../../utils/constants/navigation.constant";
+
 export const FILTER_INPUT_SCHEMA = [
   {
     key: "3",
     panelContent: "Fit Types",
-    optionField: "category",
+    optionField: FILTER_OPTIONS.category,
     formSchema: [
         "grid grid-cols-1 py-2 pl-4 filterForm",
       {

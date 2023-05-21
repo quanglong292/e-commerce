@@ -23,9 +23,10 @@ const PRODUCT_DETAIL_ADDITION_SECTION_TABS = [
 
 const AdditionInfoSection = () => {
   const fetchComments = useProductStore((state) => state.fetchComments);
+  const { id } = useParams();
   useEffect(() => {
-    fetchComments();
-  }, []);
+    fetchComments(id);
+  }, [id]);
 
   return (
     <div className="">
@@ -78,7 +79,7 @@ function ReviewTab() {
     try {
       await fetcher(REQUEST_PARAMS.ADD_COMMENT, {
         ...form,
-        userId: user.username,
+        userId: user.userName,
         productId: id,
       });
       await fetchComments(id);

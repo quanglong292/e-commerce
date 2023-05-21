@@ -24,19 +24,27 @@ const useProductStore = create((set, get) => ({
   loading: false,
   categories: [],
   categoryGroups: [],
+  allProducts: [],
   products: [],
   wishList: [],
   ordersList: [],
   filterOptions: {},
   comments: [],
-  mutateList: (listName, { payload }) =>
-    set((state) => {
+  mutateList: (listName, { payload }) => {
+    if (["products"].includes(listName)) {
+      console.log({ [listName]: payload });
+      return set(() => ({ [listName]: payload }));
+    }
+
+    return set((state) => {
       const newList = handleAddNewList(state[listName], payload);
       return { [listName]: newList };
-    }),
+    });
+  },
   setFilter: async (field, value) => {
     const { filterOptions, fetch } = get();
-    const updateFilter = { ...filterOptions, [field]: value };
+    const updateFilter =
+      typeof field === "object" ? field : { ...filterOptions, [field]: value };
 
     set(() => {
       return { filterOptions: updateFilter };
@@ -63,6 +71,10 @@ const useProductStore = create((set, get) => ({
       toggleLoading();
       const response = await fetcher(REQUEST_PARAMS.GET_PRODUCT, options);
       toggleLoading();
+      if (type) {
+        // console.log({ type, response });
+        return set({ allProducts: response });
+      }
       set({ products: response });
     }
   },
