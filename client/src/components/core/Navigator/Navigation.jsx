@@ -4,13 +4,12 @@ import React, { useEffect, useMemo } from "react";
 import Logo from "../../../assets/icons/Logo";
 import {
   APP_NAVIGATIONS,
-  SIDE_BAR_ITEMS,
 } from "../../../utils/constants/sidebar.constant";
 import { NavLink, useNavigate, useResolvedPath } from "react-router-dom";
 import CButton from "../CButton";
 import useProductStore from "../../../store/product.zustand";
 import useGlobalStore from "../../../store/global.zustand";
-import { FILTER_OPTIONS } from "../../../utils/constants/navigation.constant";
+import { FILTER_OPTIONS, SIDE_BAR_ITEMS } from "../../../utils/constants/navigation.constant";
 import AdditionNav from "./elements/AdditionNav";
 import AppsNavigator from "./elements/AppsNavigator";
 import MobileNav from "./elements/MobileNav";

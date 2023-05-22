@@ -16,7 +16,7 @@ const getProductInCart = async (carts: ICart[]): Promise<IProduct[] | []> => {
 
 export const handleUserOrderHistory = async (creator: any): Promise<any> => {    
     const cartOfUser: ICart[] = await CartModel.find({creator})
-    if (!cartOfUser.length) throw "No item found"
+    if (!cartOfUser.length) return []
     const products: IProduct[] = await getProductInCart(cartOfUser)
     
     return cartOfUser.map((i: any) => {

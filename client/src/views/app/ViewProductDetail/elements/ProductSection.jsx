@@ -11,8 +11,6 @@ const ProductSection = (props) => {
     (state) => state
   );
   const product = products.find((i) => i.id === id) ?? {};
-  console.log({ product, products, id });
-
   // Functions
 
   // Effects
@@ -44,8 +42,6 @@ function DetailSection({ item = {} }) {
   const { categoryGroups, mutateList } = useProductStore((state) => state);
   const category =
     categoryGroups.find((i) => i.id === item?.group?.[0])?.name ?? "";
-
-  console.log({ item });
 
   const [selected, setSelected] = useState([]);
 

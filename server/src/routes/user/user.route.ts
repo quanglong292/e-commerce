@@ -12,10 +12,11 @@ const { validateCreateUser } = userControll()
 
 router.get("/", async (req: Request, res: Response) => {
     const { query } = req
-    if (!query) res.status(404)
+    const isEmptyQuery = !Object.keys(query).length
 
     try {
         const data: IUser | any = await UserModel.find(query)
+        if (isEmptyQuery) res.json(data)
         const token = generateToken(data)
 
         res.json({ token })
@@ -25,7 +26,7 @@ router.get("/", async (req: Request, res: Response) => {
 })
 
 router.post("/", async ({ body }: Request, res: Response) => {
-    const isExist = await UserModel.find({ userName: body.userName })    
+    const isExist = await UserModel.find({ userName: body.userName })
 
     if (isExist.length) res.json(isExist[0])
 
@@ -57,7 +58,9 @@ router.post("/", async ({ body }: Request, res: Response) => {
 
 router.delete("/", async (req: Request, res: Response) => {
     try {
-        const { } = req
+        const data = await UserModel.deleteOne({ id: req?.body?.id ?? "" })
+
+        res.json(data)
     } catch (err) {
         res.status(404)
     }

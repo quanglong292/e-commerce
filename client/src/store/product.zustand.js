@@ -32,7 +32,6 @@ const useProductStore = create((set, get) => ({
   comments: [],
   mutateList: (listName, { payload }) => {
     if (["products"].includes(listName)) {
-      console.log({ [listName]: payload });
       return set(() => ({ [listName]: payload }));
     }
 
@@ -57,7 +56,6 @@ const useProductStore = create((set, get) => ({
   fetchComments: async (productId) => {
     const { toggleLoading } = get();
     toggleLoading();
-    // console.log("vo day");
     const response = await fetcher(REQUEST_PARAMS.GET_COMMENT, { productId });
     toggleLoading();
     set({ comments: response });
@@ -72,7 +70,6 @@ const useProductStore = create((set, get) => ({
       const response = await fetcher(REQUEST_PARAMS.GET_PRODUCT, options);
       toggleLoading();
       if (type) {
-        // console.log({ type, response });
         return set({ allProducts: response });
       }
       set({ products: response });

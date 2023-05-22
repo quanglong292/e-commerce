@@ -56,3 +56,11 @@ export const PRODUCT_TABLE_COLUMN = [
     key: "brand",
   },
 ];
+
+export const ORDER_TABLE_COLUMN = [
+  {
+    title: "Customer",
+    dataIndex: "creator",
+    key: "creator",
+  },
+];

@@ -4,8 +4,9 @@ import fetcher from "../../../../utils/helpers/fetcher";
 import { REQUEST_PARAMS } from "../../../../utils/constants/urlPath.constant";
 import useGlobalStore from "../../../../store/global.zustand";
 import formatPrice from "../../../../utils/helpers/formatPrice";
+import formatDate from "../../../../utils/helpers/formatDate";
 
-const UserHistory = () => {
+const UserHistory = (props) => {
   // Store
   const user = useGlobalStore((state) => state.user);
 
@@ -16,7 +17,7 @@ const UserHistory = () => {
   // Functions
 
   const handleInitHistory = async () => {
-    if (!user || historyList.length) return;
+    if (!user || historyList.length || props.historyList.length) return;
     setLoading(true);
     const data = await fetcher(REQUEST_PARAMS.GET_CART_HISTORY, {
       creator: user.username,
@@ -35,23 +36,27 @@ const UserHistory = () => {
       <List
         className="demo-loadmore-list"
         itemLayout="horizontal"
-        dataSource={historyList}
+        dataSource={props.historyList || historyList}
         renderItem={(item) => (
           <List.Item
-            actions={[
-              <a
-                key="list-loadmore-edit"
-                className="text-blue-400 font-semibold"
-              >
-                Detail
-              </a>,
-            ]}
+            actions={
+              props.actions || [
+                <a
+                  key="list-loadmore-edit"
+                  className="text-blue-400 font-semibold"
+                >
+                  Detail
+                </a>,
+              ]
+            }
             className="w-full"
           >
             <Skeleton avatar title={false} loading={loading} active>
               <List.Item.Meta
                 title={<p>Total: {formatPrice(item.totalPrice)}</p>}
-                description="Quantity: 2 | 10/10/2000"
+                description={`Quantity: ${
+                  item?.products?.length
+                } | ${formatDate(item.createDate)}`}
               />
             </Skeleton>
           </List.Item>

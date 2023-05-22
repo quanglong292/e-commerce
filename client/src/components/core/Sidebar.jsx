@@ -1,8 +1,8 @@
 import { memo, useMemo } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { SIDE_BAR_ITEMS } from "../../utils/constants/sidebar.constant";
 
 import { Menu } from "antd";
+import { SIDE_BAR_ITEMS } from "../../utils/constants/navigation.constant";
 
 const Sidebar = memo(() => {
   const navigate = useNavigate();

@@ -1,6 +1,7 @@
 import {
   BRAND_TABLE_COLUMN,
   CATEGORY_GROUP_TABLE_COLUMN,
+  ORDER_TABLE_COLUMN,
   PRODUCT_TABLE_COLUMN,
 } from "./columns.constant";
 import { REQUEST_PARAMS } from "../../../../utils/constants/urlPath.constant";
@@ -259,7 +260,7 @@ const ADD_NEW_PRODUCT_SCHEMA = [
     rules: { required: false },
     wrapClassName: "h-[70px] w-full",
     className: "flex-col",
-    row: 5
+    row: 5,
   },
 ];
 
@@ -312,6 +313,88 @@ export const VIEW_SCHEMAS = {
       },
     },
   },
+  user: {
+    viewName: "user",
+    schemas: {
+      columns: [
+        {
+          title: "Username",
+          dataIndex: "userName",
+          key: "userName",
+        },
+      ],
+      formSchema: [
+        "grid grid-cols-3 gap-2 mb-4",
+        {
+          label: "Username",
+          type: "Text",
+          field: "userName",
+          rules: { required: true },
+          wrapClassName: "h-[70px]",
+          className: "flex-col",
+        },
+        {
+          label: "Password",
+          type: "Text",
+          field: "password",
+          rules: { required: true },
+          wrapClassName: "h-[70px]",
+          className: "flex-col",
+        },
+        {
+          label: "Mail",
+          type: "Text",
+          field: "info.mail",
+          rules: { required: false },
+          wrapClassName: "h-[70px]",
+          className: "flex-col",
+        },
+      ],
+      requets: {
+        GET_TABLE_ITEMS: REQUEST_PARAMS.GET_USER,
+        ADD_TABLE_ITEM: REQUEST_PARAMS.ADD_USER,
+        DELETE_TABLE_ITEM: REQUEST_PARAMS.DELETE_USER,
+      },
+    },
+  },
+  orders: {
+    viewName: "orders",
+    schemas: {
+      columns: ORDER_TABLE_COLUMN,
+      formSchema: [
+        "grid grid-cols-3 gap-2 mb-4",
+        {
+          label: "Username",
+          type: "Text",
+          field: "userName",
+          rules: { required: true },
+          wrapClassName: "h-[70px]",
+          className: "flex-col",
+        },
+        {
+          label: "Password",
+          type: "Text",
+          field: "password",
+          rules: { required: true },
+          wrapClassName: "h-[70px]",
+          className: "flex-col",
+        },
+        {
+          label: "Mail",
+          type: "Text",
+          field: "info.mail",
+          rules: { required: false },
+          wrapClassName: "h-[70px]",
+          className: "flex-col",
+        },
+      ],
+      requets: {
+        GET_TABLE_ITEMS: REQUEST_PARAMS.GET_CART,
+        ADD_TABLE_ITEM: REQUEST_PARAMS.ADD_USER,
+        DELETE_TABLE_ITEM: REQUEST_PARAMS.DELETE_USER,
+      },
+    },
+  }
 };
 
 export const tabItems = [
@@ -330,5 +413,13 @@ export const tabItems = [
   {
     key: "products",
     label: `Product`,
+  },
+  {
+    key: "user",
+    label: `User`,
+  },
+  {
+    key: "orders",
+    label: `Orders`,
   },
 ];

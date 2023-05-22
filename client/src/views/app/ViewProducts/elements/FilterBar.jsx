@@ -53,8 +53,6 @@ const FilterBar = () => {
         categoryGroups.find(
           (i) => i.name.toLowerCase() === pathname.split("/")[2]
         ) ?? {};
-
-      console.log({ allProducts, category });
       mutateList("products", {
         payload: allProducts.filter((i) =>
           Boolean(i.group.find((j) => j === category.id))

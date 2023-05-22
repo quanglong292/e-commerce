@@ -21,3 +21,16 @@ export const ACCOUNT_OPTIONS = [
     path: "",
   },
 ];
+
+export const SIDE_BAR_ITEMS = [
+  {
+    label: "Dashboard",
+    path: "dashboard",
+    key: "dashboard",
+  },
+  {
+    label: "Product",
+    path: "product",
+    key: "product",
+  },
+];

@@ -74,7 +74,6 @@ function ReviewTab() {
   };
 
   const createComment = async () => {
-    console.log({ user });
     if (!user) return toggleLoginModal();
     try {
       await fetcher(REQUEST_PARAMS.ADD_COMMENT, {

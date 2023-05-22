@@ -6,7 +6,6 @@ export const getSizes = (stocks = []) => {
 };
 
 export const useProduct = (productStore) => {
-  console.log({ productStore });
   const { categories = [], products = [], fetch, fetchInitData } = productStore;
 
   const getCategory = (id) => categories?.find((i) => i.id === id) ?? {};

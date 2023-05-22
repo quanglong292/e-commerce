@@ -6,9 +6,7 @@ import dayjs from "dayjs";
 import dotenv from "dotenv";
 dotenv.config();
 
-export function generateToken(data: IUser): string {
-  console.log({generateToken: data});
-  
+export function generateToken(data: IUser): string {  
   try {
     var token = jwt.sign(
       { ...data, expired: dayjs().add(7, "day") },

@@ -5,6 +5,10 @@ import CTable from "../../../../components/core/CTable";
 import FormBuilder from "../../../../components/core/FormBuilder";
 import fetcher from "../../../../utils/helpers/fetcher";
 import useFetch from "../../../../utils/hooks/useFetch";
+import { REQUEST_PARAMS } from "../../../../utils/constants/urlPath.constant";
+import UserHistory from "../../../app/ViewUser/elements/UserHistory";
+import formatPrice from "../../../../utils/helpers/formatPrice";
+import formatDate from "../../../../utils/helpers/formatDate";
 
 const Context = createContext({
   name: "Default",
@@ -13,40 +17,85 @@ const Context = createContext({
 const ProductLayout = (props) => {
   const { fetcherHook, data, loading } = useFetch();
   const { viewName, schemas } = props;
-  const { columns, formSchema, requets } = schemas;
+  const { columns: schemaColumns, formSchema, requets } = schemas;
   const { ADD_TABLE_ITEM, DELETE_TABLE_ITEM, GET_TABLE_ITEMS } = requets;
 
   const [api, contextHolder] = notification.useNotification();
 
+  // Static
+  var additionColumns = {
+    action: {
+      title: "Action",
+      dataIndex: "action",
+      key: "action",
+      width: "120px",
+      render: (_, record) => (
+        <div className="flex gap-2">
+          <CButton onClick={() => handleEditCell(record)} size="small">
+            Edit
+          </CButton>
+          <Popconfirm
+            title="Delete item"
+            description="Are you sure to delete this item?"
+            onConfirm={() => handleDeleteItem(record.id)}
+            //   onCancel={cancel}
+            okText="Yes"
+            cancelText="No"
+          >
+            <CButton type="primary" size="small" danger>
+              Delete
+            </CButton>
+          </Popconfirm>
+        </div>
+      ),
+    },
+    user: [
+      {
+        title: "Detail orders",
+        dataIndex: "detail",
+        key: "detail",
+        render: (text, record) => (
+          <a
+            onClick={() => handleClickUserDetail(record.userName)}
+            className="text-blue-400"
+          >
+            Click
+          </a>
+        ),
+      },
+    ],
+    orders: [
+      {
+        title: "Date",
+        dataIndex: "createDate",
+        key: "createDate",
+        render: (text) => <a>{formatDate(text)}</a>,
+      },
+      {
+        title: "Price",
+        dataIndex: "totalPrice",
+        key: "totalPrice",
+        render: (_, record) => <a>{formatPrice(record.totalPrice)}</a>,
+      },
+      {
+        title: "Quantity",
+        dataIndex: "products",
+        key: "products",
+        render: (_, record) => <a>{record.products.length}</a>,
+      },
+    ],
+  };
+
   const [openForm, setOpenForm] = useState(false);
   const [dataSource, setDataSource] = useState([]);
   const [updateCell, setUpdateCell] = useState(null);
-
-  const actionColumn = {
-    title: "Action",
-    dataIndex: "action",
-    key: "action",
-    width: "120px",
-    render: (_, record) => (
-      <div className="flex gap-2">
-        <CButton onClick={() => handleEditCell(record)} size="small">
-          Edit
-        </CButton>
-        <Popconfirm
-          title="Delete item"
-          description="Are you sure to delete this item?"
-          onConfirm={() => handleDeleteItem(record.id)}
-          //   onCancel={cancel}
-          okText="Yes"
-          cancelText="No"
-        >
-          <CButton type="primary" size="small" danger>
-            Delete
-          </CButton>
-        </Popconfirm>
-      </div>
-    ),
-  };
+  const [columns, setColumns] = useState([
+    ...schemaColumns,
+    ...(additionColumns?.[viewName] ?? []),
+    additionColumns.action,
+  ]);
+  const [localLoading, setLocalLoading] = useState(false);
+  const [userDetail, setUserDetail] = useState();
 
   const contextValue = useMemo(
     () => ({
@@ -55,10 +104,11 @@ const ProductLayout = (props) => {
     []
   );
 
+  // Functions
   const toggleForm = () => setOpenForm(!openForm);
   function handleCancel() {
     toggleForm();
-    setUpdateCell(null)
+    setUpdateCell(null);
   }
   async function handleOk(e) {
     try {
@@ -95,7 +145,7 @@ const ProductLayout = (props) => {
 
   function validateDataBeforeCallAPI(e) {
     const isExistName = dataSource.findIndex((i) => i?.name === e?.name);
-    if (isExistName < 0) return true;
+    if (isExistName <= 0) return true;
 
     throw {
       message: "Data name is exist!",
@@ -124,8 +174,21 @@ const ProductLayout = (props) => {
     else setDataSource([]);
   }
 
-  useEffect(() => {
+  function handleInit() {
     fetcherHook(requets.GET_TABLE_ITEMS);
+  }
+
+  async function handleClickUserDetail(creator) {
+    setLocalLoading(true);
+    const data = await fetcher(REQUEST_PARAMS.GET_CART_HISTORY, {
+      creator,
+    });
+    setLocalLoading(false);
+    setUserDetail(data);
+  }
+
+  useEffect(() => {
+    handleInit();
   }, []);
 
   useEffect(() => {
@@ -140,9 +203,9 @@ const ProductLayout = (props) => {
           Add+
         </CButton>
         <CTable
-          columns={[...columns, actionColumn]}
+          columns={columns}
           dataSource={dataSource}
-          loading={loading}
+          loading={loading || localLoading}
         />
         <Modal
           open={openForm}
@@ -159,6 +222,20 @@ const ProductLayout = (props) => {
             onSubmit={handleOk}
             loading={loading}
           />
+        </Modal>
+
+        {/* USER DETAIL ORDERS */}
+        <Modal
+          open={Boolean(userDetail)}
+          title={
+            <p className="uppercase">{viewName + " " + "detail orders"}</p>
+          }
+          onCancel={() => setUserDetail(undefined)}
+          footer={<></>}
+          width={"90%"}
+          className="max-w-[1600px]"
+        >
+          <UserHistory historyList={userDetail} actions={[]} />
         </Modal>
       </div>
     </Context.Provider>

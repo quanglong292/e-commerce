@@ -1,21 +1,3 @@
-export const SIDE_BAR_ITEMS = [
-  {
-    label: "Dashboard",
-    path: "dashboard",
-    key: "dashboard",
-  },
-  {
-    label: "User",
-    path: "user",
-    key: "user",
-  },
-  {
-    label: "Product",
-    path: "product",
-    key: "product",
-  },
-];
-
 export const APP_NAVIGATIONS = [
   {
     label: "New & Featured",
