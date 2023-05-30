@@ -6,6 +6,7 @@ export const CategorySchema = new Schema({
     id: String,
     name: String,
     groups: [String],
+    description: String
 })
 
 export default model("Category", CategorySchema)

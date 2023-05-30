@@ -18,7 +18,7 @@ router.get("/", async (red: Request, res: Response) => {
 })
 
 router.post("/", async (red: Request, res: Response) => {
-    const { body: {name, groups, ...restBody} } = red
+    const { body: {name, groups, description, ...restBody} } = red
     
     try {
         if (!groups?.length || !name) throw ""
@@ -26,6 +26,7 @@ router.post("/", async (red: Request, res: Response) => {
             id: uuidv4(),
             name: name,
             groups,
+            description: description || "",
         })
     
         res.json(data)

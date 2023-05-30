@@ -37,22 +37,18 @@ const ADD_NEW_CATEGORY_SCHEMA = [
     fetchValue: REQUEST_PARAMS.GET_CATEGORY_GROUP,
     options: [
       {
-        value: "jack",
-        label: "Jack",
-      },
-      {
-        value: "lucy",
-        label: "Lucy",
-      },
-      {
-        value: "Yiminghe",
-        label: "yiminghe",
-      },
-      {
-        value: "disabled",
-        label: "Disabled",
+        value: "null",
+        label: "null",
       },
     ],
+  },
+  {
+    label: "Description",
+    type: "TextArea",
+    field: "description",
+    rules: { required: true },
+    wrapClassName: "h-[70px]",
+    className: "flex-col",
   },
 ];
 
@@ -394,7 +390,7 @@ export const VIEW_SCHEMAS = {
         DELETE_TABLE_ITEM: REQUEST_PARAMS.DELETE_USER,
       },
     },
-  }
+  },
 };
 
 export const tabItems = [

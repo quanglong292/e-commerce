@@ -16,7 +16,7 @@ import authenticateToken from '@/middlewares/authenticateToken';
 const useRoutes = (app: Express) => {
   // app.use(authenticateToken)
 
-  app.use("/auth", AuthenticateRoutes)
+  app.use("/auth", AuthenticateRoutes) 
   app.use("/category", CategoryRoutes)
   app.use("/brand", BrandRoutes)
   app.use("/product", ProductRoutes)

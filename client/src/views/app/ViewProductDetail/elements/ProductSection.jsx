@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import { getSizes } from "../../../../utils/composables/useProduct";
 import useProductStore from "../../../../store/product.zustand";
 import formatPrice from "../../../../utils/helpers/formatPrice";
+import { REQUEST_PARAMS } from "../../../../utils/constants/urlPath.constant";
+import fetcher from "../../../../utils/helpers/fetcher";
 
 const ProductSection = (props) => {
   const { item = {} } = props;
@@ -10,18 +12,50 @@ const ProductSection = (props) => {
   const { products, categories, fetchInitData, fetch } = useProductStore(
     (state) => state
   );
-  const product = products.find((i) => i.id === id) ?? {};
+  // const product = products.find((i) => i.id === id) ?? {};
+
+  // State
+  const [product, setProduct] = useState({});
+  const [sale, setSale] = useState();
+
   // Functions
+  const getSaleInfo = (categories, product) => {
+    const saleCates = categories.filter((i) =>
+      i.name.toLowerCase().includes("sale")
+    );
+    const saleInfo = saleCates.find((i) => product.category.includes(i.id));
+    if (saleInfo) {
+      setSale(saleInfo);
+      const saleValue = saleInfo.description.split("_")[0];
+      if (saleValue.includes("%"))
+        product.salePrice =
+          (product.price * Number(saleValue.split("%")[0])) / 100;
+      else product.salePrice = product.price - Number(saleValue);
+      product.sale = saleInfo;
+
+      setProduct(product);
+    }
+  };
+
+  const handleInit = async () => {
+    if (!categories?.length) fetchInitData();
+    const productData = await fetcher(REQUEST_PARAMS.GET_PRODUCT, { id });
+
+    if (productData) setProduct(productData[0]);
+  };
 
   // Effects
   useEffect(() => {
-    if (!categories?.length) fetchInitData();
-    if (!products?.length) fetch("all");
+    handleInit();
   }, []);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [id]);
+
+  useEffect(() => {
+    if (categories.length && product.id) getSaleInfo(categories, product);
+  }, [categories, product]);
 
   return (
     <div className="bg-gray-100 p-2 flex">
@@ -69,7 +103,15 @@ function DetailSection({ item = {} }) {
     <div className="w-[30%] bg-white p-4">
       <div className="text-2xl font-bold">{item.name}</div>
       <div className="">{`${category}'s`}</div>
-      <div className="text-lg mt-6">{formatPrice(item.price)}</div>
+      <div className="text-lg mt-6">
+        {formatPrice(item.price)}{" "}
+        <span className="text-red-500 font-semibold">
+          {item?.salePrice ? `--> ${formatPrice(item.salePrice)}` : ""}
+        </span>
+      </div>
+      <div className="text-red-500 font-semibold">
+        {item.sale?.description?.split("_")?.[1] || ""}
+      </div>
       <div className="text-sm">
         4 interest-free payments of $45.00 with{" "}
         <span className="font-semibold">Klarna</span>.{" "}
@@ -90,7 +132,7 @@ function DetailSection({ item = {} }) {
               {findSelect(i.id) && (
                 <div
                   onClick={(e) => {
-                    e.stopPropagation()
+                    e.stopPropagation();
                     setSelected(selected.filter((j) => j.id !== i.id));
                   }}
                   className="absolute top-[-12px] right-[-4px] bg-red-400 w-[24px] h-[24px] flex justify-center items-center rounded-full text-white hover:bg-red-300 z-20"
