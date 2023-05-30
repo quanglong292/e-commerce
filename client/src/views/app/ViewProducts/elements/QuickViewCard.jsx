@@ -62,7 +62,8 @@ const QuickViewCard = memo((props) => {
                   {i.name}
                   {findSelect(i.id) && (
                     <div
-                      onClick={() => {
+                      onClick={(e) => {
+                        e.stopPropagation()
                         setSelected(selected.filter((j) => j.id !== i.id));
                       }}
                       className="absolute top-[-12px] right-[-4px] bg-red-400 w-[24px] h-[24px] flex justify-center items-center rounded-full text-white hover:bg-red-300 z-20"

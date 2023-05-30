@@ -7,7 +7,9 @@
     "debug": "nodemon --exec \"node --require ts-node/register --inspect-brk src/app.ts\"",
     "start": "nodemon src/app.ts",
     "lint": "eslint .",
-    "precommit": "npm run lint"
+    "precommit": "npm run lint",
+    "docker:build": "docker build . -t test-docker-k8s/node-server-ts",
+    "docker:run": "docker run -p 5555:5555 -d test-docker-k8s/node-server-ts"
   },
   "husky": {
     "hooks": {

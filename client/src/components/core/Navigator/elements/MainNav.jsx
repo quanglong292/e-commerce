@@ -25,7 +25,7 @@ const MainNav = ({ schema }) => {
         <Logo />
       </div>
       <div className="w-[50%] flex justify-end gap-6">
-        <div className="min-w-fit hidden lg:flex gap-4 items-center">
+        <div className="min-w-fit hidden lg:flex gap-4 items-center font-roboto uppercase font-semibold">
           {schema.map((i) => (
             <NavLink
               key={i.key}
