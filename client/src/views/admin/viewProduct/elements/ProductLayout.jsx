@@ -9,6 +9,7 @@ import { REQUEST_PARAMS } from "../../../../utils/constants/urlPath.constant";
 import UserHistory from "../../../app/ViewUser/elements/UserHistory";
 import formatPrice from "../../../../utils/helpers/formatPrice";
 import formatDate from "../../../../utils/helpers/formatDate";
+import { useSearchParams } from "react-router-dom";
 
 const Context = createContext({
   name: "Default",
@@ -17,8 +18,15 @@ const Context = createContext({
 const ProductLayout = (props) => {
   const { fetcherHook, data, loading } = useFetch();
   const { viewName, schemas } = props;
-  const { columns: schemaColumns, formSchema, requets } = schemas;
+  const {
+    columns: schemaColumns,
+    formSchema: propsFormSchema,
+    requets,
+  } = schemas;
   const { ADD_TABLE_ITEM, DELETE_TABLE_ITEM, GET_TABLE_ITEMS } = requets;
+
+  let [searchParams] = useSearchParams();
+  const urlQuery = useMemo(() => searchParams.get("type"), [searchParams]);
 
   const [api, contextHolder] = notification.useNotification();
 
@@ -94,6 +102,7 @@ const ProductLayout = (props) => {
     ...(additionColumns?.[viewName] ?? []),
     additionColumns.action,
   ]);
+  const [formSchema, setFormSchema] = useState(propsFormSchema);
   const [localLoading, setLocalLoading] = useState(false);
   const [userDetail, setUserDetail] = useState();
 
@@ -187,9 +196,45 @@ const ProductLayout = (props) => {
     setUserDetail(data);
   }
 
+  const onFormChange = (name, value, formValue) => {
+    if (urlQuery === "categories") {
+      console.log({ formValue });
+      if (formValue.groups?.includes("761fcea4-58b4-4ce9-a4a5-fd5239228047")) {
+        console.log("vo day");
+        setFormSchema([
+          ...formSchema,
+          {
+            label: "Sale value",
+            type: "Number",
+            field: "saleValue",
+            rules: { required: true },
+            wrapClassName: "h-[70px]",
+            className: "flex-col",
+          },
+          {
+            label: "Sale by %",
+            type: "CheckBox",
+            field: "saleType",
+            rules: { required: true },
+            wrapClassName: "h-[70px]",
+            className: "flex-col",
+          },
+        ]);
+      } else {
+        console.log('vo day2');
+        setFormSchema(propsFormSchema);
+      }
+    }
+  };
+
+  // Effects
   useEffect(() => {
     handleInit();
   }, []);
+
+  useEffect(() => {
+    console.log({ formSchema });
+  }, [formSchema]);
 
   useEffect(() => {
     handleAssignListData(data);
@@ -221,6 +266,7 @@ const ProductLayout = (props) => {
             formValue={updateCell}
             onSubmit={handleOk}
             loading={loading}
+            onChange={onFormChange}
           />
         </Modal>
 

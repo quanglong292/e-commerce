@@ -96,6 +96,7 @@ const FormBuilder = memo((props) => {
     reset,
     setValue,
     formState: { errors },
+    watch,
   } = useForm();
   const [schema, setSchema] = useState(props.schema);
   const [isFetchedOptions, setIsFetchedOptions] = useState(false);
@@ -147,19 +148,23 @@ const FormBuilder = memo((props) => {
   };
 
   const handleInitValue = (values) => {};
+  const handleFormChange = ({ name = "", value, formValue }) => {
+    console.log({ name, value });
+    onChange(name, value, formValue);
+  };
 
+  // Effects
   useEffect(() => {
-    // if (!isEqual(schema, props.schema)) {
-      handleFetchOptionValue(props.schema);
-      setArrayFields(generateInitArrayFields(props.schema));
-    // }
+    handleFetchOptionValue(props.schema);
+    setArrayFields(generateInitArrayFields(props.schema));
   }, [props]);
 
-  // useEffect(() => {
-  //   if (formValue) {
-  //     setValue("name", "123123");
-  //   }
-  // }, [formValue]);
+  useEffect(() => {
+    const subscription = watch((value, { name, type }) => {
+      handleFormChange({ name, value: value[name], formValue: value });
+    });
+    return () => subscription.unsubscribe();
+  }, [watch]);
 
   return (
     <div className="form-builder">
@@ -204,7 +209,7 @@ const FormBuilder = memo((props) => {
                             </Button>
                           );
 
-                          return <div></div>
+                        return <div></div>;
                       }
 
                       return (
