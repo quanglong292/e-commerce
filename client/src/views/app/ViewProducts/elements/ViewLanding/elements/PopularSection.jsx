@@ -14,7 +14,7 @@ const PopularSection = (props) => {
         <CCarousel
           renderItem={(i) => (
             <div
-              onClick={() => navigate("/app/men")}
+              onClick={() => navigate("/app/women")}
               className="w-[200px] h-[250px] rounded-md cursor-pointer flex justify-center items-center m-auto"
             >
               <img
