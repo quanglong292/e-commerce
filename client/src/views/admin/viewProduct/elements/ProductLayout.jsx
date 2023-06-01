@@ -122,8 +122,8 @@ const ProductLayout = (props) => {
   async function handleOk(e) {
     try {
       validateDataBeforeCallAPI(e);
-      await fetcher(ADD_TABLE_ITEM, e);
-      await fetcherHook(GET_TABLE_ITEMS);
+      // await fetcher(ADD_TABLE_ITEM, e);
+      // await fetcherHook(GET_TABLE_ITEMS);
       // setDataSource(mapData(ADD_TABLE_ITEM[1], e));
       msg();
     } catch (error) {
@@ -154,7 +154,20 @@ const ProductLayout = (props) => {
 
   function validateDataBeforeCallAPI(e) {
     const isExistName = dataSource.findIndex((i) => i?.name === e?.name);
-    if (isExistName <= 0) return true;
+    if (isExistName <= 0) {
+      // Mutate data
+      if (
+        urlQuery === "categories" &&
+        e.groups?.includes("761fcea4-58b4-4ce9-a4a5-fd5239228047")
+      ) {
+        const saleValue = e.saleValue + (e.saleType === "percent" ? "%" : "");
+        e.description = `${saleValue}_${e.description}`;
+        delete e.saleType;
+        delete e.saleValue;
+      }
+
+      return true;
+    }
 
     throw {
       message: "Data name is exist!",
@@ -198,9 +211,7 @@ const ProductLayout = (props) => {
 
   const onFormChange = (name, value, formValue) => {
     if (urlQuery === "categories") {
-      console.log({ formValue });
-      if (formValue.groups?.includes("761fcea4-58b4-4ce9-a4a5-fd5239228047")) {
-        console.log("vo day");
+      if (formValue?.groups?.includes("761fcea4-58b4-4ce9-a4a5-fd5239228047")) {
         setFormSchema([
           ...formSchema,
           {
@@ -213,15 +224,24 @@ const ProductLayout = (props) => {
           },
           {
             label: "Sale by %",
-            type: "CheckBox",
+            type: "Select",
             field: "saleType",
             rules: { required: true },
             wrapClassName: "h-[70px]",
             className: "flex-col",
+            options: [
+              {
+                value: "percent",
+                label: "%",
+              },
+              {
+                value: "raw",
+                label: "Raw amount",
+              },
+            ],
           },
         ]);
       } else {
-        console.log('vo day2');
         setFormSchema(propsFormSchema);
       }
     }
@@ -231,10 +251,6 @@ const ProductLayout = (props) => {
   useEffect(() => {
     handleInit();
   }, []);
-
-  useEffect(() => {
-    console.log({ formSchema });
-  }, [formSchema]);
 
   useEffect(() => {
     handleAssignListData(data);

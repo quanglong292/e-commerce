@@ -99,7 +99,7 @@ const FormBuilder = memo((props) => {
     watch,
   } = useForm();
   const [schema, setSchema] = useState(props.schema);
-  const [isFetchedOptions, setIsFetchedOptions] = useState(false);
+  const [fetchedOptions, setFetchedOptions] = useState({});
   const [arrayFields, setArrayFields] = useState([]);
 
   const isShowSubmit = !(
@@ -110,21 +110,36 @@ const FormBuilder = memo((props) => {
     let newSchema = [];
 
     for (let i of schema) {
-      if (i.fetchValue && i.type === "Select" && !isFetchedOptions) {
-        const data = await fetcher(i.fetchValue);
+      if (i.fetchValue && i.type === "Select") {
+        const isFetchedBefore = fetchedOptions[i.field];
+        let options = [];
+        if (isFetchedBefore) {
+          options = isFetchedBefore;
+        } else {
+          const data = await fetcher(i.fetchValue);
+          options = data.map((j) => ({
+            ...j,
+            value: j.id,
+            label: j.name,
+          }));
+        }
+
         newSchema = [
           ...newSchema,
           {
             ...i,
-            options: data.map((j) => ({ ...j, value: j.id, label: j.name })),
+            options,
           },
         ];
+        setFetchedOptions({
+          ...fetchedOptions,
+          [i.field]: options,
+        });
       } else {
         newSchema.push(i);
       }
     }
     setSchema(newSchema);
-    setIsFetchedOptions(true);
   };
 
   const handleResetFields = () => {
@@ -149,7 +164,6 @@ const FormBuilder = memo((props) => {
 
   const handleInitValue = (values) => {};
   const handleFormChange = ({ name = "", value, formValue }) => {
-    console.log({ name, value });
     onChange(name, value, formValue);
   };
 
@@ -251,10 +265,10 @@ const FormBuilder = memo((props) => {
                         <TypeInput
                           {...field}
                           {...i}
-                          onChange={(e) => {
-                            field.onChange(e);
-                            if (onChange) onChange(e);
-                          }}
+                          // onChange={(e) => {
+                          //   field.onChange(e);
+                          //   if (onChange) onChange(e);
+                          // }}
                         />
                       );
                     }}
