@@ -27,10 +27,10 @@ const ProductSection = (props) => {
     if (saleInfo) {
       setSale(saleInfo);
       const saleValue = saleInfo.description.split("_")[0];
-      if (saleValue.includes("%"))
+      if (saleValue.includes("%")) {
         product.salePrice =
           (product.price * Number(saleValue.split("%")[0])) / 100;
-      else product.salePrice = product.price - Number(saleValue);
+      } else product.salePrice = product.price - Number(saleValue);
       product.sale = saleInfo;
 
       setProduct(product);

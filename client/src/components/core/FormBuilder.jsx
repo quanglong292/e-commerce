@@ -140,6 +140,7 @@ const FormBuilder = memo((props) => {
       }
     }
     setSchema(newSchema);
+    handleInitValue(formValue)
   };
 
   const handleResetFields = () => {
@@ -162,7 +163,11 @@ const FormBuilder = memo((props) => {
     setArrayFields(newArray);
   };
 
-  const handleInitValue = (values) => {};
+  const handleInitValue = (values) => {
+    Object.entries(values).forEach(([key, value]) => {
+      setValue(key, value ?? "")
+    })
+  };
   const handleFormChange = ({ name = "", value, formValue }) => {
     onChange(name, value, formValue);
   };

@@ -1,0 +1,4 @@
+services:
+  server:
+    image: node:18-alpine
+    command: sh -c "npm run install && npm run start"
