@@ -6,13 +6,16 @@
 - **CRM**: Create order, build, payment, print build, search stock, manage warehouse for business. [pending]
 
 ### How to run this source locally:
-**Infra**:
- - Architecture: **Monolith, mono-repo**
+**Infra/DevOps**:
+ - Architecture: **Mono-repo**
  - CI/CD: **Github Actions**
+ - Deployment:
+   + Server: **Docker, K8S, EKS**
+   + Client: **Vite build, Vercel** (https://e-commerce-two-rho.vercel.app) 
 
 **Server**: 
  - Technologies: **ExpressJS, MongoDB, Redis, TypeScript, ESlint**
- - Deployment: **Docker, K8S**
+ - Deployment: **Docker, K8S, EKS**
  - Run the source: `localhost:5555` 
 ```
   cd server
@@ -23,7 +26,6 @@
 **Client**:
  - Technologies: **React.18, JS, Antd, SASS, react-hook-form, lodash, ESlint**
  - Testing: **Cypress (E2E, Unit)**
- - Deployment: **Vite build, Vercel** (https://e-commerce-two-rho.vercel.app) 
  - Run the source: `localhost:<random>` 
 ```
   cd client
