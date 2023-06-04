@@ -33,4 +33,4 @@ export const ProductSchema = new Schema({
     fields: String
 })
 
-export default model('Product', ProductSchema);
+export default model('Product', ProductSchema); 

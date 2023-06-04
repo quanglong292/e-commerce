@@ -38,4 +38,9 @@ export const REQUEST_PARAMS = {
   GET_THREAD_COMMENT: ["community/thread/", "GET"],
   ADD_THREAD_COMMENT: ["community/thread/", "POST"],
   DELETE_THREAD_COMMENT: ["community/", "DELETE"],
+
+  // User
+  GET_SALE: ["sale/", "GET"],
+  ADD_SALE: ["sale/", "POST"],
+  DELETE_SALE: ["sale/", "DELETE"],
 };

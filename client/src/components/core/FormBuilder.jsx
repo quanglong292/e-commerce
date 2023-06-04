@@ -140,7 +140,7 @@ const FormBuilder = memo((props) => {
       }
     }
     setSchema(newSchema);
-    handleInitValue(formValue)
+    handleInitValue(formValue);
   };
 
   const handleResetFields = () => {
@@ -164,14 +164,14 @@ const FormBuilder = memo((props) => {
   };
 
   const handleInitValue = (values) => {
-    if (!values) return 
-    handleResetFields()
+    if (!values) return;
+    handleResetFields();
     Object.entries(values).forEach(([key, value]) => {
-      setValue(key, value ?? "")
-    })
+      setValue(key, value ?? "");
+    });
   };
   const handleFormChange = ({ name = "", value, formValue }) => {
-    onChange(name, value, formValue);
+    if (onChange) onChange(name, value, formValue);
   };
 
   // Effects
@@ -268,12 +268,7 @@ const FormBuilder = memo((props) => {
                     control={control}
                     rules={i.rules ?? {}}
                     render={({ field }) => {
-                      return (
-                        <TypeInput
-                          {...field}
-                          {...i}
-                        />
-                      );
+                      return <TypeInput {...field} {...i} />;
                     }}
                   />
                 </div>
@@ -288,7 +283,7 @@ const FormBuilder = memo((props) => {
         </div>
 
         {isShowSubmit && (
-          <div className="w-full flex items-center gap-4">
+          <div className="w-full flex items-center gap-4 mt-4">
             <CButton type="primary" htmlType="submit" loading={loading}>
               Submit
             </CButton>

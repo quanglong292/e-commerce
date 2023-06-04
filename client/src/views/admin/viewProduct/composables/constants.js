@@ -126,34 +126,34 @@ const ADD_NEW_PRODUCT_SCHEMA = [
     wrapClassName: "h-[70px]",
     className: "flex-col",
   },
-  {
-    label: "Category Group",
-    type: "Select",
-    field: "group",
-    rules: { required: true },
-    wrapClassName: "h-[70px]",
-    className: "flex-col",
-    mode: "multiple",
-    fetchValue: REQUEST_PARAMS.GET_CATEGORY_GROUP,
-    options: [
-      {
-        value: "jack",
-        label: "Jack",
-      },
-      {
-        value: "lucy",
-        label: "Lucy",
-      },
-      {
-        value: "Yiminghe",
-        label: "yiminghe",
-      },
-      {
-        value: "disabled",
-        label: "Disabled",
-      },
-    ],
-  },
+  // {
+  //   label: "Category Group",
+  //   type: "Select",
+  //   field: "group",
+  //   rules: { required: true },
+  //   wrapClassName: "h-[70px]",
+  //   className: "flex-col",
+  //   mode: "multiple",
+  //   fetchValue: REQUEST_PARAMS.GET_CATEGORY_GROUP,
+  //   options: [
+  //     {
+  //       value: "jack",
+  //       label: "Jack",
+  //     },
+  //     {
+  //       value: "lucy",
+  //       label: "Lucy",
+  //     },
+  //     {
+  //       value: "Yiminghe",
+  //       label: "yiminghe",
+  //     },
+  //     {
+  //       value: "disabled",
+  //       label: "Disabled",
+  //     },
+  //   ],
+  // },
   {
     label: "Category",
     type: "Select",
@@ -182,33 +182,33 @@ const ADD_NEW_PRODUCT_SCHEMA = [
       },
     ],
   },
-  {
-    label: "Brand",
-    type: "Select",
-    field: "brand",
-    rules: { required: true },
-    wrapClassName: "h-[70px]",
-    className: "flex-col",
-    fetchValue: REQUEST_PARAMS.GET_BRAND,
-    options: [
-      {
-        value: "jack",
-        label: "Jack",
-      },
-      {
-        value: "lucy",
-        label: "Lucy",
-      },
-      {
-        value: "Yiminghe",
-        label: "yiminghe",
-      },
-      {
-        value: "disabled",
-        label: "Disabled",
-      },
-    ],
-  },
+  // {
+  //   label: "Brand",
+  //   type: "Select",
+  //   field: "brand",
+  //   rules: { required: true },
+  //   wrapClassName: "h-[70px]",
+  //   className: "flex-col",
+  //   fetchValue: REQUEST_PARAMS.GET_BRAND,
+  //   options: [
+  //     {
+  //       value: "jack",
+  //       label: "Jack",
+  //     },
+  //     {
+  //       value: "lucy",
+  //       label: "Lucy",
+  //     },
+  //     {
+  //       value: "Yiminghe",
+  //       label: "yiminghe",
+  //     },
+  //     {
+  //       value: "disabled",
+  //       label: "Disabled",
+  //     },
+  //   ],
+  // },
   {
     label: "Price",
     type: "Number",
@@ -402,10 +402,10 @@ export const tabItems = [
     key: "categories",
     label: `Category`,
   },
-  {
-    key: "brands",
-    label: `Brand`,
-  },
+  // {
+  //   key: "brands",
+  //   label: `Brand`,
+  // },
   {
     key: "products",
     label: `Product`,

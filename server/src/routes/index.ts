@@ -8,6 +8,7 @@ import BrandRoutes from '@/routes/brand/brand.route';
 import ProductRoutes from '@/routes/product/product.route';
 import UserRoutes from '@/routes/user/user.route';
 import CommunityRoutes from './comunity/community.route';
+import SaleRoutes from './sale/sale.route';
 
 // Middlewares
 import authenticateToken from '@/middlewares/authenticateToken';
@@ -16,13 +17,14 @@ import authenticateToken from '@/middlewares/authenticateToken';
 const useRoutes = (app: Express) => {
   // app.use(authenticateToken)
 
-  app.use("/auth", AuthenticateRoutes) 
+  app.use("/auth", AuthenticateRoutes)
   app.use("/category", CategoryRoutes)
   app.use("/brand", BrandRoutes)
   app.use("/product", ProductRoutes)
   app.use("/cart", CartRoutes)
   app.use("/user", UserRoutes)
   app.use("/community", CommunityRoutes)
+  app.use("/sale", SaleRoutes)
 }
 
 export default useRoutes

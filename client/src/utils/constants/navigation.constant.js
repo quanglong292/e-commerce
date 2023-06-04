@@ -24,9 +24,9 @@ export const ACCOUNT_OPTIONS = [
 
 export const SIDE_BAR_ITEMS = [
   {
-    label: "Dashboard",
-    path: "dashboard",
-    key: "dashboard",
+    label: "sale",
+    path: "sale",
+    key: "sale",
   },
   {
     label: "Product",

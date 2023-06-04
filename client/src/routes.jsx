@@ -8,7 +8,6 @@ import ViewAppProductLayout from "./views/app/ViewProducts/root/ViewAppProductLa
 const ViewRootProducts = lazy(() =>
   import("./views/admin/viewProduct/ViewRootProducts")
 );
-const ViewDashBoard = lazy(() => import("./views/ViewDashboard"));
 import ViewProducts from "./views/app/ViewProducts/ViewProducts.jsx";
 import ViewCart from "./views/app/ViewCart/ViewCart";
 
@@ -17,6 +16,7 @@ import { APP_NAVIGATIONS } from "./utils/constants/sidebar.constant";
 import ViewUserDetail from "./views/app/ViewUser/ViewUserDetail";
 import ViewProductDetail from "./views/app/ViewProductDetail/index";
 import ViewSearchProduct from "./views/app/ViewSearchProduct";
+import ViewSale from "./views/admin/ViewSale";
 
 const router = createBrowserRouter([
   {
@@ -25,8 +25,8 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
-        path: "dashboard",
-        element: <ViewDashBoard />,
+        path: "sale",
+        element: <ViewSale />,
       },
       {
         path: "product",
