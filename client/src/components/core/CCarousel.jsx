@@ -26,7 +26,7 @@ const CCarousel = memo((props) => {
   };
   return (
     <div className="w-full h-full">
-      <Carousel responsive={responsiveConfig} itemClass="mr-4">
+      <Carousel arrows={<></>} responsive={responsiveConfig} itemClass="mr-4">
         {items.map((i) => renderItem(i))}
       </Carousel>
     </div>

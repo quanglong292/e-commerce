@@ -5,18 +5,14 @@ import useProductStore from "../../../../store/product.zustand";
 import formatPrice from "../../../../utils/helpers/formatPrice";
 import { REQUEST_PARAMS } from "../../../../utils/constants/urlPath.constant";
 import fetcher from "../../../../utils/helpers/fetcher";
+import CCarousel from "../../../../components/core/CCarousel";
 
 const ProductSection = (props) => {
-  const { item = {} } = props;
   const { id } = useParams();
-  const { products, categories, fetchInitData, fetch } = useProductStore(
-    (state) => state
-  );
-  // const product = products.find((i) => i.id === id) ?? {};
+  const { categories, fetchInitData } = useProductStore((state) => state);
 
   // State
   const [product, setProduct] = useState({});
-  const [sale, setSale] = useState();
 
   // Functions
   const getSaleInfo = (categories, product) => {
@@ -25,7 +21,6 @@ const ProductSection = (props) => {
     );
     const saleInfo = saleCates.find((i) => product.category.includes(i.id));
     if (saleInfo) {
-      setSale(saleInfo);
       const saleValue = saleInfo.description.split("_")[0];
       if (saleValue.includes("%")) {
         product.salePrice =
@@ -43,26 +38,43 @@ const ProductSection = (props) => {
 
     if (productData) setProduct(productData[0]);
   };
-
-  // Effects
   useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
     handleInit();
-  }, []);
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
   }, [id]);
 
   useEffect(() => {
     if (categories.length && product.id) getSaleInfo(categories, product);
+    console.log({ product });
   }, [categories, product]);
 
   return (
     <div className="bg-gray-100 p-2 flex">
       <div className="w-[40%] m-auto">
-        <img src={product.bannerImage} alt="" className="mx-auto max-w-full" />
-        {/* <div className="cursor-pointer w-fit m-auto">Zoom +</div> */}
-        {/* <div className="w-[90%] mx-auto">Slider</div> */}
+        {product.detailImages?.length ? (
+          <CCarousel
+            renderItem={(i) => {
+              return (
+                <img
+                  src={i?.value || ""}
+                  alt=""
+                  className="mx-auto max-w-full"
+                />
+              );
+            }}
+            items={product.detailImages.filter((i) => i?.name && i?.value || i)}
+            responsive={[1, 1, 1]}
+          />
+        ) : (
+          <img
+            src={product.bannerImage}
+            alt=""
+            className="mx-auto max-w-full"
+          />
+        )}
       </div>
       <DetailSection item={product} />
     </div>

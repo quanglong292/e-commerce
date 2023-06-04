@@ -164,6 +164,8 @@ const FormBuilder = memo((props) => {
   };
 
   const handleInitValue = (values) => {
+    if (!values) return 
+    handleResetFields()
     Object.entries(values).forEach(([key, value]) => {
       setValue(key, value ?? "")
     })

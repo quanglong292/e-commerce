@@ -95,6 +95,7 @@ const ProductLayout = (props) => {
   };
 
   const [openForm, setOpenForm] = useState(false);
+  const [formType, setFormType] = useState("");
   const [dataSource, setDataSource] = useState([]);
   const [updateCell, setUpdateCell] = useState(null);
   const [columns, setColumns] = useState([
@@ -120,17 +121,18 @@ const ProductLayout = (props) => {
     setUpdateCell(null);
   }
   async function handleOk(e) {
+    const [path, method] = ADD_TABLE_ITEM;
     try {
-      validateDataBeforeCallAPI(e);
-      // await fetcher(ADD_TABLE_ITEM, e);
-      // await fetcherHook(GET_TABLE_ITEMS);
-      // setDataSource(mapData(ADD_TABLE_ITEM[1], e));
+      if (formType === "new") validateDataBeforeCallAPI(e);
+      await fetcher([path, formType === "edit" ? "PUT" : method], e);
+      await fetcherHook(GET_TABLE_ITEMS);
+      setDataSource(mapData(ADD_TABLE_ITEM[1], e));
       msg();
     } catch (error) {
       console.error(error.message);
       msg(error.message, "error");
     } finally {
-      // toggleForm();
+      if (formType === "edit") toggleForm()
     }
   }
 
@@ -148,6 +150,7 @@ const ProductLayout = (props) => {
   }
 
   function handleEditCell(record) {
+    setFormType("edit");
     setOpenForm(true);
     setUpdateCell(record);
   }
@@ -195,6 +198,11 @@ const ProductLayout = (props) => {
     if (arrayData?.length) setDataSource(data);
     else setDataSource([]);
   }
+
+  const handleClickAdd = () => {
+    toggleForm();
+    setFormType("new");
+  };
 
   function handleInit() {
     fetcherHook(requets.GET_TABLE_ITEMS);
@@ -260,7 +268,7 @@ const ProductLayout = (props) => {
     <Context.Provider value={contextValue}>
       {contextHolder}
       <div className="w-full">
-        <CButton onClick={() => toggleForm()} type="primary" className="mb-2">
+        <CButton onClick={handleClickAdd} type="primary" className="mb-2">
           Add+
         </CButton>
         <CTable
