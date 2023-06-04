@@ -183,7 +183,6 @@ const FormBuilder = memo((props) => {
   useEffect(() => {
     const subscription = watch((value, { name, type }) => {
       handleFormChange({ name, value: value[name], formValue: value });
-      console.log({name, value});
     });
     return () => subscription.unsubscribe();
   }, [watch]);

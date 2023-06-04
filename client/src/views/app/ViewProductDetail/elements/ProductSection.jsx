@@ -17,12 +17,18 @@ const ProductSection = (props) => {
 
   // Functions
   const getSaleInfo = (categories, product) => {
-    const saleCates = categories.filter((i) =>
-      i.name.toLowerCase().includes("sale")
-    );
+    console.log({ categories });
+    const saleCates = categories.filter((i) => {
+      return (
+        // i.name.toLowerCase().includes("sale") ||
+        i.groups?.includes("761fcea4-58b4-4ce9-a4a5-fd5239228047")
+      );
+    });
     const foundSaleInfo = saleCates.find((i) =>
       product.category.includes(i.id)
     );
+    console.log({saleCates});
+    console.log({ foundSaleInfo, product });
     if (foundSaleInfo) {
       const saleValue = foundSaleInfo.description.split("_")[0];
       let salePrice = 0;
@@ -120,7 +126,9 @@ function DetailSection({ item = {} }) {
       <div className="text-2xl font-bold">{item.name}</div>
       <div className="">{`${category}'s`}</div>
       <div className="text-lg mt-6 flex gap-2">
-        <span className={item?.saleInfo?.salePrice ? "line-through" : ""}>{formatPrice(item.price)}</span>
+        <span className={item?.saleInfo?.salePrice ? "line-through" : ""}>
+          {formatPrice(item.price)}
+        </span>
         <span className="text-red-500 font-semibold">
           {item?.saleInfo?.salePrice
             ? `-> ${formatPrice(item?.saleInfo.salePrice)}`
