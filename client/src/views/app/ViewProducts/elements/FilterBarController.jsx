@@ -31,7 +31,7 @@ const FilterBarController = (props) => {
 
   function onSearch(e) {
     console.log({ onSearch: e });
-    // setFilter(FILTER_OPTIONS.search, e);
+    setFilter(FILTER_OPTIONS.search, e);
   }
 
   return (

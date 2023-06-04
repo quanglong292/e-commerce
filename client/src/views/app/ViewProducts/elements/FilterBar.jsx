@@ -37,7 +37,8 @@ const FilterBar = () => {
   const [filterSchema, setFilterSchema] = useState([]);
 
   // Functions
-  const onFilterChange = (e, field) => {
+  const onFilterChange = (field, e) => {
+    console.log({onFilterChange: {field, e}});
     let value = ["number", "string"].includes(typeof e) ? e : e.target.name;
     const obj = { ...filter, [field]: value };
 
@@ -135,7 +136,7 @@ const FilterBar = () => {
                   <FormBuilder
                     key={i.key}
                     schema={i.formSchema}
-                    onChange={(value) => onFilterChange(value, i.optionField)}
+                    onChange={onFilterChange}
                   />
                 </Panel>
               );

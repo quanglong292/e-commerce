@@ -10,7 +10,7 @@ export const FILTER_INPUT_SCHEMA = [
       {
         label: "",
         type: "Select",
-        field: "",
+        field: "category",
         wrapClassName: "h-auto",
         className: "w-full",
         placeholder: "Select style",
@@ -33,7 +33,7 @@ export const FILTER_INPUT_SCHEMA = [
       {
         label: "",
         type: "Select",
-        field: "",
+        field: "size",
         wrapClassName: "h-auto",
         className: "w-full",
         placeholder: "Select size",
