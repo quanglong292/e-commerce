@@ -10,6 +10,7 @@ import UserHistory from "../../../app/ViewUser/elements/UserHistory";
 import formatPrice from "../../../../utils/helpers/formatPrice";
 import formatDate from "../../../../utils/helpers/formatDate";
 import { useSearchParams } from "react-router-dom";
+import FilterBarController from "../../../app/ViewProducts/elements/FilterBarController";
 
 const Context = createContext({
   name: "Default",
@@ -132,7 +133,7 @@ const ProductLayout = (props) => {
       console.error(error.message);
       msg(error.message, "error");
     } finally {
-      if (formType === "edit") toggleForm()
+      if (formType === "edit") toggleForm();
     }
   }
 
@@ -268,9 +269,12 @@ const ProductLayout = (props) => {
     <Context.Provider value={contextValue}>
       {contextHolder}
       <div className="w-full">
-        <CButton onClick={handleClickAdd} type="primary" className="mb-2">
-          Add+
-        </CButton>
+        <div className="flex justify-between">
+          <CButton onClick={handleClickAdd} type="primary" className="mb-2">
+            Add+
+          </CButton>
+          {/* <FilterBarController /> */}
+        </div>
         <CTable
           columns={columns}
           dataSource={dataSource}

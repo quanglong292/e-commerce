@@ -13,22 +13,25 @@ const ProductSection = (props) => {
 
   // State
   const [product, setProduct] = useState({});
+  const [saleInfo, setSaleInfo] = useState({});
 
   // Functions
   const getSaleInfo = (categories, product) => {
     const saleCates = categories.filter((i) =>
       i.name.toLowerCase().includes("sale")
     );
-    const saleInfo = saleCates.find((i) => product.category.includes(i.id));
-    if (saleInfo) {
-      const saleValue = saleInfo.description.split("_")[0];
+    const foundSaleInfo = saleCates.find((i) =>
+      product.category.includes(i.id)
+    );
+    if (foundSaleInfo) {
+      const saleValue = foundSaleInfo.description.split("_")[0];
+      let salePrice = 0;
       if (saleValue.includes("%")) {
-        product.salePrice =
-          (product.price * Number(saleValue.split("%")[0])) / 100;
-      } else product.salePrice = product.price - Number(saleValue);
-      product.sale = saleInfo;
+        salePrice = (product.price * Number(saleValue.split("%")[0])) / 100;
+      } else salePrice = product.price - Number(saleValue);
+      const description = foundSaleInfo?.description?.split("_")?.[1] || "";
 
-      setProduct(product);
+      setSaleInfo({ salePrice, description });
     }
   };
 
@@ -48,7 +51,6 @@ const ProductSection = (props) => {
 
   useEffect(() => {
     if (categories.length && product.id) getSaleInfo(categories, product);
-    console.log({ product });
   }, [categories, product]);
 
   return (
@@ -65,7 +67,9 @@ const ProductSection = (props) => {
                 />
               );
             }}
-            items={product.detailImages.filter((i) => i?.name && i?.value || i)}
+            items={product.detailImages.filter(
+              (i) => (i?.name && i?.value) || i
+            )}
             responsive={[1, 1, 1]}
           />
         ) : (
@@ -76,7 +80,7 @@ const ProductSection = (props) => {
           />
         )}
       </div>
-      <DetailSection item={product} />
+      <DetailSection item={{ ...product, saleInfo }} />
     </div>
   );
 };
@@ -115,14 +119,16 @@ function DetailSection({ item = {} }) {
     <div className="w-[30%] bg-white p-4">
       <div className="text-2xl font-bold">{item.name}</div>
       <div className="">{`${category}'s`}</div>
-      <div className="text-lg mt-6">
-        {formatPrice(item.price)}{" "}
+      <div className="text-lg mt-6 flex gap-2">
+        <span className={item?.saleInfo?.salePrice ? "line-through" : ""}>{formatPrice(item.price)}</span>
         <span className="text-red-500 font-semibold">
-          {item?.salePrice ? `--> ${formatPrice(item.salePrice)}` : ""}
+          {item?.saleInfo?.salePrice
+            ? `-> ${formatPrice(item?.saleInfo.salePrice)}`
+            : ""}
         </span>
       </div>
       <div className="text-red-500 font-semibold">
-        {item.sale?.description?.split("_")?.[1] || ""}
+        {item?.saleInfo?.description}
       </div>
       <div className="text-sm">
         4 interest-free payments of $45.00 with{" "}
