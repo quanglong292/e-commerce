@@ -66,7 +66,7 @@ const AddSaleModal = (props) => {
         <div className="w-1/2">
           <FormBuilder
             schema={[
-              "grid grid-cols-2 gap-4",
+              "grid grid-cols-2 gap-8",
               {
                 label: "Title",
                 type: "Text",

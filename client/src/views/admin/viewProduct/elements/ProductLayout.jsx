@@ -29,6 +29,7 @@ const ProductLayout = (props) => {
 
   let [searchParams] = useSearchParams();
   const urlQuery = useMemo(() => searchParams.get("type"), [searchParams]);
+  // console.log({urlQuery});
 
   const [api, contextHolder] = notification.useNotification();
 
@@ -236,7 +237,7 @@ const ProductLayout = (props) => {
     fetcherHook(requets.GET_TABLE_ITEMS);
   }
 
-  async function handleClickUserDetail(creator) {
+async function handleClickUserDetail(creator) {
     setLocalLoading(true);
     const data = await fetcher(REQUEST_PARAMS.GET_CART_HISTORY, {
       creator,
@@ -302,9 +303,11 @@ const ProductLayout = (props) => {
       {contextHolder}
       <div className="w-full">
         <div className="flex justify-between">
-          <CButton onClick={handleClickAdd} type="primary" className="mb-2">
-            Add+
-          </CButton>
+          {urlQuery !== "orders" && (
+            <CButton onClick={handleClickAdd} type="primary" className={"mb-2"}>
+              Add+
+            </CButton>
+          )}
           {/* <FilterBarController /> */}
         </div>
         <CTable

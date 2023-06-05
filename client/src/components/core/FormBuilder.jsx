@@ -292,7 +292,7 @@ const FormBuilder = memo((props) => {
         </div>
 
         {isShowSubmit && (
-          <div className="w-full flex items-center gap-4 mt-4">
+          <div className="w-full flex items-center gap-4 mt-8">
             <CButton type="primary" htmlType="submit" loading={loading}>
               Submit
             </CButton>

@@ -17,7 +17,7 @@ const AppsNavigator = (props) => {
               key: "0",
             },
             {
-              label: <div onClick={() => navigate("/")}>Admin</div>,
+              label: <div onClick={() => navigate("/product")}>Admin</div>,
               key: "2",
             },
             {

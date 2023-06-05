@@ -5,28 +5,34 @@ import SigninForm from "./elements/SigninForm";
 import SignupForm from "./elements/SignupForm";
 import useGlobalStore from "../../store/global.zustand";
 import { notification } from "antd";
+import { useNavigate } from "react-router-dom";
 
 const ViewAuthenticate = () => {
-  const { showLogin, handleLogin, handleRegister, toggleLoginModal } =
-    useGlobalStore((state) => state);
+  const navigate = useNavigate();
+  const { handleLogin, handleRegister, toggleLoginModal } = useGlobalStore(
+    (state) => state
+  );
 
   // State
-  const [formType, setFormType] = useState();
+  const [formType, setFormType] = useState("signin");
 
   // Functions
   const onSubmit = async (data) => {
     console.log({ onSubmit: data });
-    // if (formType === "signin") handleLogin({ payload: data });
-    // else {
-    //   await handleRegister(data);
-    //   notification.success({
-    //     message: "Success!",
-    //     placement: "bottomLeft",
-    //   });
-    //   setTimeout(() => {
-    //     setFormType("signin");
-    //   }, 100);
-    // }
+    if (formType === "signin") {
+      handleLogin({ payload: data });
+      navigate(-1);
+      toggleLoginModal();
+    } else {
+      await handleRegister(data);
+      notification.success({
+        message: "Success!",
+        placement: "bottomLeft",
+      });
+      setTimeout(() => {
+        setFormType("signin");
+      }, 100);
+    }
   };
 
   return (
@@ -39,9 +45,9 @@ const ViewAuthenticate = () => {
             : "your account for everything Mike"}
         </p>
         {formType === "signin" ? (
-          <SignupForm onSubmit={onSubmit} />
-        ) : (
           <SigninForm onSubmit={onSubmit} />
+        ) : (
+          <SignupForm onSubmit={onSubmit} />
         )}
         <div className="text-gray-400 cursor-pointer">
           {formType === "signin" ? (

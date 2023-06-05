@@ -15,22 +15,23 @@ const SigninForm = (props) => {
       className="w-full flex flex-col items-center"
     >
       <CInput
-        {...register("username", { required: true })}
+        {...register("userName", { required: true })}
         placeholder="Username"
         className="w-full"
-        error2={errors?.username}
+        formError={errors?.username}
+        type="text"
       />
       <CInput
         {...register("password", { required: true })}
         type="password"
         placeholder="Password"
         className="w-full"
-        error2={errors?.password}
+        formError={errors?.password}
       />
       <div className="w-full flex justify-between text-sm">
-        <div className="flex gap-2 justify-start text-gray-400">
+        <div className="flex gap-2 justify-start items-start text-gray-400">
           <CInput type="checkbox" placeholder="Username" className="w-[14px]" />
-          <div>Keep me signed in</div>
+          <div className="whitespace-nowrap">Keep me signed in</div>
         </div>
         <div className="text-gray-400 hover:underline cursor-pointer">
           Forgot password?

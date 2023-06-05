@@ -1,17 +1,18 @@
-import React, { memo } from "react";
+import React, { forwardRef, memo } from "react";
 import "../../assets/styles/input.scss";
 
-const CInput = memo((props) => {
+const CInput = (props, ref) => {
+  const { className, formError, ...rest } = props;
   return (
     <div className="w-full relative pb-6">
-      <input {...props} className={"CInput " + props?.className} />
-      {props.error && (
+      <input {...rest} ref={ref} className={"CInput " + className} />
+      {formError && (
         <span className="m-0 text-sm text-red-500 absolute bottom-0 left-[2px]">
           This field is required
         </span>
       )}
     </div>
   );
-});
+};
 
-export default CInput;
+export default forwardRef(CInput);

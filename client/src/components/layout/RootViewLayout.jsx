@@ -18,7 +18,7 @@ const RootViewLayout = () => {
     console.log({ pathname });
     if (["/", "/sale", "/product"].includes(pathname)) {
       if (!user) navigate("auth/admin");
-      else navigate("/product");
+      // else navigate("/product");
     }
   };
 

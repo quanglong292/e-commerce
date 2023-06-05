@@ -18,33 +18,33 @@ const SignupForm = (props) => {
         {...register("fullName", { required: true })}
         placeholder="Full name"
         className="w-full"
-        error={errors?.fullName}
+        formError={errors?.fullName}
       />
       <CInput
         {...register("dateOfBirth", { required: true })}
         type="date"
         placeholder="Date of birth"
-        error={errors?.dateOfBirth}
+        formError={errors?.dateOfBirth}
         className="w-full"
       />
       <CInput
-        {...register("username", { required: true })}
+        {...register("userName", { required: true })}
         placeholder="Username"
         className="w-full"
-        error={errors?.username}
+        formError={errors?.username}
       />
       <CInput
         {...register("password", { required: true })}
         type="password"
         placeholder="Password"
-        error={errors?.password}
+        formError={errors?.password}
         className="w-full"
       />
       <CInput
         {...register("confirnPassword", { required: true })}
-        type="confirnPassword"
+        type="password"
         placeholder="Confirm Password"
-        error={errors?.confirnPassword}
+        formError={errors?.confirnPassword}
         className="w-full"
       />
 
