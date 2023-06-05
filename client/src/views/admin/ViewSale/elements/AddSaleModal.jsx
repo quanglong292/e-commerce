@@ -8,7 +8,7 @@ import { formatToSystemDate } from "../../../../utils/helpers/formatDate";
 import handleClientError from "../../../../utils/helpers/handleClientError";
 
 const AddSaleModal = (props) => {
-  const { visible, onCancel, onSubmit } = props;
+  const { visible, edittingCell, onCancel, onSubmit } = props;
   const { allProducts, fetch } = useProductStore((state) => state);
 
   // State
@@ -46,6 +46,11 @@ const AddSaleModal = (props) => {
       fetch();
     }
   }, []);
+
+  useEffect(() => {
+    if (edittingCell && allProducts.length)
+      handleSelect(edittingCell?.products);
+  }, [edittingCell, allProducts]);
 
   return (
     <Modal
@@ -105,6 +110,7 @@ const AddSaleModal = (props) => {
               },
             ]}
             onSubmit={handleCreateSale}
+            formValue={edittingCell}
           />
         </div>
         <div className="w-1/2">

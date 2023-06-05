@@ -1,4 +1,12 @@
-import { Button, Checkbox, Input, Radio, Select, Switch } from "antd";
+import {
+  Button,
+  Checkbox,
+  DatePicker,
+  Input,
+  Radio,
+  Select,
+  Switch,
+} from "antd";
 import React, { memo, useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import CButton from "./CButton";
@@ -82,6 +90,7 @@ const getInputType = (type) => {
   if (type === "Select") TypeInput = Select;
   if (type === "Switch") TypeInput = Switch;
   if (type === "Button") TypeInput = Button;
+  // if (type === "Date") TypeInput = DatePicker;
   if (["TextArea", "Password"].includes(type)) TypeInput = Input[type];
 
   return TypeInput;

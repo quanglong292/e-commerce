@@ -17,7 +17,6 @@ const validateParams = (params) => {
 };
 
 export default async function (requestParams, body) {
-  console.log({body});
   const [urlPath, method] = requestParams;
   const searchParam =
     method === "GET" && body

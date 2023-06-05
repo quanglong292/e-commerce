@@ -6,11 +6,13 @@ import { REQUEST_PARAMS } from "../../../utils/constants/urlPath.constant";
 import fetcher from "../../../utils/helpers/fetcher";
 import { Button, Popconfirm, notification } from "antd";
 import formatDate from "../../../utils/helpers/formatDate";
+import dayjs from "dayjs";
 
 const ViewSupplier = () => {
   // State
   const [visible, setVisible] = useState(false);
   const [list, setList] = useState([]);
+  const [edittingCell, setEdittingCell] = useState(null);
 
   // Functions
   const toggleForm = () => setVisible(!visible);
@@ -27,7 +29,7 @@ const ViewSupplier = () => {
   const handleCreateSale = async (submitValue) => {
     await fetcher(REQUEST_PARAMS.ADD_SALE, submitValue);
     notification.success({
-      message: "Created sale category!",
+      message: edittingCell ? "Updated!" : "Created sale category!",
       placement: "bottomLeft",
     });
     await handleInit();
@@ -42,7 +44,17 @@ const ViewSupplier = () => {
     await handleInit();
   };
 
-  const onEdit = (id) => {};
+  const onEdit = (id) => {
+    const item = list.find((i) => i.id === id);
+    const formatDate = (date) => dayjs(date, "MM/DD/YYYY").format("YYYY-MM-DD");
+
+    setEdittingCell({
+      ...item,
+      startDate: formatDate(item.startDate),
+      endDate: formatDate(item.endDate),
+    });
+    toggleForm();
+  };
 
   useEffect(() => {
     handleInit();
@@ -109,8 +121,12 @@ const ViewSupplier = () => {
       />
       <AddSaleModal
         visible={visible}
-        onCancel={toggleForm}
+        onCancel={() => {
+          toggleForm();
+          setEdittingCell(null);
+        }}
         onSubmit={handleCreateSale}
+        edittingCell={edittingCell}
       />
     </div>
   );
