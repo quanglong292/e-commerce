@@ -6,6 +6,7 @@ import formatPrice from "../../../../utils/helpers/formatPrice";
 import { REQUEST_PARAMS } from "../../../../utils/constants/urlPath.constant";
 import fetcher from "../../../../utils/helpers/fetcher";
 import CCarousel from "../../../../components/core/CCarousel";
+import CButton from "../../../../components/core/CButton";
 
 const ProductSection = (props) => {
   const { id } = useParams();
@@ -27,7 +28,7 @@ const ProductSection = (props) => {
     const foundSaleInfo = saleCates.find((i) =>
       product.category.includes(i.id)
     );
-    console.log({saleCates});
+    console.log({ saleCates });
     console.log({ foundSaleInfo, product });
     if (foundSaleInfo) {
       const saleValue = foundSaleInfo.description.split("_")[0];
@@ -170,18 +171,12 @@ function DetailSection({ item = {} }) {
           ))}
         </div>
       </div>
-      <div
-        onClick={() => handleAddSelectedItems("ordersList")}
-        className="bg-black text-white cursor-pointer font-bold uppercase w-full py-2 text-center"
-      >
+      <CButton type="black" onClick={() => handleAddSelectedItems("ordersList")}>
         add to cart
-      </div>
-      <div
-        onClick={() => handleAddSelectedItems("wishList")}
-        className="bg-black text-white cursor-pointer font-bold uppercase w-full py-2 text-center my-4"
-      >
+      </CButton>
+      <CButton type="black" onClick={() => handleAddSelectedItems("wishList")}>
         add to wish list
-      </div>
+      </CButton>
     </div>
   );
 }

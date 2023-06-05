@@ -17,6 +17,7 @@ import ViewUserDetail from "./views/app/ViewUser/ViewUserDetail";
 import ViewProductDetail from "./views/app/ViewProductDetail/index";
 import ViewSearchProduct from "./views/app/ViewSearchProduct";
 import ViewSale from "./views/admin/ViewSale";
+import ViewAuthenticate from "./views/ViewAuthenticate/ViewAuthenticate";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
     element: <RootViewLayout />,
     errorElement: <ErrorPage />,
     children: [
+      {
+        path: "auth/:app",
+        element: <ViewAuthenticate />,
+      },
       {
         path: "sale",
         element: <ViewSale />,

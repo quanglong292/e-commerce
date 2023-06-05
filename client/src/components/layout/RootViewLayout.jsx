@@ -11,11 +11,19 @@ const RootViewLayout = () => {
   const { pathname } = useResolvedPath();
 
   // Store
-  const {  } = useGlobalStore((state) => state);
+  const { user } = useGlobalStore((state) => state);
+
+  // Function
+  const handleValidateAuth = () => {
+    console.log({ pathname });
+    if (["/", "/sale", "/product"].includes(pathname)) {
+      if (!user) navigate("auth/admin");
+      else navigate("/product");
+    }
+  };
 
   useEffect(() => {
-    // if (["/app"].includes(pathname)) navigate("/app/men");
-    if (["/"].includes(pathname)) navigate("/product");
+    handleValidateAuth();
   }, [pathname]);
 
   return (
