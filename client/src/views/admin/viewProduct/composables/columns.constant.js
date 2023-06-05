@@ -63,4 +63,5 @@ export const ORDER_TABLE_COLUMN = [
     dataIndex: "creator",
     key: "creator",
   },
+  // There are addition columns -> check ProductLayout
 ];

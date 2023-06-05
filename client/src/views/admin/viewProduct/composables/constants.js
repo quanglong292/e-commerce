@@ -359,30 +359,14 @@ export const VIEW_SCHEMAS = {
       columns: ORDER_TABLE_COLUMN,
       formSchema: [
         "grid grid-cols-3 gap-2 mb-4",
-        // {
-        //   label: "Username",
-        //   type: "Text",
-        //   field: "userName",
-        //   rules: { required: true },
-        //   wrapClassName: "h-[70px]",
-        //   className: "flex-col",
-        // },
-        // {
-        //   label: "Password",
-        //   type: "Text",
-        //   field: "password",
-        //   rules: { required: true },
-        //   wrapClassName: "h-[70px]",
-        //   className: "flex-col",
-        // },
-        // {
-        //   label: "Mail",
-        //   type: "Text",
-        //   field: "info.mail",
-        //   rules: { required: false },
-        //   wrapClassName: "h-[70px]",
-        //   className: "flex-col",
-        // },
+        {
+          label: "Username",
+          type: "Text",
+          field: "userName",
+          rules: { required: true },
+          wrapClassName: "h-[70px]",
+          className: "flex-col",
+        },
       ],
       requets: {
         GET_TABLE_ITEMS: REQUEST_PARAMS.GET_CART,

@@ -1,4 +1,4 @@
-import { Modal, notification, Popconfirm } from "antd";
+import { Modal, notification, Popconfirm, Tag } from "antd";
 import { createContext, memo, useEffect, useMemo, useState } from "react";
 import CButton from "../../../../components/core/CButton";
 import CTable from "../../../../components/core/CTable";
@@ -11,6 +11,7 @@ import formatPrice from "../../../../utils/helpers/formatPrice";
 import formatDate from "../../../../utils/helpers/formatDate";
 import { useSearchParams } from "react-router-dom";
 import FilterBarController from "../../../app/ViewProducts/elements/FilterBarController";
+import ConfirmOrderModal from "./ConfirmOrderModal";
 
 const Context = createContext({
   name: "Default",
@@ -32,7 +33,7 @@ const ProductLayout = (props) => {
   const [api, contextHolder] = notification.useNotification();
 
   // Static
-  var additionColumns = {
+  const additionColumns = {
     action: {
       title: "Action",
       dataIndex: "action",
@@ -75,6 +76,16 @@ const ProductLayout = (props) => {
     ],
     orders: [
       {
+        title: "Status",
+        dataIndex: "status",
+        key: "status",
+        render: (text) => (
+          <Tag color="orange" className="uppercase">
+            {text || "pending"}
+          </Tag>
+        ),
+      },
+      {
         title: "Date",
         dataIndex: "createDate",
         key: "createDate",
@@ -92,9 +103,24 @@ const ProductLayout = (props) => {
         key: "products",
         render: (_, record) => <a>{record.products.length}</a>,
       },
+      {
+        title: "Confirm order",
+        dataIndex: "confirm",
+        key: "confirm",
+        render: (text, rec) => (
+          <CButton
+            type="primary"
+            onClick={() => handleConfirmOrder(rec)}
+            size="small"
+          >
+            Confirm
+          </CButton>
+        ),
+      },
     ],
   };
 
+  // State
   const [openForm, setOpenForm] = useState(false);
   const [formType, setFormType] = useState("");
   const [dataSource, setDataSource] = useState([]);
@@ -107,6 +133,7 @@ const ProductLayout = (props) => {
   const [formSchema, setFormSchema] = useState(propsFormSchema);
   const [localLoading, setLocalLoading] = useState(false);
   const [userDetail, setUserDetail] = useState();
+  const [orderToConfirm, setOrderToConfirm] = useState();
 
   const contextValue = useMemo(
     () => ({
@@ -256,6 +283,11 @@ const ProductLayout = (props) => {
     }
   };
 
+  function handleConfirmOrder(rec) {
+    // console.log({ handleConfirmOrder: rec });
+    setOrderToConfirm(rec);
+  }
+
   // Effects
   useEffect(() => {
     handleInit();
@@ -311,6 +343,12 @@ const ProductLayout = (props) => {
         >
           <UserHistory historyList={userDetail} actions={[]} />
         </Modal>
+
+        <ConfirmOrderModal
+          item={orderToConfirm}
+          visible={Boolean(orderToConfirm)}
+          onCancel={() => setOrderToConfirm(null)}
+        />
       </div>
     </Context.Provider>
   );
