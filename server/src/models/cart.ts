@@ -5,7 +5,18 @@ const CartSchema = new mongoose.Schema({
   creator: String,
   createDate: String,
   totalPrice: Number,
-  products: [String],
+  products: [
+    {
+      amount: Number,
+      id: String,
+      value: String,
+      info: {
+        name: String,
+        image: String,
+        price: Number,
+      },
+    },
+  ],
   status: String,
 });
 

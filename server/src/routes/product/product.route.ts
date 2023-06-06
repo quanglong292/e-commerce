@@ -14,7 +14,8 @@ router.get("/", async (req: Request<IFilterOptions>, res: Response) => {
 
     try {
         const data = await ProductModel.find(query)
-
+        console.log({data});
+        
         res.json(data)
     } catch (error) {
         res.status(404)

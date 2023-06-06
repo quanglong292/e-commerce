@@ -34,6 +34,19 @@ router.post("/", async ({ body }: Request, res: Response) => {
   }
 });
 
+router.post("/confirm", async ({ body }: Request, res: Response) => {
+  try {
+    const data = await CartModel.findOneAndUpdate(
+      { id: body.id },
+      { status: "order shipped" }
+    );
+
+    res.json(data);
+  } catch (error) {
+    res.status(404);
+  }
+});
+
 router.delete("/", async (red: Request, res: Response) => {
   try {
     const data = await CartModel.deleteOne({ id: red?.body?.id });
@@ -47,8 +60,8 @@ router.delete("/", async (red: Request, res: Response) => {
 router.get("/history/", async ({ query }: Request, res: Response) => {
   try {
     if (!query?.creator) throw "";
-
     const data = await handleUserOrderHistory(query.creator);
+    console.log({ data12354: data });
 
     res.json(data);
   } catch (error: any) {

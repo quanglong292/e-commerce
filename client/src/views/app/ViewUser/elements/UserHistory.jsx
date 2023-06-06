@@ -8,7 +8,7 @@ import formatDate from "../../../../utils/helpers/formatDate";
 
 const UserHistory = (props) => {
   // Store
-  const user = useGlobalStore((state) => state.user);
+  const { checkToken } = useGlobalStore((state) => state);
 
   // State
   const [loading, setLoading] = useState(false);
@@ -17,10 +17,14 @@ const UserHistory = (props) => {
   // Functions
 
   const handleInitHistory = async () => {
-    if (!user || historyList.length || props.historyList.length) return;
+    const user = checkToken()["0"];
+    if (!user || historyList.length || props.historyList?.length) return;
+
+    console.log("vo day", { user });
+
     setLoading(true);
     const data = await fetcher(REQUEST_PARAMS.GET_CART_HISTORY, {
-      creator: user.username,
+      creator: user.userName,
     });
     setLoading(false);
 
@@ -29,7 +33,7 @@ const UserHistory = (props) => {
 
   useEffect(() => {
     handleInitHistory();
-  }, [user]);
+  }, []);
 
   return (
     <>

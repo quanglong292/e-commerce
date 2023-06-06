@@ -30,7 +30,11 @@ const SigninForm = (props) => {
       />
       <div className="w-full flex justify-between text-sm">
         <div className="flex gap-2 justify-start items-start text-gray-400">
-          <CInput type="checkbox" placeholder="Username" className="w-[14px]" />
+          <CInput
+            {...register("remember")}
+            type="checkbox"
+            className="w-[14px]"
+          />
           <div className="whitespace-nowrap">Keep me signed in</div>
         </div>
         <div className="text-gray-400 hover:underline cursor-pointer">

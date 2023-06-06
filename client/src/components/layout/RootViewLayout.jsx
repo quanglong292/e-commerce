@@ -4,21 +4,18 @@ import { Suspense, useEffect } from "react";
 import ComponentLoading from "./ComponentLoading";
 import ViewLogin from "../../views/ViewLogin";
 import useGlobalStore from "../../store/global.zustand";
-// import Sidebar from "../core/Sidebar";
 
 const RootViewLayout = () => {
   const navigate = useNavigate();
   const { pathname } = useResolvedPath();
 
   // Store
-  const { user } = useGlobalStore((state) => state);
+  const checkToken = useGlobalStore((state) => state.checkToken);
 
   // Function
   const handleValidateAuth = () => {
-    console.log({ pathname });
     if (["/", "/sale", "/product"].includes(pathname)) {
-      if (!user) navigate("auth/admin");
-      // else navigate("/product");
+      if (!checkToken()) navigate("auth/admin");
     }
   };
 

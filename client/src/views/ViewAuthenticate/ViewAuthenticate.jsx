@@ -9,19 +9,22 @@ import { useNavigate } from "react-router-dom";
 
 const ViewAuthenticate = () => {
   const navigate = useNavigate();
-  const { handleLogin, handleRegister, toggleLoginModal } = useGlobalStore(
-    (state) => state
-  );
+  const { handleLogin, handleRegister, toggleLoginModal, setToken } =
+    useGlobalStore((state) => state);
 
   // State
   const [formType, setFormType] = useState("signin");
 
   // Functions
   const onSubmit = async (data) => {
-    console.log({ onSubmit: data });
+    // console.log({ onSubmit: data });
+    if (data.remember) setToken();
+
+    delete data.remember;
+
     if (formType === "signin") {
       handleLogin({ payload: data });
-      navigate(-1);
+      navigate("/product");
       toggleLoginModal();
     } else {
       await handleRegister(data);

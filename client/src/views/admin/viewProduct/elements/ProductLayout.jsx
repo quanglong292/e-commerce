@@ -285,7 +285,7 @@ async function handleClickUserDetail(creator) {
   };
 
   function handleConfirmOrder(rec) {
-    // console.log({ handleConfirmOrder: rec });
+    console.log({ handleConfirmOrder: rec });
     setOrderToConfirm(rec);
   }
 
