@@ -1,13 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Logo from "../../../../assets/icons/Logo";
 import { NavLink, useNavigate, useResolvedPath } from "react-router-dom";
 import MobileNav from "./MobileNav";
 import { Button, Input, Tooltip } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
+import CButton from "../../CButton";
+import useGlobalStore from "../../../../store/global.zustand";
 
 const MainNav = ({ schema }) => {
   const navigate = useNavigate();
   const { pathname } = useResolvedPath();
+  const { handleLogout, token } = useGlobalStore((state) => state);
 
   // Functions
   const handleClickLogo = () => {
@@ -17,6 +20,11 @@ const MainNav = ({ schema }) => {
 
   const handleFocusSearch = () => {
     navigate("/app/search");
+  };
+
+  const handleAdminLogout = () => {
+    handleLogout();
+    navigate("/auth/admin");
   };
 
   return (
@@ -42,13 +50,17 @@ const MainNav = ({ schema }) => {
             </NavLink>
           ))}
         </div>
-        <Tooltip title="search">
-          <Button
-            onClick={handleFocusSearch}
-            shape="circle"
-            icon={<SearchOutlined />}
-          />
-        </Tooltip>
+        {pathname.includes("app") ? (
+          <Tooltip title="search">
+            <Button
+              onClick={handleFocusSearch}
+              shape="circle"
+              icon={<SearchOutlined />}
+            />
+          </Tooltip>
+        ) : (
+          <>{token && <Button onClick={handleAdminLogout}>Logout</Button>}</>
+        )}
       </div>
 
       {/* MOBILE */}

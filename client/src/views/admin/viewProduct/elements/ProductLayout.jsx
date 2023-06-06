@@ -36,29 +36,32 @@ const ProductLayout = (props) => {
   // Static
   const additionColumns = {
     action: {
-      title: "Action",
-      dataIndex: "action",
-      key: "action",
-      width: "120px",
-      render: (_, record) => (
-        <div className="flex gap-2">
-          <CButton onClick={() => handleEditCell(record)} size="small">
-            Edit
-          </CButton>
-          <Popconfirm
-            title="Delete item"
-            description="Are you sure to delete this item?"
-            onConfirm={() => handleDeleteItem(record.id)}
-            //   onCancel={cancel}
-            okText="Yes"
-            cancelText="No"
-          >
-            <CButton type="primary" size="small" danger>
-              Delete
+      default: {
+        title: "Action",
+        dataIndex: "action",
+        key: "action",
+        width: "120px",
+        render: (_, record) => (
+          <div className="flex gap-2">
+            <CButton onClick={() => handleEditCell(record)} size="small">
+              Edit
             </CButton>
-          </Popconfirm>
-        </div>
-      ),
+            <Popconfirm
+              title="Delete item"
+              description="Are you sure to delete this item?"
+              onConfirm={() => handleDeleteItem(record.id)}
+              //   onCancel={cancel}
+              okText="Yes"
+              cancelText="No"
+            >
+              <CButton type="primary" size="small" danger>
+                Delete
+              </CButton>
+            </Popconfirm>
+          </div>
+        ),
+      },
+      orders: {},
     },
     user: [
       {
@@ -81,9 +84,17 @@ const ProductLayout = (props) => {
         dataIndex: "status",
         key: "status",
         render: (text) => (
-          <Tag color="orange" className="uppercase">
-            {text || "pending"}
-          </Tag>
+          <>
+            {text === "order shipped" ? (
+              <Tag color="green" className="uppercase">
+                {text}
+              </Tag>
+            ) : (
+              <Tag color="orange" className="uppercase">
+                {text || "pending"}
+              </Tag>
+            )}
+          </>
         ),
       },
       {
@@ -105,18 +116,35 @@ const ProductLayout = (props) => {
         render: (_, record) => <a>{record.products.length}</a>,
       },
       {
-        title: "Confirm order",
+        title: "",
         dataIndex: "confirm",
         key: "confirm",
-        render: (text, rec) => (
-          <CButton
-            type="primary"
-            onClick={() => handleConfirmOrder(rec)}
-            size="small"
-          >
-            Confirm
-          </CButton>
-        ),
+        render: (text, rec) => {
+          if (rec.status === "order shipped") return <></>
+          return (
+            <div className="flex gap-2">
+              <CButton
+                type="primary"
+                onClick={() => handleConfirmOrder(rec)}
+                size="small"
+              >
+                Confirm
+              </CButton>
+              <Popconfirm
+                title="Delete item"
+                description="Are you sure to delete this item?"
+                onConfirm={() => handleDeleteItem(record.id)}
+                //   onCancel={cancel}
+                okText="Yes"
+                cancelText="No"
+              >
+                <CButton type="primary" size="small" danger>
+                  Delete
+                </CButton>
+              </Popconfirm>
+            </div>
+          )
+        },
       },
     ],
   };
@@ -129,7 +157,7 @@ const ProductLayout = (props) => {
   const [columns, setColumns] = useState([
     ...schemaColumns,
     ...(additionColumns?.[viewName] ?? []),
-    additionColumns.action,
+    additionColumns.action[viewName] ?? additionColumns.action.default,
   ]);
   const [formSchema, setFormSchema] = useState(propsFormSchema);
   const [localLoading, setLocalLoading] = useState(false);
@@ -237,7 +265,7 @@ const ProductLayout = (props) => {
     fetcherHook(requets.GET_TABLE_ITEMS);
   }
 
-async function handleClickUserDetail(creator) {
+  async function handleClickUserDetail(creator) {
     setLocalLoading(true);
     const data = await fetcher(REQUEST_PARAMS.GET_CART_HISTORY, {
       creator,
@@ -284,9 +312,12 @@ async function handleClickUserDetail(creator) {
     }
   };
 
-  function handleConfirmOrder(rec) {
+  async function handleConfirmOrder(rec, type = "open") {
     console.log({ handleConfirmOrder: rec });
-    setOrderToConfirm(rec);
+    if (type === "confirm") {
+      await fetcher(REQUEST_PARAMS.CONFIRM_CART, { id: orderToConfirm.id });
+      handleInit();
+    } else setOrderToConfirm(rec);
   }
 
   // Effects
@@ -350,6 +381,7 @@ async function handleClickUserDetail(creator) {
         <ConfirmOrderModal
           item={orderToConfirm}
           visible={Boolean(orderToConfirm)}
+          onConfirmOrder={handleConfirmOrder}
           onCancel={() => setOrderToConfirm(null)}
         />
       </div>

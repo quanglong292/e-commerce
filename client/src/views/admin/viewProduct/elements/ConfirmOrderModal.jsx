@@ -7,7 +7,7 @@ import UserHistory from "../../../app/ViewUser/elements/UserHistory";
 import formatPrice from "../../../../utils/helpers/formatPrice";
 
 const ConfirmOrderModal = (props) => {
-  const { visible, item, onCancel, onSubmit } = props;
+  const { visible, item, onCancel, onConfirmOrder } = props;
 
   // State
   const [products, setProducts] = useState([]);
@@ -18,6 +18,7 @@ const ConfirmOrderModal = (props) => {
 
   const confirmOrder = async () => {
     // write api to confirm order
+    // await fetcher(REQUEST_PARAMS.CONFIRM_CART, { id: item.id });
   };
 
   useEffect(() => {
@@ -57,10 +58,16 @@ const ConfirmOrderModal = (props) => {
         })}
       </div>
       <div className="flex gap-4 mt-4">
-        <Button onClick={confirmOrder} size="small" type="primary">
+        <Button
+          onClick={() => onConfirmOrder(null, "confirm")}
+          size="small"
+          type="primary"
+        >
           Confirm
         </Button>
-        <Button size="small">Close</Button>
+        <Button onClick={onCancel} size="small">
+          Close
+        </Button>
       </div>
     </Modal>
   );

@@ -29,6 +29,7 @@ export const REQUEST_PARAMS = {
   ADD_CART: ["cart/", "POST"],
   DELETE_CART: ["cart/", "DELETE"],
   GET_CART_HISTORY: ["cart/history/", "GET"],
+  CONFIRM_CART: ["cart/confirm", "POST"],
 
   // Comment
   GET_COMMENT: ["community/comment/", "GET"],

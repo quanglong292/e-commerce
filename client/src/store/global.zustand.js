@@ -13,7 +13,7 @@ const useGlobalStore = create((set) => ({
   toggleLoginModal: () => set((state) => ({ showLogin: !state.showLogin })),
   checkToken: () => {
     const token = parseJwt(getToken());
-    console.log({ token });
+    // console.log({ token });
 
     if (!token) return false;
 
