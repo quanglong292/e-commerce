@@ -73,8 +73,20 @@ function ReviewTab() {
     setForm({ ...form, [key]: e });
   };
 
+  // Functions
+  const createCommentValidator = () => {
+    if (!user) {
+      toggleLoginModal();
+      return false;
+    }
+
+    return true;
+  };
+
   const createComment = async () => {
-    if (!user) return toggleLoginModal();
+    const isValidToCreate = createCommentValidator();
+    if (!isValidToCreate) return;
+
     try {
       await fetcher(REQUEST_PARAMS.ADD_COMMENT, {
         ...form,
