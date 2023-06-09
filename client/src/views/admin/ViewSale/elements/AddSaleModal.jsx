@@ -13,6 +13,59 @@ const AddSaleModal = (props) => {
 
   // State
   const [selecteds, setSelecteds] = useState([]);
+  const [formSchema, setFormSchema] = useState([
+    "grid grid-cols-2 gap-8",
+    {
+      label: "Title",
+      type: "Text",
+      field: "title",
+      rules: { required: true },
+      wrapClassName: "h-[70px]",
+      className: "flex-col",
+    },
+    {
+      label: "Sale amount",
+      type: "Number",
+      field: "value",
+      rules: { required: true },
+      wrapClassName: "h-[70px]",
+      className: "flex-col",
+      max: 100,
+    },
+    {
+      label: "Description",
+      type: "TextArea",
+      field: "description",
+      rules: { required: false },
+      wrapClassName: "h-[70px]",
+      className: "flex-col",
+    },
+    {
+      label: "Have end date ?",
+      type: "Switch",
+      field: "isEndDate",
+      rules: { required: false },
+      wrapClassName: "h-[70px]",
+      className: "flex-col",
+    },
+    {
+      label: "Start date",
+      type: "Date",
+      field: "startDate",
+      rules: { required: true },
+      wrapClassName: "h-[70px]",
+      className: "flex-col",
+    },
+    {
+      label: "End date",
+      type: "Date",
+      field: "endDate",
+      rules: { required: true },
+      wrapClassName: "h-[70px]",
+      className: "flex-col",
+      disabled: true,
+    },
+  ]);
 
   // Function
   const handleSelect = (e) => {
@@ -41,6 +94,22 @@ const AddSaleModal = (props) => {
     onSubmit(submitValue);
   };
 
+  const onFormChange = (name, value, formValue) => {
+    if (formValue["isEndDate"]) {
+      setFormSchema(
+        formSchema.map((i) =>
+          i.field === "endDate" ? { ...i, disabled: false } : i
+        )
+      );
+    } else {
+      setFormSchema(
+        formSchema.map((i) =>
+          i.field === "endDate" ? { ...i, disabled: true } : i
+        )
+      );
+    }
+  };
+
   useEffect(() => {
     if (!allProducts.length) {
       fetch();
@@ -65,52 +134,10 @@ const AddSaleModal = (props) => {
       <div className="flex gap-4">
         <div className="w-1/2">
           <FormBuilder
-            schema={[
-              "grid grid-cols-2 gap-8",
-              {
-                label: "Title",
-                type: "Text",
-                field: "title",
-                rules: { required: true },
-                wrapClassName: "h-[70px]",
-                className: "flex-col",
-              },
-              {
-                label: "Sale amount",
-                type: "Number",
-                field: "value",
-                rules: { required: true },
-                wrapClassName: "h-[70px]",
-                className: "flex-col",
-                max: 100,
-              },
-              {
-                label: "Start date",
-                type: "Date",
-                field: "startDate",
-                rules: { required: true },
-                wrapClassName: "h-[70px]",
-                className: "flex-col",
-              },
-              {
-                label: "End date",
-                type: "Date",
-                field: "endDate",
-                rules: { required: true },
-                wrapClassName: "h-[70px]",
-                className: "flex-col",
-              },
-              {
-                label: "Description",
-                type: "TextArea",
-                field: "description",
-                rules: { required: false },
-                wrapClassName: "h-[70px]",
-                className: "flex-col",
-              },
-            ]}
+            schema={formSchema}
             onSubmit={handleCreateSale}
             formValue={edittingCell}
+            onChange={onFormChange}
           />
         </div>
         <div className="w-1/2">
@@ -118,7 +145,7 @@ const AddSaleModal = (props) => {
           <div className="flex gap-2">
             <Select
               className="w-full mb-2"
-              options={allProducts.map((i) => ({
+              options={allProducts?.map((i) => ({
                 ...i,
                 value: i.id,
                 label: i.name,

@@ -27,7 +27,7 @@ const ADD_NEW_CATEGORY_SCHEMA = [
     className: "flex-col",
   },
   {
-    label: "Category groups",
+    label: "Groups",
     type: "Select",
     field: "groups",
     rules: { required: true },

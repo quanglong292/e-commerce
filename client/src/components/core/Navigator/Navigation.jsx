@@ -54,7 +54,7 @@ const Navigation = () => {
 
     if (!path) return fetch("all");
 
-    const value = categoryGroups.find((i) => i.name.toLowerCase() === path)?.id;
+    const value = categoryGroups?.find((i) => i.name.toLowerCase() === path)?.id;
 
     if (!value) return;
 

@@ -171,10 +171,10 @@ function DetailSection({ item = {} }) {
           ))}
         </div>
       </div>
-      <CButton type="black" onClick={() => handleAddSelectedItems("ordersList")}>
+      <CButton type="black" className="mb-2" onClick={() => handleAddSelectedItems("ordersList")}>
         add to cart
       </CButton>
-      <CButton type="black" onClick={() => handleAddSelectedItems("wishList")}>
+      <CButton type="black" className="" onClick={() => handleAddSelectedItems("wishList")}>
         add to wish list
       </CButton>
     </div>

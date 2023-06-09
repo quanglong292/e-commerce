@@ -7,7 +7,8 @@ export const SaleSchema = new Schema({
     description: String,
     startDate: String,
     endDate: String,
-    value: Number
+    value: Number,
+    isEndDate: Boolean
 })
 
 export default model("Sale", SaleSchema)

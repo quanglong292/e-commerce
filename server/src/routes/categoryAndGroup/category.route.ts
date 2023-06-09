@@ -50,11 +50,8 @@ router.delete("/", async (red: Request, res: Response) => {
     }
 })
 
-router.post("/delMany", async (red: Request, res: Response) => {
-    // const { body: {name, groups, ...restBody} } = red
-    
+router.post("/delMany", async (red: Request, res: Response) => {    
     try {
-        // if (!groups?.length || !name) throw ""
         const data = await Category.deleteMany({
             groups: [],
         })

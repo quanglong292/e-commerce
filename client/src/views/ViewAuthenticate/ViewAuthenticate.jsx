@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Logo from "../../assets/icons/Logo";
-import { useForm } from "react-hook-form";
 import SigninForm from "./elements/SigninForm";
 import SignupForm from "./elements/SignupForm";
 import useGlobalStore from "../../store/global.zustand";
@@ -9,8 +8,9 @@ import { useNavigate } from "react-router-dom";
 
 const ViewAuthenticate = () => {
   const navigate = useNavigate();
-  const { handleLogin, handleRegister, toggleLoginModal, setToken } =
-    useGlobalStore((state) => state);
+  const { handleLogin, handleRegister, setToken } = useGlobalStore(
+    (state) => state
+  );
 
   // State
   const [formType, setFormType] = useState("signin");
@@ -23,9 +23,8 @@ const ViewAuthenticate = () => {
     delete data.remember;
 
     if (formType === "signin") {
-      handleLogin({ payload: data });
+      await handleLogin({ payload: data }, "ViewAuthenticate");
       navigate("/product");
-      toggleLoginModal();
     } else {
       await handleRegister(data);
       notification.success({

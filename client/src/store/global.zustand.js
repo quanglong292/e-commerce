@@ -34,12 +34,12 @@ const useGlobalStore = create((set) => ({
       return true;
     } catch (error) {}
   },
-  handleLogin: async ({ payload }) => {
+  handleLogin: async ({ payload }, view = "default") => {
     const data = await fetcher(REQUEST_PARAMS.GET_USER, payload);
     document.cookie = JSON.stringify(data.token);
 
     return set((state) => {
-      state.toggleLoginModal();
+      if (!["ViewAuthenticate"].includes(view)) state.toggleLoginModal();
       return { token: parseJwt(data.token), user: payload };
     });
   },

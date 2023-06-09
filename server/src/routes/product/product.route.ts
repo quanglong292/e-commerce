@@ -4,6 +4,7 @@ import { productServices } from "@/services/products";
 import { Request, Response, Router } from "express";
 import { Schema } from "mongoose";
 import { v4 } from "uuid";
+import { findProductGroup } from '@/controllers/product.controll';
 
 const router = Router()
 const { generateFilterOptions } = productServices()
@@ -14,8 +15,8 @@ router.get("/", async (req: Request<IFilterOptions>, res: Response) => {
 
     try {
         const data = await ProductModel.find(query)
-        console.log({data});
-        
+        console.log({ query });
+
         res.json(data)
     } catch (error) {
         res.status(404)
@@ -24,10 +25,12 @@ router.get("/", async (req: Request<IFilterOptions>, res: Response) => {
 
 router.post("/", async ({ body }: Request, res: Response) => {
     try {
+        const group = await findProductGroup(body.category)
         const data = await ProductModel.create({
             id: v4(),
             available: true,
-            ...body
+            ...body,
+            group
         })
 
         res.json(data)

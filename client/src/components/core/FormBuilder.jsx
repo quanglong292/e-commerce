@@ -91,6 +91,7 @@ const getInputType = (type) => {
   if (type === "Switch") TypeInput = Switch;
   if (type === "Button") TypeInput = Button;
   // if (type === "Date") TypeInput = DatePicker;
+  // if (type === "Toggle") TypeInput = Switch
   if (["TextArea", "Password"].includes(type)) TypeInput = Input[type];
 
   return TypeInput;
@@ -214,6 +215,9 @@ const FormBuilder = memo((props) => {
             let className =
               "flex flex-col justify-between h-[70px] " + i.wrapClassName;
             const TypeInput = getInputType(type);
+            const style = {
+              width: type === "Switch" ? "24px" : type === "Select" ? "100%" : "auto",
+            };
 
             if (type === "Array") {
               const fields =
@@ -277,7 +281,14 @@ const FormBuilder = memo((props) => {
                     control={control}
                     rules={i.rules ?? {}}
                     render={({ field }) => {
-                      return <TypeInput {...field} {...i} />;
+                      return (
+                        <TypeInput
+                          {...field}
+                          {...i}
+                          style={style}
+                          className=""
+                        />
+                      );
                     }}
                   />
                 </div>
