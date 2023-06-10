@@ -134,6 +134,10 @@ const FormBuilder = memo((props) => {
           }));
         }
 
+        options = options.filter(
+          (i) => i.id !== "761fcea4-58b4-4ce9-a4a5-fd5239228047"
+        );
+
         newSchema = [
           ...newSchema,
           {
@@ -216,7 +220,12 @@ const FormBuilder = memo((props) => {
               "flex flex-col justify-between h-[70px] " + i.wrapClassName;
             const TypeInput = getInputType(type);
             const style = {
-              width: type === "Switch" ? "24px" : type === "Select" ? "100%" : "auto",
+              width:
+                type === "Switch"
+                  ? "24px"
+                  : type === "Select"
+                  ? "100%"
+                  : "auto",
             };
 
             if (type === "Array") {

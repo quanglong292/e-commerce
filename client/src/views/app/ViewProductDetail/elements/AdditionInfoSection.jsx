@@ -1,4 +1,4 @@
-import { Button, Input, Rate, Tabs } from "antd";
+import { Button, Input, Rate, Tabs, Tag } from "antd";
 import React, { useEffect, useState } from "react";
 import fetcher from "../../../../utils/helpers/fetcher";
 import { REQUEST_PARAMS } from "../../../../utils/constants/urlPath.constant";
@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 import dayjs from "dayjs";
 import formatDate from "../../../../utils/helpers/formatDate";
 import useGlobalStore from "../../../../store/global.zustand";
+import { CheckCircleOutlined } from "@ant-design/icons";
 
 const PRODUCT_DETAIL_ADDITION_SECTION_TABS = [
   {
@@ -92,6 +93,10 @@ function ReviewTab() {
         ...form,
         userId: user.userName,
         productId: id,
+        isBought: user.orderHistory
+          .map((i) => i.products)
+          .map((i) => i.id)
+          .includes(id),
       });
       await fetchComments(id);
     } catch (err) {}
@@ -122,6 +127,15 @@ function ReviewTab() {
                   </div>
                   <div>-</div>
                   <div className="text-gray-500">{formatDate(i.date)}</div>
+                  <>
+                    {i.isBought ? (
+                      <Tag icon={<CheckCircleOutlined />} color="success">
+                        Bought
+                      </Tag>
+                    ) : (
+                      <Tag color="">Guest</Tag>
+                    )}
+                  </>
                 </div>
                 <div className="text-sm">Description: {i.content}</div>
               </div>

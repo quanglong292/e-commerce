@@ -40,7 +40,10 @@ const useGlobalStore = create((set) => ({
 
     return set((state) => {
       if (!["ViewAuthenticate"].includes(view)) state.toggleLoginModal();
-      return { token: parseJwt(data.token), user: payload };
+      return {
+        token: parseJwt(data.token),
+        user: { ...payload, orderHistory: data.orderHistory },
+      };
     });
   },
 }));

@@ -30,7 +30,10 @@ export const ProductSchema = new Schema({
     }],
     bannerImage: String,
     description: String,
-    fields: String
+    fields: String,
+    saleInfo: {
+        salePrice: Number
+    },
 })
 
 export default model('Product', ProductSchema); 

@@ -4,7 +4,7 @@ import { productServices } from "@/services/products";
 import { Request, Response, Router } from "express";
 import { Schema } from "mongoose";
 import { v4 } from "uuid";
-import { findProductGroup } from '@/controllers/product.controll';
+import { findProductGroup, handleGetProduct } from '@/controllers/product.controll';
 
 const router = Router()
 const { generateFilterOptions } = productServices()
@@ -14,8 +14,7 @@ router.get("/", async (req: Request<IFilterOptions>, res: Response) => {
     if (query.name) query.name = { $regex: new RegExp(query.name, "i") }
 
     try {
-        const data = await ProductModel.find(query)
-        console.log({ query });
+        const data = await handleGetProduct(query)
 
         res.json(data)
     } catch (error) {

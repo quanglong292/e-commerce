@@ -34,6 +34,7 @@ const ComunitySchema = new Schema({
         type: String,
         require: true
     },
+    isBought: Boolean,
     content: String,
     rating: Number,
     images: [String],
@@ -44,4 +45,4 @@ const ComunitySchema = new Schema({
 })
 
 export default model("Comunity", ComunitySchema)
-export {ThreadComment, ThreadCommentModel, ComunitySchema}
+export { ThreadComment, ThreadCommentModel, ComunitySchema }

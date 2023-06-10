@@ -17,34 +17,35 @@ const ProductSection = (props) => {
   const [saleInfo, setSaleInfo] = useState({});
 
   // Functions
-  const getSaleInfo = (categories, product) => {
-    console.log({ categories });
-    const saleCates = categories.filter((i) => {
-      return (
-        // i.name.toLowerCase().includes("sale") ||
-        i.groups?.includes("761fcea4-58b4-4ce9-a4a5-fd5239228047")
-      );
-    });
-    const foundSaleInfo = saleCates.find((i) =>
-      product.category.includes(i.id)
-    );
-    console.log({ saleCates });
-    console.log({ foundSaleInfo, product });
-    if (foundSaleInfo) {
-      const saleValue = foundSaleInfo.description.split("_")[0];
-      let salePrice = 0;
-      if (saleValue.includes("%")) {
-        salePrice = (product.price * Number(saleValue.split("%")[0])) / 100;
-      } else salePrice = product.price - Number(saleValue);
-      const description = foundSaleInfo?.description?.split("_")?.[1] || "";
+  // const getSaleInfo = (categories, product) => {
+  //   console.log({ categories });
+  //   const saleCates = categories.filter((i) => {
+  //     return (
+  //       // i.name.toLowerCase().includes("sale") ||
+  //       i.groups?.includes("761fcea4-58b4-4ce9-a4a5-fd5239228047")
+  //     );
+  //   });
+  //   const foundSaleInfo = saleCates.find((i) =>
+  //     product.category.includes(i.id)
+  //   );
+  //   console.log({ saleCates });
+  //   console.log({ foundSaleInfo, product });
+  //   if (foundSaleInfo) {
+  //     const saleValue = foundSaleInfo.description.split("_")[0];
+  //     let salePrice = 0;
+  //     if (saleValue.includes("%")) {
+  //       salePrice = (product.price * Number(saleValue.split("%")[0])) / 100;
+  //     } else salePrice = product.price - Number(saleValue);
+  //     const description = foundSaleInfo?.description?.split("_")?.[1] || "";
 
-      setSaleInfo({ salePrice, description });
-    }
-  };
+  //     setSaleInfo({ salePrice, description });
+  //   }
+  // };
 
   const handleInit = async () => {
-    if (!categories?.length) fetchInitData();
+    // if (!categories?.length) fetchInitData();
     const productData = await fetcher(REQUEST_PARAMS.GET_PRODUCT, { id });
+    console.log({ productData });
 
     if (productData) setProduct(productData[0]);
   };
@@ -56,9 +57,9 @@ const ProductSection = (props) => {
     handleInit();
   }, [id]);
 
-  useEffect(() => {
-    if (categories.length && product.id) getSaleInfo(categories, product);
-  }, [categories, product]);
+  // useEffect(() => {
+  //   // if (categories.length && product.id) getSaleInfo(categories, product);
+  // }, [categories, product]);
 
   return (
     <div className="bg-gray-100 p-2 flex">
@@ -87,7 +88,7 @@ const ProductSection = (props) => {
           />
         )}
       </div>
-      <DetailSection item={{ ...product, saleInfo }} />
+      <DetailSection item={product} />
     </div>
   );
 };
@@ -122,23 +123,25 @@ function DetailSection({ item = {} }) {
     });
   };
 
+  console.log({ item });
+
   return (
     <div className="w-[30%] bg-white p-4">
       <div className="text-2xl font-bold">{item.name}</div>
       <div className="">{`${category}'s`}</div>
       <div className="text-lg mt-6 flex gap-2">
-        <span className={item?.saleInfo?.salePrice ? "line-through" : ""}>
+        <span
+          className={item?.finalPrice !== item?.price ? "line-through" : ""}
+        >
           {formatPrice(item.price)}
         </span>
         <span className="text-red-500 font-semibold">
-          {item?.saleInfo?.salePrice
-            ? `-> ${formatPrice(item?.saleInfo.salePrice)}`
+          {item?.finalPrice !== item?.price
+            ? `-> ${formatPrice(item?.finalPrice)}`
             : ""}
         </span>
       </div>
-      <div className="text-red-500 font-semibold">
-        {item?.saleInfo?.description}
-      </div>
+      <div className="text-red-500 font-semibold">{item?.saleInfo?.title}</div>
       <div className="text-sm">
         4 interest-free payments of $45.00 with{" "}
         <span className="font-semibold">Klarna</span>.{" "}
@@ -171,10 +174,18 @@ function DetailSection({ item = {} }) {
           ))}
         </div>
       </div>
-      <CButton type="black" className="mb-2" onClick={() => handleAddSelectedItems("ordersList")}>
+      <CButton
+        type="black"
+        className="mb-2"
+        onClick={() => handleAddSelectedItems("ordersList")}
+      >
         add to cart
       </CButton>
-      <CButton type="black" className="" onClick={() => handleAddSelectedItems("wishList")}>
+      <CButton
+        type="black"
+        className=""
+        onClick={() => handleAddSelectedItems("wishList")}
+      >
         add to wish list
       </CButton>
     </div>

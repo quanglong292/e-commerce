@@ -98,13 +98,17 @@ const AddSaleModal = (props) => {
     if (formValue["isEndDate"]) {
       setFormSchema(
         formSchema.map((i) =>
-          i.field === "endDate" ? { ...i, disabled: false } : i
+          i.field === "endDate"
+            ? { ...i, disabled: false, rules: { required: true } }
+            : i
         )
       );
     } else {
       setFormSchema(
         formSchema.map((i) =>
-          i.field === "endDate" ? { ...i, disabled: true } : i
+          i.field === "endDate"
+            ? { ...i, disabled: true, rules: { required: false } }
+            : i
         )
       );
     }

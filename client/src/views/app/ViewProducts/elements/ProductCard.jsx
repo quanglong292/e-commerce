@@ -56,7 +56,13 @@ const ProductCard = (props) => {
         <div className="w-full mt-2">
           <p className="font-semibold">{item.name}</p>
           <div className="flex gap-2 items-end">
-            <p>{formatPrice(item.price)}</p>
+            {item?.finalPrice !== item.price ? (
+              <p className="uppercase text-red-500 font-semibold">
+                SALE: {formatPrice(item.finalPrice)}
+              </p>
+            ) : (
+              <p>{formatPrice(item.price)}</p>
+            )}
             <p>-</p>
             <p
               className={
