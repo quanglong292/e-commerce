@@ -6,16 +6,23 @@ import { useNavigate } from "react-router-dom";
 const SALE_BANNER =
   "https://static.nike.com/a/images/f_auto/dpr_1.0,cs_srgb/w_1824,c_limit/9e83666e-b2bd-40c2-af70-7cc42b2beb3c/nike-just-do-it.jpg";
 
-const SaleSection = () => {
+const SaleSection = ({
+  header = "Sale",
+  banner = SALE_BANNER,
+  buttonText = "Shop",
+  path = "/app/sale",
+}) => {
   const navigate = useNavigate();
 
   return (
     <div className="mt-24">
-      <SectionHeader>Sale</SectionHeader>
+      <SectionHeader>{header}</SectionHeader>
       <div className="w-full relative">
-        <img src={SALE_BANNER} className="max-w-full" />
+        <img src={banner} className="max-w-full" />
         <div className="absolute bottom-4 left-4">
-          <CButton onClick={() => navigate("/app/sale")} type="primary">Shop</CButton>
+          <CButton onClick={() => navigate(path)} type="primary">
+            {buttonText}
+          </CButton>
         </div>
       </div>
     </div>
