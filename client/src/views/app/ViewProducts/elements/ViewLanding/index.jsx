@@ -60,7 +60,7 @@ const ViewLanding = memo(() => {
         </div>
       </div>
       <PopularSection {...state} />
-      <CategorySection {...state} />
+      {/* <CategorySection {...state} /> */}
       <div className="mt-24">
         <SectionHeader>Don't miss this</SectionHeader>
         <BigCategory src="https://static.nike.com/a/images/f_auto/dpr_1.0,cs_srgb/w_1824,c_limit/b6de205f-c91a-4cb2-b58a-b2bb29080cd0/nike-just-do-it.jpg" />

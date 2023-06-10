@@ -3,7 +3,7 @@ import CCarousel from "../../../../../../components/core/CCarousel";
 import SectionHeader from "./SectionHeader";
 
 const PopularSection = (props) => {
-  const { products = [], loading } = props;
+  const { allProducts, loading } = props;
 
   return (
     <div className="mt-24">
@@ -24,7 +24,7 @@ const PopularSection = (props) => {
               />
             </div>
           )}
-          items={products.filter((i, idx) => idx < 5)}
+          items={allProducts?.filter((i, idx) => idx < 5)}
         />
       )}
     </div>
