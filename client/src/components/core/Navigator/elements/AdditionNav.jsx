@@ -19,7 +19,7 @@ import { useNavigate } from "react-router-dom";
 
 const AdditionNav = (props) => {
   const { isClientApp } = props;
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   // Store
   const {
     wishList,
@@ -85,8 +85,9 @@ const AdditionNav = (props) => {
                 label: (
                   <p
                     onClick={() => {
-                      if (i.label === "Login") toggleLoginModal();
-                      else if (i.label === "Log out") handleLogout();
+                      if (i.label === "Login") {
+                        navigate("auth/app");
+                      } else if (i.label === "Log out") handleLogout();
                       else navigate(i.path);
                     }}
                   >

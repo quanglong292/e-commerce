@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useMemo, useState } from "react";
+import { useParams, useResolvedPath } from "react-router-dom";
 import { getSizes } from "../../../../utils/composables/useProduct";
 import useProductStore from "../../../../store/product.zustand";
 import formatPrice from "../../../../utils/helpers/formatPrice";
@@ -7,14 +7,24 @@ import { REQUEST_PARAMS } from "../../../../utils/constants/urlPath.constant";
 import fetcher from "../../../../utils/helpers/fetcher";
 import CCarousel from "../../../../components/core/CCarousel";
 import CButton from "../../../../components/core/CButton";
+import BreadCrum from "../../../../components/core/BreadCrum";
 
 const ProductSection = (props) => {
+  const { pathname } = useResolvedPath();
   const { id } = useParams();
   const { categories, fetchInitData } = useProductStore((state) => state);
 
   // State
   const [product, setProduct] = useState({});
-  const [saleInfo, setSaleInfo] = useState({});
+
+  const breadCrumItems = useMemo(() => {
+    const raw =
+      pathname.split("/").map((i) => ({ title: i.toUpperCase() })) ?? [];
+    if (raw.length) {
+      raw[4] = { title: product.name };
+    }
+    return raw;
+  }, [pathname, product]);
 
   // Functions
   // const getSaleInfo = (categories, product) => {
@@ -62,34 +72,37 @@ const ProductSection = (props) => {
   // }, [categories, product]);
 
   return (
-    <div className="bg-gray-100 p-2 flex">
-      <div className="w-[40%] m-auto">
-        {product.detailImages?.length ? (
-          <CCarousel
-            renderItem={(i) => {
-              return (
-                <img
-                  src={i?.value || ""}
-                  alt=""
-                  className="mx-auto max-w-full"
-                />
-              );
-            }}
-            items={product.detailImages.filter(
-              (i) => (i?.name && i?.value) || i
-            )}
-            responsive={[1, 1, 1]}
-          />
-        ) : (
-          <img
-            src={product.bannerImage}
-            alt=""
-            className="mx-auto max-w-full"
-          />
-        )}
+    <>
+      <BreadCrum items={breadCrumItems} />
+      <div className="bg-gray-100 p-2 flex">
+        <div className="w-[40%] m-auto">
+          {product.detailImages?.length ? (
+            <CCarousel
+              renderItem={(i) => {
+                return (
+                  <img
+                    src={i?.value || ""}
+                    alt=""
+                    className="mx-auto max-w-full"
+                  />
+                );
+              }}
+              items={product.detailImages.filter(
+                (i) => (i?.name && i?.value) || i
+              )}
+              responsive={[1, 1, 1]}
+            />
+          ) : (
+            <img
+              src={product.bannerImage}
+              alt=""
+              className="mx-auto max-w-full"
+            />
+          )}
+        </div>
+        <DetailSection item={product} />
       </div>
-      <DetailSection item={product} />
-    </div>
+    </>
   );
 };
 

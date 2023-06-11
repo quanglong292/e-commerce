@@ -20,7 +20,7 @@ const SaleSection = ({
       <div className="w-full relative">
         <img src={banner} className="max-w-full" />
         <div className="absolute bottom-4 left-4">
-          <CButton onClick={() => navigate(path)} type="primary">
+          <CButton onClick={() => navigate(path)} className="px-4 rounded-[50px]" type="black">
             {buttonText}
           </CButton>
         </div>

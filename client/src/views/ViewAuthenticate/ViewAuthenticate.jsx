@@ -24,7 +24,7 @@ const ViewAuthenticate = () => {
 
     if (formType === "signin") {
       await handleLogin({ payload: data }, "ViewAuthenticate");
-      navigate("/product");
+      navigate(-1);
     } else {
       await handleRegister(data);
       notification.success({

@@ -61,10 +61,10 @@ const router = createBrowserRouter([
         element: <ViewProductDetail />,
       },
       // CRM routes
-      {
-        path: "crm/",
-        element: <ViewAppProductLayout />,
-      },
+      // {
+      //   path: "crm/",
+      //   element: <ViewAppProductLayout />,
+      // },
     ],
   },
   {

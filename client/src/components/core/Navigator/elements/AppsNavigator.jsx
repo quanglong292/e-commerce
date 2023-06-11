@@ -20,10 +20,10 @@ const AppsNavigator = (props) => {
               label: <div onClick={() => navigate("/product")}>Admin</div>,
               key: "2",
             },
-            {
-              label: <div onClick={() => navigate("/crm/")}>CRM</div>,
-              key: "1",
-            },
+            // {
+            //   label: <div onClick={() => navigate("/crm/")}>CRM</div>,
+            //   key: "1",
+            // },
           ],
         }}
         trigger={["click"]}

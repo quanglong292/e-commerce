@@ -26,7 +26,7 @@ const useGlobalStore = create((set) => ({
   },
   handleLogout: () => {
     logout();
-    return set(() => ({ token: null }));
+    return set(() => ({ token: null, user: null }));
   },
   handleRegister: async (body) => {
     try {

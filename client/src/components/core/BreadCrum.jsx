@@ -9,7 +9,7 @@ const BreadCrum = (props) => {
     return pathname.split("/").map((i) => ({ title: i.toUpperCase() })) ?? [];
   }, [pathname]);
 
-  return <Breadcrumb items={items} />;
+  return <Breadcrumb items={props.items ?? items} />;
 };
 
 export default BreadCrum;

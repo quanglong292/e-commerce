@@ -3,11 +3,12 @@ import React, { useEffect, useState } from "react";
 import fetcher from "../../../../utils/helpers/fetcher";
 import { REQUEST_PARAMS } from "../../../../utils/constants/urlPath.constant";
 import useProductStore from "../../../../store/product.zustand";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import dayjs from "dayjs";
 import formatDate from "../../../../utils/helpers/formatDate";
 import useGlobalStore from "../../../../store/global.zustand";
 import { CheckCircleOutlined } from "@ant-design/icons";
+import CButton from "../../../../components/core/CButton";
 
 const PRODUCT_DETAIL_ADDITION_SECTION_TABS = [
   {
@@ -68,6 +69,7 @@ function ReviewTab() {
   const { comments, fetchComments } = useProductStore((state) => state);
   const { user, toggleLoginModal } = useGlobalStore((state) => state);
   const { id } = useParams();
+  const navigate = useNavigate()
 
   const [form, setForm] = useState({});
   const onChange = (e, key) => {
@@ -77,7 +79,8 @@ function ReviewTab() {
   // Functions
   const createCommentValidator = () => {
     if (!user) {
-      toggleLoginModal();
+      // toggleLoginModal();
+      navigate("/auth/app")
       return false;
     }
 
@@ -109,21 +112,35 @@ function ReviewTab() {
         {comments.length ? (
           <>
             <div className="p-4 border-2 rounded-lg flex flex-col gap-2">
-              <Rate onChange={(e) => onChange(e, "rating")} />
+              <Rate
+                onChange={(e) => onChange(e, "rating")}
+                style={{ color: "black" }}
+                size
+              />
               <Input
                 onInput={(e) => onChange(e.currentTarget.value, "content")}
                 placeholder="Description..."
               />
-              <Button onClick={createComment} className="w-fit" type="primary">
-                Send
-              </Button>
+              <div className="w-fit">
+                <CButton
+                  onClick={createComment}
+                  type="black"
+                  className="w-fit px-6 py-1 rounded-[50px]"
+                >
+                  Send
+                </CButton>
+              </div>
             </div>
             {comments.map((i) => (
               <div className="my-2 border-b-[1px] pb-2">
-                <div className="flex gap-4 items-end">
+                <div className="flex gap-4 items-start">
                   <div className="text-lg font-semibold">{i.userId}: </div>
                   <div>
-                    <Rate value={i.rating} disabled />
+                    <Rate
+                      value={i.rating}
+                      disabled
+                      style={{ color: "black", fontSize: "14px" }}
+                    />
                   </div>
                   <div>-</div>
                   <div className="text-gray-500">{formatDate(i.date)}</div>
@@ -137,7 +154,7 @@ function ReviewTab() {
                     )}
                   </>
                 </div>
-                <div className="text-sm">Description: {i.content}</div>
+                <div className="text-sm">{i.content}</div>
               </div>
             ))}
           </>

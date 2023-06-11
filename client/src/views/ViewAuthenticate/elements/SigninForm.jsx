@@ -37,9 +37,9 @@ const SigninForm = (props) => {
           />
           <div className="whitespace-nowrap">Keep me signed in</div>
         </div>
-        <div className="text-gray-400 hover:underline cursor-pointer">
+        {/* <div className="text-gray-400 hover:underline cursor-pointer">
           Forgot password?
-        </div>
+        </div> */}
       </div>
       <CInput
         type="submit"
