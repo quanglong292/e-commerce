@@ -4,18 +4,33 @@ import { Suspense, useEffect } from "react";
 import ComponentLoading from "./ComponentLoading";
 import ViewLogin from "../../views/ViewLogin";
 import useGlobalStore from "../../store/global.zustand";
+import { notification } from "antd";
 
 const RootViewLayout = () => {
   const navigate = useNavigate();
   const { pathname } = useResolvedPath();
 
   // Store
-  const checkToken = useGlobalStore((state) => state.checkToken);
+  const { checkToken, handleLogout } = useGlobalStore((state) => state);
 
   // Function
   const handleValidateAuth = () => {
     if (["/", "/sale", "/product"].includes(pathname)) {
       if (!checkToken()) navigate("auth/admin");
+      else {
+        const permission = checkToken()?.["0"]?.permission;
+        console.log({ permission });
+        if (!permission || permission !== "admin") {
+          notification.warning({
+            message: "You don't have admin permission!",
+            placement: "bottomLeft",
+          });
+          handleLogout();
+          setTimeout(() => {
+            navigate("/auth/admin");
+          }, 500);
+        }
+      }
     }
   };
 

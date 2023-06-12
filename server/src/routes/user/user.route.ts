@@ -16,6 +16,7 @@ router.get("/", async (req: Request, res: Response) => {
 
   try {
     const data: IUser | any = await UserModel.find(query);
+    if (!data.length) return res.status(401).json('Invalid user/password!');
     const orderHistory: any = await cart.find({ creator: query.userName });
     if (isEmptyQuery) res.json(data);
     const token = generateToken(data);
@@ -28,32 +29,34 @@ router.get("/", async (req: Request, res: Response) => {
 
 router.post("/", async ({ body }: Request, res: Response) => {
   const isExist = await UserModel.find({ userName: body.userName });
-
-  if (isExist.length) res.json(isExist[0]);
+  if (isExist.length) return res.status(401).json('UserName is existed!');
 
   try {
     validateCreateUser(body);
     const { mail, ...restBody } = body;
+    const info = restBody.info ? restBody.info : {
+      name: "",
+      phone: "",
+      birthDay: "",
+      mail: mail || "",
+    }
+
     body = {
       ...restBody,
       id: v4(),
-      info: {
-        name: "",
-        phone: "",
-        avatar: "",
-        birthDay: "",
-        mail: mail || "",
-      },
+      info,
       carts: [],
       wishs: [],
       orderHistory: [],
     };
 
     const data = await UserModel.create(body);
+    console.log({ data });
+
 
     res.json(data);
   } catch (err) {
-    res.status(404);
+    res.status(404).send('Bad request!');
   }
 });
 

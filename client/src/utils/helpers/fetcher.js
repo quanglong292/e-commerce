@@ -1,3 +1,4 @@
+import { notification } from "antd";
 import useToken from "../composables/useToken";
 import handleClientError from "./handleClientError";
 import cloneDeep from "lodash/cloneDeep";
@@ -24,17 +25,19 @@ export default async function (requestParams, body) {
       : "";
 
   try {
-    const data = await fetch(BASE_URL + urlPath + searchParam, {
+    const response = await fetch(BASE_URL + urlPath + searchParam, {
       method,
       headers: {
         "Content-Type": "application/json",
         Authorization: useToken().token,
       },
       body: method !== "GET" ? JSON.stringify(body) : undefined,
-    }).then((res) => res.json());
-
-    return data;
+    });
+    const jsonData = await response.json();
+    if (response.status > 400) throw { message: jsonData };
+    return jsonData;
   } catch (error) {
     handleClientError(error);
+    throw error;
   }
 }

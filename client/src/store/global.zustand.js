@@ -30,8 +30,7 @@ const useGlobalStore = create((set) => ({
   },
   handleRegister: async (body) => {
     try {
-      await fetcher(REQUEST_PARAMS.ADD_USER, body);
-      return true;
+      return await fetcher(REQUEST_PARAMS.ADD_USER, body);
     } catch (error) {}
   },
   handleLogin: async ({ payload }, view = "default") => {

@@ -8,7 +8,6 @@ import {
 import { NavLink, useNavigate, useResolvedPath } from "react-router-dom";
 import CButton from "../CButton";
 import useProductStore from "../../../store/product.zustand";
-import useGlobalStore from "../../../store/global.zustand";
 import { FILTER_OPTIONS, SIDE_BAR_ITEMS } from "../../../utils/constants/navigation.constant";
 import AdditionNav from "./elements/AdditionNav";
 import AppsNavigator from "./elements/AppsNavigator";
@@ -28,9 +27,6 @@ const Navigation = () => {
     fetchInitData,
     fetch,
   } = useProductStore((state) => state);
-  const { token, toggleLoginModal, handleLogout } = useGlobalStore(
-    (state) => state
-  );
 
   // Memo data
   const isClientApp = useMemo(() => pathname.includes("app"), [pathname]);

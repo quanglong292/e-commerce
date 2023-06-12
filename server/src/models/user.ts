@@ -7,12 +7,13 @@ export const UserSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    avatar: String,
     info: {
         name: String,
         phone: String,
-        avatar: String,
         birthDate: Date,
         mail: String,
+        sex: String,
     },
     carts: [String],
     wishs: [String],
