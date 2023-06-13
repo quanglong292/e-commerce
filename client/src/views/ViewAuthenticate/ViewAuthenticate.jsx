@@ -8,10 +8,11 @@ import { useNavigate } from "react-router-dom";
 import { cloneDeep } from "lodash";
 import fetcher from "../../utils/helpers/fetcher";
 import { REQUEST_PARAMS } from "../../utils/constants/urlPath.constant";
+import { checkAccountPermission } from "../../utils/composables/useToken";
 
 const ViewAuthenticate = () => {
   const navigate = useNavigate();
-  const { handleLogin, handleRegister, setToken } = useGlobalStore(
+  const { handleLogin, setToken, checkToken } = useGlobalStore(
     (state) => state
   );
 
@@ -51,6 +52,7 @@ const ViewAuthenticate = () => {
       if (formType === "signin") {
         await handleLogin({ payload: data }, "ViewAuthenticate");
         navigate(-1);
+        checkAccountPermission(checkToken, handleLogout);
       } else {
         const validatedForm = validateRegister(data);
         await fetcher(REQUEST_PARAMS.ADD_USER, validatedForm);

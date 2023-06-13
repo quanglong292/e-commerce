@@ -5,6 +5,7 @@ import ComponentLoading from "./ComponentLoading";
 import ViewLogin from "../../views/ViewLogin";
 import useGlobalStore from "../../store/global.zustand";
 import { notification } from "antd";
+import { checkAccountPermission } from "../../utils/composables/useToken";
 
 const RootViewLayout = () => {
   const navigate = useNavigate();
@@ -18,18 +19,11 @@ const RootViewLayout = () => {
     if (["/", "/sale", "/product"].includes(pathname)) {
       if (!checkToken()) navigate("auth/admin");
       else {
-        const permission = checkToken()?.["0"]?.permission;
-        console.log({ permission });
-        if (!permission || permission !== "admin") {
-          notification.warning({
-            message: "You don't have admin permission!",
-            placement: "bottomLeft",
-          });
-          handleLogout();
-          setTimeout(() => {
-            navigate("/auth/admin");
-          }, 500);
-        }
+        checkAccountPermission(checkToken, handleLogout, {
+          navigate,
+          pathname,
+          notification,
+        });
       }
     }
   };

@@ -1,4 +1,26 @@
+// import { notification } from "antd";
+
 const TOKEN_NAME = "mikeToken";
+
+export const checkAccountPermission = (
+  checkToken,
+  handleLogout,
+  { navigate, pathname, notification }
+) => {
+  if (["/", "/sale", "/product"].includes(pathname)) {
+    const permission = checkToken()?.["0"]?.permission;
+    if (!permission || permission !== "admin") {
+      notification.warning({
+        message: "You don't have admin permission!",
+        placement: "bottomLeft",
+      });
+      handleLogout();
+      setTimeout(() => {
+        navigate("/auth/admin");
+      }, 500);
+    }
+  }
+};
 
 export default (inputToken) => {
   const decoded = parseJwt(inputToken);

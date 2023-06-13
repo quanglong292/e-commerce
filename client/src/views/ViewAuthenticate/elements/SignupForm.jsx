@@ -52,7 +52,7 @@ const SignupForm = (props) => {
           },
           pattern: {
             value: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,15}$/,
-            message: "Invalid (capital letter, number, @!#)",
+            message: "Invalid (capital letter, number)",
           },
         })}
         type="password"
