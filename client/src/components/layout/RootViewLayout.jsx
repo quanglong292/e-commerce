@@ -7,6 +7,13 @@ import useGlobalStore from "../../store/global.zustand";
 import { notification } from "antd";
 import { checkAccountPermission } from "../../utils/composables/useToken";
 
+import { ClerkProvider, RedirectToSignIn, SignedIn, SignedOut } from "@clerk/clerk-react";
+
+if (!import.meta.env.VITE_REACT_APP_CLERK_PUBLISHABLE_KEY) {
+  throw new Error("Missing Publishable Key")
+}
+const clerkPubKey = import.meta.env.VITE_REACT_APP_CLERK_PUBLISHABLE_KEY;
+
 const RootViewLayout = () => {
   const navigate = useNavigate();
   const { pathname } = useResolvedPath();
@@ -44,7 +51,14 @@ const RootViewLayout = () => {
           className="overflow-y-auto overflow-x-hidden w-full p-2"
         >
           <Suspense fallback={<ComponentLoading />}>
-            <Outlet />
+            <ClerkProvider publishableKey={clerkPubKey}>
+              <SignedIn>
+                <Outlet />
+              </SignedIn>
+              <SignedOut>
+                <RedirectToSignIn />
+              </SignedOut>
+            </ClerkProvider>
           </Suspense>
         </div>
       </div>
