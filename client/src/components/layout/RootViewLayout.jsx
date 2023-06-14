@@ -51,14 +51,15 @@ const RootViewLayout = () => {
           className="overflow-y-auto overflow-x-hidden w-full p-2"
         >
           <Suspense fallback={<ComponentLoading />}>
-            <ClerkProvider publishableKey={clerkPubKey}>
+          <Outlet />
+            {/* <ClerkProvider publishableKey={clerkPubKey}>
               <SignedIn>
-                <Outlet />
+                
               </SignedIn>
               <SignedOut>
                 <RedirectToSignIn />
               </SignedOut>
-            </ClerkProvider>
+            </ClerkProvider> */}
           </Suspense>
         </div>
       </div>

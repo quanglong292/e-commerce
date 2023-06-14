@@ -11,8 +11,6 @@ const { generateFilterOptions } = productServices()
 
 router.get("/", async (req: Request<IFilterOptions>, res: Response) => {
     let { query }: IFilterOptions | any = req
-    if (query.name) query.name = { $regex: new RegExp(query.name, "i") }
-
     try {
         const data = await handleGetProduct(query)
 

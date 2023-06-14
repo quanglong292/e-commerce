@@ -125,7 +125,7 @@ function ReviewTab() {
                 <CButton
                   onClick={createComment}
                   type="black"
-                  className="w-fit px-6 py-1 rounded-[50px]"
+                  className="w-fit px-6 py-1 mt-2"
                 >
                   Send
                 </CButton>
