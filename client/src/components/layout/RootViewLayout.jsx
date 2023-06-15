@@ -7,10 +7,15 @@ import useGlobalStore from "../../store/global.zustand";
 import { notification } from "antd";
 import { checkAccountPermission } from "../../utils/composables/useToken";
 
-import { ClerkProvider, RedirectToSignIn, SignedIn, SignedOut } from "@clerk/clerk-react";
+import {
+  ClerkProvider,
+  RedirectToSignIn,
+  SignedIn,
+  SignedOut,
+} from "@clerk/clerk-react";
 
 if (!import.meta.env.VITE_REACT_APP_CLERK_PUBLISHABLE_KEY) {
-  throw new Error("Missing Publishable Key")
+  throw new Error("Missing Publishable Key");
 }
 const clerkPubKey = import.meta.env.VITE_REACT_APP_CLERK_PUBLISHABLE_KEY;
 
@@ -33,6 +38,10 @@ const RootViewLayout = () => {
         });
       }
     }
+    console.log({ pathname, checkToken: checkToken() });
+    if (["/app/cart", "/app/user/detail"].includes(pathname)) {
+      if (!checkToken()) navigate("auth/app");
+    }
   };
 
   useEffect(() => {
@@ -51,7 +60,7 @@ const RootViewLayout = () => {
           className="overflow-y-auto overflow-x-hidden w-full p-2"
         >
           <Suspense fallback={<ComponentLoading />}>
-          <Outlet />
+            <Outlet />
             {/* <ClerkProvider publishableKey={clerkPubKey}>
               <SignedIn>
                 

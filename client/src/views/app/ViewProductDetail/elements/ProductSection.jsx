@@ -8,6 +8,8 @@ import fetcher from "../../../../utils/helpers/fetcher";
 import CCarousel from "../../../../components/core/CCarousel";
 import CButton from "../../../../components/core/CButton";
 import BreadCrum from "../../../../components/core/BreadCrum";
+import useGlobalStore from "../../../../store/global.zustand";
+import { notification } from "antd";
 
 const ProductSection = (props) => {
   const { pathname } = useResolvedPath();
@@ -111,6 +113,7 @@ export default ProductSection;
 // Sub-components
 function DetailSection({ item = {} }) {
   const { categoryGroups, mutateList } = useProductStore((state) => state);
+  const { checkToken } = useGlobalStore((state) => state);
   const category =
     categoryGroups.find((i) => i.id === item?.group?.[0])?.name ?? "";
 
@@ -130,6 +133,14 @@ function DetailSection({ item = {} }) {
   }
 
   const handleAddSelectedItems = (type) => {
+    if (!checkToken()) {
+      notification.warning({
+        key: 1,
+        placement: "bottomLeft",
+        message: "Please login!",
+      });
+      return;
+    }
     setSelected([]);
     mutateList(type, {
       payload: selected,
