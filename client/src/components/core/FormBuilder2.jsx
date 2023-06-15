@@ -1,9 +1,32 @@
-import React from 'react'
+import React, { memo } from "react";
+import CInput from "./CInput";
 
-const FormBuilder2 = () => {
+const demoFormSchema = [
+  {}
+];
+
+const FormBuilder2 = (props) => {
+  const { formSchema } = props;
   return (
-    <div>FormBuilder2</div>
-  )
-}
+    <div className="">
+      <section>FormBuilder2</section>
+      <section>
+        <form>
+          <GenerateInputs schema={formSchema} />
+        </form>
+      </section>
+    </div>
+  );
+};
 
-export default FormBuilder2
+var GenerateInputs = memo(function (props) {
+  const { schema } = props;
+
+  return schema.map((i) => {
+    if (Array.isArray(i)) return i.map((j) => <CInput {...j} />);
+
+    return <CInput {...i} />;
+  });
+});
+
+export default FormBuilder2;

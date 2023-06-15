@@ -26,7 +26,7 @@ const QuickViewCard = memo((props) => {
   function findSelect(id) {
     return selected.find((i) => i.id === id);
   }
-
+  
   const handleAddSelectedItems = (type) => {
     if (!checkToken()) {
       notification.warning({
