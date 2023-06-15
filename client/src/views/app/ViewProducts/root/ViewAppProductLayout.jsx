@@ -52,7 +52,7 @@ const ViewAppProductLayout = () => {
           </div>
         </>
       )}
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };

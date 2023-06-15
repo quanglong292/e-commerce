@@ -31,12 +31,14 @@ const useProductStore = create((set, get) => ({
   filterOptions: {},
   comments: [],
   mutateList: (listName, { payload }) => {
-    if (["products"].includes(listName)) {
-      return set(() => ({ [listName]: payload }));
-    }
+    const isProduct = ["products"].includes(listName);
+    if (isProduct) return set(() => ({ [listName]: payload }));
 
     return set((state) => {
-      const newList = handleAddNewList(state[listName], payload);
+      const newList = isProduct
+        ? handleAddNewList(state[listName], payload)
+        : payload;
+        
       return { [listName]: newList };
     });
   },

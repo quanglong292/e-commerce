@@ -2,12 +2,15 @@ import React, { lazy, useState } from "react";
 import CButton from "../../../../components/core/CButton";
 import { useNavigate } from "react-router-dom";
 import formatPrice from "../../../../utils/helpers/formatPrice";
+import { HeartTwoTone } from "@ant-design/icons";
+import useProductStore from "../../../../store/product.zustand";
 
 const QuickViewCard = lazy(() => import("./QuickViewCard"));
 
 const ProductCard = (props) => {
   const { item } = props;
   const navigate = useNavigate();
+  const { mutateList, wishList } = useProductStore((state) => state);
   // const item = cloneItem
   const [isHover, setHover] = useState(false);
   const [quickViewId, setQuickViewId] = useState(null);
@@ -16,9 +19,22 @@ const ProductCard = (props) => {
     setHover(!(type === "mouseleave"));
   }
 
+  const handleAddWishList = (item) => {
+    const firstSize = item.stocks[0].name;
+    mutateList("wishList", {
+      payload: [
+        {
+          count: 1,
+          id: firstSize,
+          product: item,
+        },
+      ],
+    });
+  };
+
   return (
     <>
-      <div className="w-full">
+      <div className="w-full relative">
         <div
           onMouseEnter={toggle}
           onMouseLeave={(e) => toggle(e)}
@@ -73,6 +89,22 @@ const ProductCard = (props) => {
               {item.available ? "Available" : "Out of stock"}
             </p>
           </div>
+        </div>
+        {/* Heart icon */}
+        <div
+          onClick={(e) => {
+            e.stopPropagation();
+            handleAddWishList(item);
+          }}
+          className="absolute top-1 right-2 z-50 cursor-pointer"
+        >
+          <HeartTwoTone
+            twoToneColor={
+              wishList.find((i) => i.product?.name === item.name)
+                ? "#eb2f96"
+                : "#5b5b5c"
+            }
+          />
         </div>
       </div>
       {quickViewId && (

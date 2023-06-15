@@ -126,6 +126,7 @@ function DetailSection({ item = {} }) {
       i.id === id ? { ...i, count: i.count + 1 } : i
     );
     setSelected(!selected.length ? [newItem] : map);
+    console.log({ new: !selected.length ? [newItem] : map });
   }
 
   function findSelect(id) {
@@ -146,8 +147,6 @@ function DetailSection({ item = {} }) {
       payload: selected,
     });
   };
-
-  console.log({ item });
 
   return (
     <div className="w-[30%] bg-white p-4">

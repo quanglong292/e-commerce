@@ -21,14 +21,9 @@ const AdditionNav = (props) => {
   const { isClientApp } = props;
   const navigate = useNavigate();
   // Store
-  const {
-    wishList,
-    setFilter,
-    ordersList,
-    categoryGroups,
-    fetchInitData,
-    fetch,
-  } = useProductStore((state) => state);
+  const { wishList, ordersList, mutateList } = useProductStore(
+    (state) => state
+  );
   const { token, toggleLoginModal, handleLogout } = useGlobalStore(
     (state) => state
   );
@@ -39,7 +34,21 @@ const AdditionNav = (props) => {
       </div>
     );
 
+  // Functions
   function onSearch(e) {}
+  const handleRemoveWishList = (item) => {
+    const payload = wishList.filter(
+      (i) => i.product.name !== item.product.name
+    );
+    mutateList("wishList", { payload });
+  };
+
+  const handleBuyWishItem = (item) => {
+    mutateList("ordersList", {
+      payload: [item],
+    });
+    handleRemoveWishList(item);
+  };
 
   return (
     <div className="w-full flex justify-end bg-[#313131] p-1">
@@ -50,10 +59,26 @@ const AdditionNav = (props) => {
               label: (
                 <div className="flex items-center gap-4">
                   <div className="flex">
-                    <p className="font-semibold">Air Jordan 1 - Size: {i.id}</p>
+                    <p className="font-semibold">
+                      {i.product.name} - <span className="font-bold">Size</span>
+                      : {i.id}*{i.count}
+                    </p>
                   </div>
-                  <div className="flex text-xs">
-                    <CButton danger>X</CButton>
+                  <div className="flex text-xs gap-2">
+                    <CButton
+                      success
+                      onClick={() => handleBuyWishItem(i)}
+                      size="small"
+                    >
+                      Buy
+                    </CButton>
+                    <CButton
+                      onClick={() => handleRemoveWishList(i)}
+                      danger
+                      size="small"
+                    >
+                      X
+                    </CButton>
                   </div>
                 </div>
               ),
@@ -62,7 +87,7 @@ const AdditionNav = (props) => {
           }}
           placement="bottomRight"
         >
-          <Badge count={sumAmount(wishList)}>
+          <Badge count={wishList?.length}>
             <div className="font-semibold text-[#a1a1a1] hover:underline cursor-pointer text-sm">
               WISH
             </div>

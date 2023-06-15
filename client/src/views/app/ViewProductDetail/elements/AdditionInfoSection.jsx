@@ -36,6 +36,9 @@ const AdditionInfoSection = () => {
         // onChange={onChange}
         type="card"
         items={PRODUCT_DETAIL_ADDITION_SECTION_TABS}
+        tabBarStyle={{
+          borderRadius: "0"
+        }}
       />
     </div>
   );
@@ -111,7 +114,7 @@ function ReviewTab() {
       <div className="mt-4 pl-4 flex flex-col gap-2">
         {comments.length ? (
           <>
-            <div className="p-4 border-2 rounded-lg flex flex-col gap-2">
+            <div className="p-4 border-2 flex flex-col gap-2">
               <Rate
                 onChange={(e) => onChange(e, "rating")}
                 style={{ color: "black" }}
