@@ -138,7 +138,7 @@ function DetailSection({ item = {} }) {
       notification.warning({
         key: 1,
         placement: "bottomLeft",
-        message: "Please login!",
+        message: <a>Please login!</a>
       });
       return;
     }
