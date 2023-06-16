@@ -9,6 +9,7 @@ import { cloneDeep } from "lodash";
 import fetcher from "../../utils/helpers/fetcher";
 import { REQUEST_PARAMS } from "../../utils/constants/urlPath.constant";
 import { checkAccountPermission } from "../../utils/composables/useToken";
+import Footer from "../../components/layout/Footer";
 
 const ViewAuthenticate = () => {
   const navigate = useNavigate();
@@ -68,50 +69,55 @@ const ViewAuthenticate = () => {
   };
 
   return (
-    <div className="h-full w-full flex justify-center pt-24">
-      <div className="w-[24%] flex flex-col items-center gap-4">
-        <Logo />
-        <p className="w-[80%] text-center uppercase font-bold text-2xl">
-          {formType === "signin"
-            ? "your account for everything nike"
-            : "your account for everything Mike"}
-        </p>
-        {formType === "signup" && (
-          <p className="text-gray-500 text-center">
-            Create your Nike Member profile and get first access to the very
-            best of Nike products, inspiration and community.
+    <>
+      <div className="h-full w-full flex justify-center pt-24">
+        <div className="w-[24%] flex flex-col items-center gap-4">
+          <Logo />
+          <p className="w-[80%] text-center uppercase font-bold text-2xl">
+            {formType === "signin"
+              ? "your account for everything nike"
+              : "your account for everything Mike"}
           </p>
-        )}
-        {formType === "signin" ? (
-          <SigninForm onSubmit={onSubmit} />
-        ) : (
-          <SignupForm onSubmit={onSubmit} />
-        )}
-        <div className="text-gray-400 cursor-pointer">
-          {formType === "signin" ? (
-            <>
-              Not a member?{" "}
-              <span
-                onClick={() => setFormType("signup")}
-                className="text-black underline"
-              >
-                Join us
-              </span>
-            </>
-          ) : (
-            <>
-              You are member?{" "}
-              <span
-                onClick={() => setFormType("signin")}
-                className="text-black underline"
-              >
-                Sign in
-              </span>
-            </>
+          {formType === "signup" && (
+            <p className="text-gray-500 text-center">
+              Create your Nike Member profile and get first access to the very
+              best of Nike products, inspiration and community.
+            </p>
           )}
+          {formType === "signin" ? (
+            <SigninForm onSubmit={onSubmit} />
+          ) : (
+            <SignupForm onSubmit={onSubmit} />
+          )}
+          <div className="text-gray-400 cursor-pointer">
+            {formType === "signin" ? (
+              <>
+                Not a member?{" "}
+                <span
+                  onClick={() => setFormType("signup")}
+                  className="text-black underline"
+                >
+                  Join us
+                </span>
+              </>
+            ) : (
+              <>
+                You are member?{" "}
+                <span
+                  onClick={() => setFormType("signin")}
+                  className="text-black underline"
+                >
+                  Sign in
+                </span>
+              </>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+      <div className="mt-32">
+        <Footer />
+      </div>
+    </>
   );
 };
 
