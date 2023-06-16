@@ -1,13 +1,15 @@
-import { Modal } from "antd";
+import { Modal, notification } from "antd";
 import React, { memo, useState } from "react";
 import "./cardModal.scss";
 import CButton from "../../../../components/core/CButton";
 import useProductStore from "../../../../store/product.zustand";
 import { getSizes } from "../../../../utils/composables/useProduct";
+import useGlobalStore from "../../../../store/global.zustand";
 
 const QuickViewCard = memo((props) => {
   const { item, isShow, onCancel } = props;
   const { mutateList } = useProductStore((state) => state);
+  const { checkToken } = useGlobalStore((state) => state);
 
   // local state
   const [selected, setSelected] = useState([]);
@@ -24,6 +26,21 @@ const QuickViewCard = memo((props) => {
   function findSelect(id) {
     return selected.find((i) => i.id === id);
   }
+  
+  const handleAddSelectedItems = (type) => {
+    if (!checkToken()) {
+      notification.warning({
+        key: 1,
+        placement: "bottomLeft",
+        message: "Please login!",
+      });
+      return;
+    }
+    setSelected([]);
+    mutateList(type, {
+      payload: selected,
+    });
+  };
 
   return (
     <Modal
@@ -63,7 +80,7 @@ const QuickViewCard = memo((props) => {
                   {findSelect(i.id) && (
                     <div
                       onClick={(e) => {
-                        e.stopPropagation()
+                        e.stopPropagation();
                         setSelected(selected.filter((j) => j.id !== i.id));
                       }}
                       className="absolute top-[-12px] right-[-4px] bg-red-400 w-[24px] h-[24px] flex justify-center items-center rounded-full text-white hover:bg-red-300 z-20"
@@ -80,20 +97,14 @@ const QuickViewCard = memo((props) => {
             <CButton
               type="primary"
               onClick={() => {
-                setSelected([]);
-                mutateList("ordersList", {
-                  payload: selected,
-                });
+                handleAddSelectedItems("ordersList");
               }}
             >
               Add to cart: {selected.reduce((a, b) => a + b.count, 0)}
             </CButton>
             <CButton
               onClick={() => {
-                setSelected([]);
-                mutateList("wishList", {
-                  payload: selected,
-                });
+                handleAddSelectedItems("wishList");
               }}
               type="primary"
             >

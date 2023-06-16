@@ -5,3 +5,14 @@
 .ant-collapse-content-box {
     padding: 0 !important;
 }
+
+// Tabs
+:where(.css-dev-only-do-not-override-mxhywb).ant-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+    color: black;
+    // text-transform: uppercase;
+}
+
+:where(.css-dev-only-do-not-override-mxhywb).ant-tabs-card.ant-tabs-top > .ant-tabs-nav .ant-tabs-tab,
+:where(.css-dev-only-do-not-override-mxhywb).ant-tabs-card.ant-tabs-top > div > .ant-tabs-nav .ant-tabs-tab {
+    border-radius: 0;
+}

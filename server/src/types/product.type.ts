@@ -3,7 +3,7 @@ interface IFilterOptions {
     category: String,
     categoryGroup: String,
     brand: String,
-    sortBy: String,
+    sortBy: "highToLow" | "lowToHigh",
 }
 
 interface IArrayValue {
@@ -39,4 +39,4 @@ const IFilterOptionKeys = {
 
 // interface IGetProductRequest 
 
-export {IFilterOptions, IProduct, IFilterOptionKeys}
+export { IFilterOptions, IProduct, IFilterOptionKeys }

@@ -8,20 +8,14 @@ const { Search } = Input;
 
 const items = [
   {
-    label: <p>Featured</p>,
-    key: "0",
-  },
-  {
-    label: <p>Newest</p>,
-    key: "1",
-  },
-  {
     label: <p>Price: High-Low</p>,
     key: "2",
+    value: "highToLow",
   },
   {
     label: <p>Price: Low-High</p>,
     key: "3",
+    value: "lowToHigh",
   },
 ];
 
@@ -30,8 +24,13 @@ const FilterBarController = (props) => {
   const { setFilter, fetch } = useProductStore((state) => state);
 
   function onSearch(e) {
-    console.log({ onSearch: e });
+    // console.log({ onSearch: e });
     setFilter(FILTER_OPTIONS.search, e);
+  }
+
+  function onSortClick({ key }) {
+    const value = items.find((i) => i.key === key)?.value;
+    setFilter(FILTER_OPTIONS.sortBy, value);
   }
 
   return (
@@ -45,7 +44,16 @@ const FilterBarController = (props) => {
       >
         Show Filter <MenuFoldOutlined />
       </div>
-      <Dropdown trigger={["click"]} menu={{ items }}>
+      <Dropdown
+        trigger={["click"]}
+        menu={{ items, onClick: onSortClick }}
+        onOpenChange={(e) => {
+          console.log({ onOpenChange: e });
+        }}
+        on={(e) => {
+          console.log({ onOpenChange: e });
+        }}
+      >
         <a
           className="hover:text-blue-500 cursor-pointer"
           onClick={(e) => e.preventDefault()}

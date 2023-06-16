@@ -6,12 +6,16 @@ import {
   TwitterOutlined,
   YoutubeOutlined,
 } from "@ant-design/icons";
+import { useNavigate, useResolvedPath } from "react-router-dom";
 
 const ABOUT = ["About us", "Careers", "Order status", "Contact"];
 
 const Footer = () => {
+  const { pathname } = useResolvedPath();
+  const navigate = useNavigate();
   const categoryGroups = useProductStore((state) => state.categoryGroups);
 
+  if (!pathname.includes("app")) return <></>;
   return (
     <div className="mt-12 w-full bg-black text-white p-4 lg:px-24">
       <div className="lg:flex">
@@ -21,6 +25,7 @@ const Footer = () => {
             {categoryGroups?.map((i) => {
               return (
                 <div
+                  onClick={() => navigate(`/app/${i.name.toLowerCase()}`)}
                   key={i.name}
                   className="w-fit uppercase cursor-pointer hover:text-slate-300"
                 >
@@ -30,7 +35,7 @@ const Footer = () => {
             })}
           </div>
           <div className="">
-            <p className="text-xl font-bold uppercase">Help Me</p>
+            <p className="text-xl font-bold uppercase">Need Help</p>
             {ABOUT.map((i) => {
               return (
                 <div
@@ -48,7 +53,7 @@ const Footer = () => {
           <FacebookFilled />
           <TwitterOutlined />
           <YoutubeOutlined />
-          <InstagramOutlined /> 
+          <InstagramOutlined />
         </div>
       </div>
       <div className="flex gap-8 text-xs mt-8">

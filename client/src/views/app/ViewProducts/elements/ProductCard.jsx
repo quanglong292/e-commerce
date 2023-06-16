@@ -2,13 +2,18 @@ import React, { lazy, useState } from "react";
 import CButton from "../../../../components/core/CButton";
 import { useNavigate } from "react-router-dom";
 import formatPrice from "../../../../utils/helpers/formatPrice";
+import { HeartTwoTone } from "@ant-design/icons";
+import useProductStore from "../../../../store/product.zustand";
+import useGlobalStore from "../../../../store/global.zustand";
+import { notification } from "antd";
 
 const QuickViewCard = lazy(() => import("./QuickViewCard"));
 
 const ProductCard = (props) => {
   const { item } = props;
   const navigate = useNavigate();
-  // const item = cloneItem
+  const { mutateList, wishList } = useProductStore((state) => state);
+  const { checkToken } = useGlobalStore((state) => state);
   const [isHover, setHover] = useState(false);
   const [quickViewId, setQuickViewId] = useState(null);
 
@@ -16,9 +21,46 @@ const ProductCard = (props) => {
     setHover(!(type === "mouseleave"));
   }
 
+  const handleAddWishList = (item) => {
+    if (!checkToken()) {
+      notification.warning({
+        key: 1,
+        placement: "bottomLeft",
+        message: (
+          <a onClick={() => navigate("/auth/app")} className="underline">
+            Please login! (click)
+          </a>
+        ),
+      });
+      return;
+    }
+
+    const firstSize = item.stocks[0].name;
+    let updatingList = wishList;
+    const names = updatingList.map((i) => i.product.name);
+    const isExist = names.includes(item.name);
+
+    if (isExist) {
+      updatingList = updatingList.filter((i) => i.product.name !== item.name);
+    } else {
+      updatingList = [
+        ...updatingList,
+        {
+          count: 1,
+          id: firstSize,
+          product: item,
+        },
+      ];
+    }
+
+    mutateList("wishList", {
+      payload: updatingList,
+    });
+  };
+
   return (
     <>
-      <div className="w-full">
+      <div className="w-full relative">
         <div
           onMouseEnter={toggle}
           onMouseLeave={(e) => toggle(e)}
@@ -73,6 +115,22 @@ const ProductCard = (props) => {
               {item.available ? "Available" : "Out of stock"}
             </p>
           </div>
+        </div>
+        {/* Heart icon */}
+        <div
+          onClick={(e) => {
+            e.stopPropagation();
+            handleAddWishList(item);
+          }}
+          className="absolute top-1 right-2 z-50 cursor-pointer"
+        >
+          <HeartTwoTone
+            twoToneColor={
+              wishList.find((i) => i.product?.name === item.name)
+                ? "#eb2f96"
+                : "#5b5b5c"
+            }
+          />
         </div>
       </div>
       {quickViewId && (

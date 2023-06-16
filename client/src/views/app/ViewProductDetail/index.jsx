@@ -17,7 +17,7 @@ const ViewProductDetail = memo(() => {
       <ProductSection />
       <AdditionInfoSection />
       <SuggestSection />
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 });

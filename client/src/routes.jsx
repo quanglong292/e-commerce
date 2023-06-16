@@ -51,10 +51,16 @@ const router = createBrowserRouter([
       {
         path: "app/cart",
         element: <ViewCart />,
+        shouldRevalidate: (...e) => {
+          console.log({ shouldRevalidate: e });
+        },
       },
       {
         path: "app/user/detail",
         element: <ViewUserDetail />,
+        shouldRevalidate: (...e) => {
+          console.log({ shouldRevalidate: e });
+        },
       },
       {
         path: "app/product/detail/:id",

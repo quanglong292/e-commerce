@@ -6,13 +6,13 @@ import ViewLogin from "../../views/ViewLogin";
 import useGlobalStore from "../../store/global.zustand";
 import { notification } from "antd";
 import { checkAccountPermission } from "../../utils/composables/useToken";
-
-import {
-  ClerkProvider,
-  RedirectToSignIn,
-  SignedIn,
-  SignedOut,
-} from "@clerk/clerk-react";
+// import {
+//   ClerkProvider,
+//   RedirectToSignIn,
+//   SignedIn,
+//   SignedOut,
+// } from "@clerk/clerk-react";
+import Footer from "./Footer";
 
 if (!import.meta.env.VITE_REACT_APP_CLERK_PUBLISHABLE_KEY) {
   throw new Error("Missing Publishable Key");
@@ -37,6 +37,9 @@ const RootViewLayout = () => {
           notification,
         });
       }
+    }
+    if (["/app/cart", "/app/user/detail"].includes(pathname)) {
+      if (!checkToken()) navigate("auth/app");
     }
   };
 
@@ -69,6 +72,7 @@ const RootViewLayout = () => {
         </div>
       </div>
       <ViewLogin />
+      <Footer />
     </div>
   );
 };
