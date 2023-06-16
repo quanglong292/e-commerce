@@ -1,8 +1,11 @@
 import React from "react";
 import SectionHeader from "./SectionHeader";
 import CButton from "../../../../../../components/core/CButton";
+import { useNavigate } from "react-router-dom";
 
 const MemberSection = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="mt-24">
       <SectionHeader>Mike! Membership</SectionHeader>
@@ -18,10 +21,16 @@ const MemberSection = () => {
           </SectionHeader>
           <p className="my-2">Sign up for free. Join the community.</p>
           <div className="flex items-center gap-4">
-            <CButton type="default rounded-2xl font-semibold bg-white">
+            <CButton
+              onClick={() => navigate("/auth/app")}
+              type="default rounded-2xl font-semibold bg-white"
+            >
               Join us
             </CButton>
-            <CButton type="default rounded-2xl font-semibold bg-white">
+            <CButton
+              onClick={() => navigate("/auth/app")}
+              type="default rounded-2xl font-semibold bg-white"
+            >
               Sign in
             </CButton>
           </div>

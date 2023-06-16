@@ -114,9 +114,6 @@ const ViewAuthenticate = () => {
           </div>
         </div>
       </div>
-      <div className="mt-32">
-        <Footer />
-      </div>
     </>
   );
 };
