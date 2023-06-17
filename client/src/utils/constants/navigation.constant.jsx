@@ -1,3 +1,5 @@
+import { AppstoreOutlined, SettingOutlined } from "@ant-design/icons";
+
 export const FILTER_OPTIONS = {
   search: "name",
   category: "category",
@@ -24,13 +26,21 @@ export const ACCOUNT_OPTIONS = [
 
 export const SIDE_BAR_ITEMS = [
   {
-    label: "sale",
+    label: "Dashboard",
+    path: "",
+    key: "",
+    icon: <AppstoreOutlined />,
+  },
+  {
+    label: "Sale",
     path: "sale",
     key: "sale",
+    icon: <AppstoreOutlined />,
   },
   {
     label: "Product",
     path: "product",
     key: "product",
+    icon: <SettingOutlined />,
   },
 ];

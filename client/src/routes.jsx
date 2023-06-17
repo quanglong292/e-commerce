@@ -18,6 +18,7 @@ import ViewProductDetail from "./views/app/ViewProductDetail/index";
 import ViewSearchProduct from "./views/app/ViewSearchProduct";
 import ViewSale from "./views/admin/ViewSale";
 import ViewAuthenticate from "./views/ViewAuthenticate/ViewAuthenticate";
+import ViewDashBoard from "./views/admin/ViewDashBoard";
 
 const router = createBrowserRouter([
   {
@@ -30,11 +31,18 @@ const router = createBrowserRouter([
         element: <ViewAuthenticate />,
       },
       {
+        path: "",
+        isAdmin: true,
+        element: <ViewDashBoard />,
+      },
+      {
         path: "sale",
+        isAdmin: true,
         element: <ViewSale />,
       },
       {
         path: "product",
+        isAdmin: true,
         element: <ViewRootProducts />,
       },
       // APP routes

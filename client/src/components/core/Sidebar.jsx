@@ -18,7 +18,8 @@ const Sidebar = memo(() => {
       items={SIDE_BAR_ITEMS}
       onClick={(e) => navigate(e.key)}
       style={{
-        height: "100%"
+        width: "14%",
+        minHeight: "100%",
       }}
     />
   );

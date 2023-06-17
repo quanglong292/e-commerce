@@ -1,6 +1,12 @@
-import { Outlet, useNavigate, useResolvedPath } from "react-router-dom";
+import {
+  Outlet,
+  useLocation,
+  useNavigate,
+  useParams,
+  useResolvedPath,
+} from "react-router-dom";
 import Navigation from "../core/Navigator/Navigation";
-import { Suspense, useEffect } from "react";
+import { Suspense, useEffect, useMemo } from "react";
 import ComponentLoading from "./ComponentLoading";
 import ViewLogin from "../../views/ViewLogin";
 import useGlobalStore from "../../store/global.zustand";
@@ -13,6 +19,9 @@ import { checkAccountPermission } from "../../utils/composables/useToken";
 //   SignedOut,
 // } from "@clerk/clerk-react";
 import Footer from "./Footer";
+import Sidebar from "../core/Sidebar";
+import ClientLayout from "./ClientLayout";
+import AdminLayout from "./AdminLayout";
 
 if (!import.meta.env.VITE_REACT_APP_CLERK_PUBLISHABLE_KEY) {
   throw new Error("Missing Publishable Key");
@@ -22,6 +31,13 @@ const clerkPubKey = import.meta.env.VITE_REACT_APP_CLERK_PUBLISHABLE_KEY;
 const RootViewLayout = () => {
   const navigate = useNavigate();
   const { pathname } = useResolvedPath();
+  const params = useParams();
+  const location = useLocation();
+
+  // Memo
+  const isAdmin = useMemo(() => !pathname.includes("app"), [pathname]);
+
+  console.log({ params, location });
 
   // Store
   const { checkToken, handleLogout } = useGlobalStore((state) => state);
@@ -50,27 +66,7 @@ const RootViewLayout = () => {
   return (
     <div className="w-full">
       <Navigation />
-      <div
-        id="sidebar"
-        className="flex items-start w-full max-w-[1600px] m-auto"
-      >
-        <div
-          id="detail"
-          className="overflow-y-auto overflow-x-hidden w-full p-2"
-        >
-          <Suspense fallback={<ComponentLoading />}>
-            <Outlet />
-            {/* <ClerkProvider publishableKey={clerkPubKey}>
-              <SignedIn>
-                
-              </SignedIn>
-              <SignedOut>
-                <RedirectToSignIn />
-              </SignedOut>
-            </ClerkProvider> */}
-          </Suspense>
-        </div>
-      </div>
+      {isAdmin ? <AdminLayout /> : <ClientLayout />}
       <ViewLogin />
       <Footer />
     </div>
