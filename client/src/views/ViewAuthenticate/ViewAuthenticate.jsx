@@ -9,7 +9,6 @@ import { cloneDeep } from "lodash";
 import fetcher from "../../utils/helpers/fetcher";
 import { REQUEST_PARAMS } from "../../utils/constants/urlPath.constant";
 import { checkAccountPermission } from "../../utils/composables/useToken";
-import Footer from "../../components/layout/Footer";
 
 const ViewAuthenticate = () => {
   const navigate = useNavigate();
@@ -52,7 +51,8 @@ const ViewAuthenticate = () => {
     try {
       if (formType === "signin") {
         await handleLogin({ payload: data }, "ViewAuthenticate");
-        navigate(-1);
+        console.log("vo day");
+        navigate("/");
         checkAccountPermission(checkToken, handleLogout);
       } else {
         const validatedForm = validateRegister(data);

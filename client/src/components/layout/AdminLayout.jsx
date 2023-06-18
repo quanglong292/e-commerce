@@ -11,7 +11,7 @@ const AdminLayout = () => {
       {user && <Sidebar />}
       <div id="detail" className="overflow-y-auto overflow-x-hidden w-full p-4">
         <Suspense fallback={<ComponentLoading />}>
-          <Outlet />
+          {user && <Outlet />}
         </Suspense>
       </div>
     </div>

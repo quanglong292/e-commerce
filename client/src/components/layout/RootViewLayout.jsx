@@ -40,7 +40,7 @@ const RootViewLayout = () => {
   console.log({ params, location });
 
   // Store
-  const { checkToken, handleLogout } = useGlobalStore((state) => state);
+  const { checkToken, handleLogout, user } = useGlobalStore((state) => state);
 
   // Function
   const handleValidateAuth = () => {
@@ -66,7 +66,7 @@ const RootViewLayout = () => {
   return (
     <div className="w-full">
       <Navigation />
-      {isAdmin ? <AdminLayout /> : <ClientLayout />}
+      {!user ? <Outlet /> : isAdmin ? <AdminLayout /> : <ClientLayout />}
       <ViewLogin />
       <Footer />
     </div>
