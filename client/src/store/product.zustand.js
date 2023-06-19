@@ -5,13 +5,26 @@ import fetcher from "../utils/helpers/fetcher";
 import { FILTER_OPTIONS } from "../utils/constants/navigation.constant";
 
 const handleAddNewList = (origin = [], update = []) => {
-  return [...origin, ...update].reduce((a, { id, count, ...i }) => {
-    const exist = a.find((j) => j.id === id);
-    if (exist) exist.count += count;
-    else a.push({ ...i, id, count });
+  const Arrays = {
+    long: origin.length > update.length ? origin : update,
+    short: origin.length < update.length ? origin : update,
+  };
+  return Arrays.long.map((i) => {
+    const found = Arrays.short.find(
+      (j) => j.product.name === i.product.name && j.id === i.id
+    );
 
-    return a;
-  }, []);
+    if (found) {
+      return { ...i, count: i.count + found.count };
+    } else return i;
+  });
+  // return [...origin, ...update].reduce((a, { id, count, ...i }) => {
+  //   const exist = a.find((j) => j.product.name === i.product.name);
+  //   if (exist) exist.count += count;
+  //   else a.push({ ...i, id, count });
+
+  //   return a;
+  // }, []);
 };
 
 const findIsHasFilter = (options) => {
@@ -38,7 +51,7 @@ const useProductStore = create((set, get) => ({
       const newList = isProduct
         ? handleAddNewList(state[listName], payload)
         : payload;
-        
+
       return { [listName]: newList };
     });
   },

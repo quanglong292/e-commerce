@@ -5,7 +5,7 @@ import { Outlet } from "react-router-dom";
 const ClientLayout = () => {
   return (
     <div className="flex items-start w-full max-w-[1600px] m-auto">
-      <div id="detail" className="overflow-y-auto overflow-x-hidden w-full p-2">
+      <div id="detail" className="overflow-y-auto overflow-x-hidden w-full px-8 py-4">
         <Suspense fallback={<ComponentLoading />}>
           <Outlet />
         </Suspense>

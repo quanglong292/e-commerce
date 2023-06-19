@@ -36,9 +36,10 @@ router.post("/", async ({ body }: Request, res: Response) => {
 
 router.post("/confirm", async ({ body }: Request, res: Response) => {
   try {
+    if (!body.status || !body.id) return res.status(404);
     const data = await CartModel.findOneAndUpdate(
       { id: body.id },
-      { status: "order shipped" }
+      { status: body.status }
     );
 
     res.json(data);

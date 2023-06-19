@@ -17,7 +17,7 @@ const Footer = () => {
 
   if (!pathname.includes("app")) return <></>;
   return (
-    <div className="mt-12 w-full bg-black text-white p-4 lg:px-24">
+    <div className="mt-24 w-full bg-black text-white p-4 lg:px-24">
       <div className="lg:flex">
         <div className="lg:w-[60%] flex justify-between">
           <div className="">

@@ -66,11 +66,21 @@ const RootViewLayout = () => {
   return (
     <div className="w-full">
       <Navigation />
-      {!user ? <Outlet /> : isAdmin ? <AdminLayout /> : <ClientLayout />}
+      <Suspense fallback={<ComponentLoading />}>
+        <RenderViewLayouts user={user} isAdmin={isAdmin} />
+      </Suspense>
       <ViewLogin />
       <Footer />
     </div>
   );
 };
+
+function RenderViewLayouts({ user, isAdmin }) {
+  if (!user) {
+    if (!isAdmin) return <ClientLayout />;
+    else return <Outlet />;
+  } else if (isAdmin) return <AdminLayout />;
+  else return <ClientLayout />;
+}
 
 export default RootViewLayout;

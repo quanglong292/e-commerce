@@ -10,8 +10,8 @@ import UserHistory from "../../../app/ViewUser/elements/UserHistory";
 import formatPrice from "../../../../utils/helpers/formatPrice";
 import formatDate from "../../../../utils/helpers/formatDate";
 import { useSearchParams } from "react-router-dom";
-import FilterBarController from "../../../app/ViewProducts/elements/FilterBarController";
 import ConfirmOrderModal from "./ConfirmOrderModal";
+import { createOrder } from "../../../../utils/helpers/ghnFetcher";
 
 const Context = createContext({
   name: "Default",
@@ -83,19 +83,19 @@ const ProductLayout = (props) => {
         title: "Status",
         dataIndex: "status",
         key: "status",
-        render: (text) => (
-          <>
-            {text === "order shipped" ? (
-              <Tag color="green" className="uppercase">
-                {text}
-              </Tag>
-            ) : (
-              <Tag color="orange" className="uppercase">
-                {text || "pending"}
-              </Tag>
-            )}
-          </>
-        ),
+        render: (text) => {
+          const color =
+            text === "order shipped"
+              ? "green"
+              : text === "cancel"
+              ? "red"
+              : "orange";
+          return (
+            <Tag color={color} className="uppercase">
+              {text}
+            </Tag>
+          );
+        },
       },
       {
         title: "Date",
@@ -119,8 +119,8 @@ const ProductLayout = (props) => {
         title: "",
         dataIndex: "confirm",
         key: "confirm",
-        render: (text, rec) => {
-          if (rec.status === "order shipped") return <></>
+        render: (_, rec) => {
+          if (["order shipped", "cancel"].includes(rec.status)) return <></>;
           return (
             <div className="flex gap-2">
               <CButton
@@ -134,7 +134,6 @@ const ProductLayout = (props) => {
                 title="Delete item"
                 description="Are you sure to delete this item?"
                 onConfirm={() => handleDeleteItem(record.id)}
-                //   onCancel={cancel}
                 okText="Yes"
                 cancelText="No"
               >
@@ -143,7 +142,7 @@ const ProductLayout = (props) => {
                 </CButton>
               </Popconfirm>
             </div>
-          )
+          );
         },
       },
     ],
@@ -313,11 +312,18 @@ const ProductLayout = (props) => {
   };
 
   async function handleConfirmOrder(rec, type = "open") {
-    console.log({ handleConfirmOrder: rec });
-    if (type === "confirm") {
-      await fetcher(REQUEST_PARAMS.CONFIRM_CART, { id: orderToConfirm.id });
-      handleInit();
-    } else setOrderToConfirm(rec);
+    try {
+      if (["order shipped", "cancel"].includes(type)) {
+        await fetcher(REQUEST_PARAMS.CONFIRM_CART, {
+          id: orderToConfirm.id,
+          status: type,
+        });
+        if (type === "order shipeed") {
+          await createOrder();
+        }
+        handleInit();
+      } else setOrderToConfirm(rec);
+    } catch (error) {}
   }
 
   // Effects

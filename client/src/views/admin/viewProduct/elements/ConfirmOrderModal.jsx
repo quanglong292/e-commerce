@@ -16,13 +16,7 @@ const ConfirmOrderModal = (props) => {
     setProducts(item.products);
   };
 
-  const confirmOrder = async () => {
-    // write api to confirm order
-    // await fetcher(REQUEST_PARAMS.CONFIRM_CART, { id: item.id });
-  };
-
   useEffect(() => {
-    console.log({ item });
     if (item) handleInit(item);
 
     return () => {
@@ -42,7 +36,7 @@ const ConfirmOrderModal = (props) => {
         {products?.map((i) => {
           const { info } = i;
           return (
-            <div className="flex gap-4 pb-4 border-b-2">
+            <div key={info.name} className="flex gap-4 pb-4 border-b-2">
               <img src={info.image} className="max-w-[20%]" />
               <div>
                 <p key={info.name} className="font-mono font-semibold">
@@ -59,11 +53,19 @@ const ConfirmOrderModal = (props) => {
       </div>
       <div className="flex gap-4 mt-4">
         <Button
-          onClick={() => onConfirmOrder(null, "confirm")}
+          onClick={() => onConfirmOrder(null, "order shipped")}
           size="small"
           type="primary"
         >
           Confirm
+        </Button>
+        <Button
+          onClick={() => onConfirmOrder(null, "cancel")}
+          size="small"
+          type="primary"
+          danger
+        >
+          Cancel
         </Button>
         <Button onClick={onCancel} size="small">
           Close
