@@ -19,12 +19,10 @@ const items = [
   },
 ];
 
-const FilterBarController = (props) => {
-  const { clickShowFilter } = props;
-  const { setFilter, fetch } = useProductStore((state) => state);
+const FilterBarController = ({ clickShowFilter }) => {
+  const setFilter = useProductStore((state) => state.setFilter);
 
   function onSearch(e) {
-    // console.log({ onSearch: e });
     setFilter(FILTER_OPTIONS.search, e);
   }
 
@@ -44,16 +42,7 @@ const FilterBarController = (props) => {
       >
         Show Filter <MenuFoldOutlined />
       </div>
-      <Dropdown
-        trigger={["click"]}
-        menu={{ items, onClick: onSortClick }}
-        onOpenChange={(e) => {
-          console.log({ onOpenChange: e });
-        }}
-        on={(e) => {
-          console.log({ onOpenChange: e });
-        }}
-      >
+      <Dropdown trigger={["click"]} menu={{ items, onClick: onSortClick }}>
         <a
           className="hover:text-blue-500 cursor-pointer"
           onClick={(e) => e.preventDefault()}

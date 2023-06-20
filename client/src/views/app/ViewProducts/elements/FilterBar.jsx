@@ -12,6 +12,7 @@ import CButton from "../../../../components/core/CButton";
 import useProductStore from "../../../../store/product.zustand";
 import uniqBy from "lodash/uniqBy";
 import ComponentLoading from "../../../../components/layout/ComponentLoading";
+import { cloneDeep } from "lodash";
 
 const { Panel } = Collapse;
 
@@ -37,13 +38,14 @@ const FilterBar = () => {
   const [filterSchema, setFilterSchema] = useState([]);
 
   // Functions
-  const onFilterChange = (field, e) => {
-    console.log({onFilterChange: {field, e}});
-    let value = ["number", "string"].includes(typeof e) ? e : e.target.name;
-    const obj = { ...filter, [field]: value };
-
-    setFilter(obj);
-    setSearchParams(obj);
+  const onFilterChange = (field, e, formValue) => {
+    const values = cloneDeep(formValue);
+    Object.entries(values).forEach(([key, value]) => {
+      if (typeof value === "undefined") delete values[key];
+      if (!value && key === "sale") delete values[key];
+    });
+    setFilter(values);
+    setSearchParams(values);
   };
 
   const handleSearch = async (type) => {
@@ -62,15 +64,19 @@ const FilterBar = () => {
     }
   };
 
-  const handleInitOptions = (products, categories) => {
-    if (!products.length || !categories.length) return;
+  const handleInitOptions = (products, categories, categoryGroups) => {
+    if (!products.length || !categories.length || !categoryGroups.length)
+      return;
 
+    const currentGroup = categoryGroups.find(
+      (i) => i.name.toLowerCase() === pathname.split("/")[2]
+    )?.id;
     const categoriesOptions = categories
       .filter((i) => {
-        const isExistGroup = i.groups.find((j) => j === filterOptions.group);
-        return isExistGroup;
+        return i.groups.includes(currentGroup);
       })
       .map((i) => ({ ...i, label: i.name, value: i.id }));
+
     const productSizes = uniqBy(
       products
         .map((i) => i.stocks)
@@ -102,12 +108,13 @@ const FilterBar = () => {
 
   // Effects
   useEffect(() => {
-    handleInitOptions(allProducts, categories);
-  }, [allProducts, categories]);
+    handleInitOptions(allProducts, categories, categoryGroups);
+  }, [allProducts, categories, categoryGroups, pathname]);
 
   useEffect(() => {
     const size = searchParams.get("size");
     const category = searchParams.get("category");
+    const sale = searchParams.get("sale");
 
     if (size)
       mutateList("products", {
@@ -115,18 +122,26 @@ const FilterBar = () => {
           Boolean(i.stocks.find((j) => j.name == size))
         ),
       });
-    if (category)
+    else if (category)
       mutateList("products", {
         payload: allProducts.filter((i) =>
           Boolean(i.category.find((j) => j == category))
         ),
+      });
+    else if (sale) {
+      mutateList("products", {
+        payload: allProducts.filter((i) => i.price !== i.finalPrice),
+      });
+    } else
+      mutateList("products", {
+        payload: allProducts,
       });
   }, [searchParams]);
 
   return (
     <div className="min-w-fit w-[20%] mr-4">
       <div className="w-full h-auto max-h-[80vh] overflow-auto">
-        <Collapse defaultActiveKey={["1", "2", "3"]} ghost>
+        <Collapse defaultActiveKey={["3"]} ghost>
           {!filterSchema.length ? (
             <ComponentLoading />
           ) : (

@@ -3,10 +3,10 @@ import { FILTER_OPTIONS } from "../../../../utils/constants/navigation.constant"
 export const FILTER_INPUT_SCHEMA = [
   {
     key: "3",
-    panelContent: "Fit Types",
+    panelContent: "Category",
     optionField: FILTER_OPTIONS.category,
     formSchema: [
-        "grid grid-cols-1 py-2 pl-4 filterForm",
+      "grid grid-cols-1 py-2 pl-4 filterForm",
       {
         label: "",
         type: "Select",
@@ -49,30 +49,14 @@ export const FILTER_INPUT_SCHEMA = [
   },
   {
     key: "2",
-    panelContent: "Brand",
-    optionField: "brand",
+    panelContent: "Sale & Offers",
+    optionField: "sale",
     formSchema: [
       "flex flex-col py-2 pl-4 filterForm",
       {
-        label: "Air Jordan",
+        label: "Sale",
         type: "CheckBox",
-        field: "airJordan",
-        rules: {},
-        wrapClassName: "h-auto",
-        className: "flex-row-reverse justify-end gap-2",
-      },
-      {
-        label: "Air Max",
-        type: "CheckBox",
-        field: "airMax",
-        rules: {},
-        wrapClassName: "h-auto",
-        className: "flex-row-reverse justify-end gap-2",
-      },
-      {
-        label: "Stan Smith",
-        type: "CheckBox",
-        field: "stanSmith",
+        field: "sale",
         rules: {},
         wrapClassName: "h-auto",
         className: "flex-row-reverse justify-end gap-2",

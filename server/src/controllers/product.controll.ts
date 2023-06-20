@@ -28,7 +28,7 @@ export const handleGetProduct = async (query: IFilterOptions | any) => {
         return item
     })
 
-    if (sortQuery) combineSaleData = combineSaleData.sort((a, b) => sortQuery === "highToLow" ? a.finalPrice - b.finalPrice : b.finalPrice - a.finalPrice)
+    if (sortQuery) combineSaleData = combineSaleData.sort((a, b) => sortQuery === "lowToHigh" ? a.finalPrice - b.finalPrice : b.finalPrice - a.finalPrice)
 
     return combineSaleData
 }

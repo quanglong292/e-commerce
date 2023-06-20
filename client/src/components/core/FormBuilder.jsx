@@ -196,6 +196,7 @@ const FormBuilder = memo((props) => {
 
   useEffect(() => {
     const subscription = watch((value, { name, type }) => {
+      console.log({ value, name, type });
       handleFormChange({ name, value: value[name], formValue: value });
     });
     return () => subscription.unsubscribe();
@@ -296,6 +297,11 @@ const FormBuilder = memo((props) => {
                           {...i}
                           style={style}
                           className=""
+                          onChange={(e) => {
+                            if (type === "CheckBox")
+                              field.onChange(e.target.checked);
+                            else field.onChange(e?.target?.value ?? e);
+                          }}
                         />
                       );
                     }}
