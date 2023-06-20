@@ -27,7 +27,7 @@ async function fetcher(method, body) {
         ShopId: import.meta.env.VITE_GHN_SHOPID,
         Token: import.meta.env.VITE_GHN_TOKEN,
       },
-      body,
+      body: JSON.stringify(body),
     });
     const jsonData = await response.json();
     if (response.status > 400) throw { message: jsonData };
@@ -39,8 +39,8 @@ async function fetcher(method, body) {
 }
 
 // Create
-const createOrder = async () => {
-  const data = await fetcher("create", demoCreateBody);
+const createOrder = async (body) => {
+  const data = await fetcher("create", { ...demoCreateBody, ...body });
 
   return data;
 };

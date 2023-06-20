@@ -59,6 +59,9 @@ const ViewCart = () => {
               <section className="w-1/2">Estimated Delivery & Handling</section>
               <section className="w-1/2 text-right">Free</section>
             </div>
+            <div className="pb-2 border-b-2 border-black text-lg mb-9">
+              <section className="w-1/2">Paypal</section>
+            </div>
             <CButton onClick={() => setOpenPayment(true)} type="black">
               Checkout
             </CButton>
@@ -75,11 +78,7 @@ const ViewCart = () => {
         open={openPayment}
         onCancel={() => setOpenPayment(false)}
       >
-        <CreditForm
-          onSubmit={() => {
-            handlePayment();
-          }}
-        />
+        <CreditForm onSubmit={handlePayment} />
       </Modal>
     </>
   );

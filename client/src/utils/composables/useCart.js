@@ -1,6 +1,7 @@
 import { REQUEST_PARAMS } from "../constants/urlPath.constant";
 import fetcher from "../helpers/fetcher";
 import formatPrice from "../helpers/formatPrice";
+import { createOrder as createGHNOrder } from "../helpers/ghnFetcher";
 import handleClientError from "../helpers/handleClientError";
 
 export default (cart, { user, token } = {}) => {
@@ -14,10 +15,11 @@ export default (cart, { user, token } = {}) => {
     return { currencyPrice, price: total };
   }
 
-  function generateCartData() {
+  function generateCartData(shippingOrderInfo = {}) {
     return {
       creator: user?.userName,
       totalPrice: amounts.price,
+      shippingOrderInfo,
       products: cart.map(({ product, ...i }) => ({
         id: product.id,
         value: i.id,
@@ -34,8 +36,13 @@ export default (cart, { user, token } = {}) => {
   const createPayment = async () => {
     try {
       if (!user) throw { message: "Please login!" };
-      // console.log({ generateCartData: generateCartData() });
-      const data = await fetcher(REQUEST_PARAMS.ADD_CART, generateCartData());
+      const shipData = await createGHNOrder({
+        client_order_code: user?.userName,
+      });
+      const data = await fetcher(
+        REQUEST_PARAMS.ADD_CART,
+        generateCartData(shipData)
+      );
 
       return data;
     } catch (error) {
