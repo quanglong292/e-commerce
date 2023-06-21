@@ -8,6 +8,7 @@ import useCart from "../../../utils/composables/useCart";
 import CreditForm from "./elements/CreditForm";
 import WishList from "./elements/WishList";
 import SectionHeader from "../ViewProducts/elements/ViewLanding/elements/SectionHeader";
+import { PayPalButtons } from "@paypal/react-paypal-js";
 
 const ViewCart = () => {
   // Store
@@ -62,9 +63,19 @@ const ViewCart = () => {
             <div className="pb-2 border-b-2 border-black text-lg mb-9">
               <section className="w-1/2">Paypal</section>
             </div>
-            <CButton onClick={() => setOpenPayment(true)} type="black">
+            {/* <CButton onClick={() => setOpenPayment(true)} type="black">
               Checkout
-            </CButton>
+            </CButton> */}
+            <PayPalButtons
+              onApprove={(data, actions) => {
+                return actions.order.capture().then((details) => {
+                  const name = details.payer.name.given_name;
+                  alert(`Transaction completed by ${name}`);
+                  handlePayment();
+                });
+              }}
+              style={{ layout: "horizontal" }}
+            />
           </div>
         </div>
 

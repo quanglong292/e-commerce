@@ -6,12 +6,15 @@ import FormBuilder from "../../../../components/core/FormBuilder";
 import fetcher from "../../../../utils/helpers/fetcher";
 import useFetch from "../../../../utils/hooks/useFetch";
 import { REQUEST_PARAMS } from "../../../../utils/constants/urlPath.constant";
-import UserHistory from "../../../app/ViewUser/elements/UserHistory";
+import UserHistory, {
+  OrderStatus,
+} from "../../../app/ViewUser/elements/UserHistory";
 import formatPrice from "../../../../utils/helpers/formatPrice";
 import formatDate from "../../../../utils/helpers/formatDate";
 import { useSearchParams } from "react-router-dom";
 import ConfirmOrderModal from "./ConfirmOrderModal";
-import { createOrder } from "../../../../utils/helpers/ghnFetcher";
+import { createOrder as createGHNOrder } from "../../../../utils/helpers/ghnFetcher";
+import handleClientError from "../../../../utils/helpers/handleClientError";
 
 const Context = createContext({
   name: "Default",
@@ -83,19 +86,7 @@ const ProductLayout = (props) => {
         title: "Status",
         dataIndex: "status",
         key: "status",
-        render: (text) => {
-          const color =
-            text === "order shipped"
-              ? "green"
-              : text === "cancel"
-              ? "red"
-              : "orange";
-          return (
-            <Tag color={color} className="uppercase">
-              {text}
-            </Tag>
-          );
-        },
+        render: (text) => <OrderStatus status={text} />,
       },
       {
         title: "Date",
@@ -120,7 +111,8 @@ const ProductLayout = (props) => {
         dataIndex: "confirm",
         key: "confirm",
         render: (_, rec) => {
-          if (["order shipped", "cancel"].includes(rec.status)) return <></>;
+          if (["order shipped", "cancel", "shipping"].includes(rec.status))
+            return <></>;
           return (
             <div className="flex gap-2">
               <CButton
@@ -312,18 +304,31 @@ const ProductLayout = (props) => {
   };
 
   async function handleConfirmOrder(rec, type = "open") {
+    console.log("vo day", { type });
     try {
-      if (["order shipped", "cancel"].includes(type)) {
-        await fetcher(REQUEST_PARAMS.CONFIRM_CART, {
-          id: orderToConfirm.id,
-          status: type,
-        });
-        if (type === "order shipeed") {
-          await createOrder();
+      if (["order shipped", "shipping", "cancel"].includes(type)) {
+        if (type === "shipping") {
+          const shipData = await createGHNOrder({
+            client_order_code: orderToConfirm.id,
+          });
+          await fetcher(REQUEST_PARAMS.CONFIRM_CART, {
+            id: orderToConfirm.id,
+            status: type,
+            shippingOrderInfo: shipData,
+          });
+        } else {
+          await fetcher(REQUEST_PARAMS.CONFIRM_CART, {
+            id: orderToConfirm.id,
+            status: type,
+          });
         }
         handleInit();
+        setOrderToConfirm(null);
       } else setOrderToConfirm(rec);
-    } catch (error) {}
+    } catch (error) {
+      console.error(error);
+      handleClientError(error)
+    }
   }
 
   // Effects

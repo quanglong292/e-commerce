@@ -1,4 +1,4 @@
-import { Avatar, Button, List, Skeleton } from "antd";
+import { Avatar, Button, List, Skeleton, Tag } from "antd";
 import React, { useEffect, useState } from "react";
 import fetcher from "../../../../utils/helpers/fetcher";
 import { REQUEST_PARAMS } from "../../../../utils/constants/urlPath.constant";
@@ -19,8 +19,6 @@ const UserHistory = (props) => {
   const handleInitHistory = async () => {
     const user = checkToken()["0"];
     if (!user || historyList.length || props.historyList?.length) return;
-
-    console.log("vo day", { user });
 
     setLoading(true);
     const data = await fetcher(REQUEST_PARAMS.GET_CART_HISTORY, {
@@ -43,21 +41,26 @@ const UserHistory = (props) => {
         dataSource={props.historyList || historyList}
         renderItem={(item) => (
           <List.Item
-            actions={
-              props.actions || [
-                <a
-                  key="list-loadmore-edit"
-                  className="text-blue-400 font-semibold"
-                >
-                  Detail
-                </a>,
-              ]
-            }
+            // actions={
+            //   props.actions || [
+            //     <a
+            //       key="list-loadmore-edit"
+            //       className="text-blue-400 font-semibold"
+            //     >
+            //       Detail
+            //     </a>,
+            //   ]
+            // }
             className="w-full"
           >
             <Skeleton avatar title={false} loading={loading} active>
               <List.Item.Meta
-                title={<p>Total: {formatPrice(item.totalPrice)}</p>}
+                title={
+                  <div className="flex gap-4">
+                    <p>Total: {formatPrice(item.totalPrice)}</p>
+                    <OrderStatus status={item.status} />
+                  </div>
+                }
                 description={`Quantity: ${
                   item?.products?.length
                 } | ${formatDate(item.createDate)}`}
@@ -66,9 +69,22 @@ const UserHistory = (props) => {
           </List.Item>
         )}
       />
-      {/* <Button onClick={handleInitHistory}>asd</Button> */}
     </>
   );
 };
 
 export default UserHistory;
+
+export function OrderStatus({ status }) {
+  const color =
+    status === "order shipped"
+      ? "green"
+      : status === "cancel"
+      ? "red"
+      : "orange";
+  return (
+    <Tag color={color} className="uppercase">
+      {status}
+    </Tag>
+  );
+}

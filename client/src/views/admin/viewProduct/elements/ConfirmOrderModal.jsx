@@ -53,7 +53,7 @@ const ConfirmOrderModal = (props) => {
       </div>
       <div className="flex gap-4 mt-4">
         <Button
-          onClick={() => onConfirmOrder(null, "order shipped")}
+          onClick={() => onConfirmOrder(null, "shipping")}
           size="small"
           type="primary"
         >

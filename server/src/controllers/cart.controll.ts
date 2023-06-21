@@ -8,7 +8,7 @@ import { IProduct } from "@/types/product.type";
 import findManyByIds from "@/utils/helpers/findManyByIds";
 
 const getProductInCart = async (carts: ICart[]): Promise<IProduct[] | []> => {
-  const productIds: string[] = uniq(carts.map((i) => i.products).flat());
+  const productIds: string[] = uniq(carts.map((i) => i.products).flat()?.map(i => i.id));
   const data: any = (await findManyByIds(ProductModel, productIds)) ?? [];
   if (!data.length) throw "No product found";
 
@@ -16,10 +16,12 @@ const getProductInCart = async (carts: ICart[]): Promise<IProduct[] | []> => {
 };
 
 export const handleUserOrderHistory = async (creator: any): Promise<any> => {
+  // console.log("vo day");
+
   const cartOfUser: ICart[] = await CartModel.find({ creator });
   if (!cartOfUser.length) return [];
   const products: IProduct[] = await getProductInCart(cartOfUser);
-  console.log({ products123: products });
+  // console.log({ products123: products });
 
   return cartOfUser.map((i: any) => {
     const cart = cloneDeep(i._doc);
@@ -28,7 +30,7 @@ export const handleUserOrderHistory = async (creator: any): Promise<any> => {
     // );
     // cart.products = mappedProducts;
     // i.products2 = products;
-    console.log({ cart1234: i });
+    // console.log({ cart1234: i });
 
     return {
       ...cart,

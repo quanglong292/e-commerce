@@ -62,7 +62,7 @@ router.get("/history/", async ({ query }: Request, res: Response) => {
   try {
     if (!query?.creator) throw "";
     const data = await handleUserOrderHistory(query.creator);
-    console.log({ data12354: data });
+    // console.log({ data12354: data });
 
     res.json(data);
   } catch (error: any) {

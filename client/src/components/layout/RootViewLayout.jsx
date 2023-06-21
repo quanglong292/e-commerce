@@ -22,6 +22,7 @@ import Footer from "./Footer";
 import Sidebar from "../core/Sidebar";
 import ClientLayout from "./ClientLayout";
 import AdminLayout from "./AdminLayout";
+import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 
 if (!import.meta.env.VITE_REACT_APP_CLERK_PUBLISHABLE_KEY) {
   throw new Error("Missing Publishable Key");
@@ -67,7 +68,14 @@ const RootViewLayout = () => {
     <div className="w-full">
       <Navigation />
       <Suspense fallback={<ComponentLoading />}>
-        <RenderViewLayouts user={user} isAdmin={isAdmin} />
+        <PayPalScriptProvider
+          options={{
+            clientId:
+              "AUZatVub5zKdTx0UNGs-djLa7-Ya08zzH3ePZRdkQdh4SLKgtD8l2W40Bc1wk37H_xJ3jAIPoVzndBwZ",
+          }}
+        >
+          <RenderViewLayouts user={user} isAdmin={isAdmin} />
+        </PayPalScriptProvider>
       </Suspense>
       <ViewLogin />
       <Footer />

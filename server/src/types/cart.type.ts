@@ -3,7 +3,7 @@ interface ICart {
     creator: string,
     createDate: string,
     totalPrice: number,
-    products: string[] | []
+    products: any
 }
 
 export {ICart}
