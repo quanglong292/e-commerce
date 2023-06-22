@@ -10,8 +10,10 @@ import WishList from "./elements/WishList";
 import SectionHeader from "../ViewProducts/elements/ViewLanding/elements/SectionHeader";
 import { PayPalButtons } from "@paypal/react-paypal-js";
 import AddressForm from "../../../components/core/AddressForm";
+import { useNavigate } from "react-router-dom";
 
 const ViewCart = () => {
+  const navigate = useNavigate();
   // Store
   const { ordersList, mutateList } = useProductStore((state) => state);
   const { token, user } = useGlobalStore((state) => state);
@@ -67,7 +69,13 @@ const ViewCart = () => {
               <section className="w-1/2">Paypal</section>
             </div>
             {!paymentForm ? (
-              <CButton onClick={() => setOpenPayment(true)} type="black">
+              <CButton
+                onClick={() => {
+                  // setOpenPayment(true)
+                  navigate("/app/cart-checkout");
+                }}
+                type="black"
+              >
                 Checkout
               </CButton>
             ) : (

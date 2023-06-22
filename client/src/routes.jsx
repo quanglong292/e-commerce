@@ -19,6 +19,7 @@ import ViewSearchProduct from "./views/app/ViewSearchProduct";
 import ViewSale from "./views/admin/ViewSale";
 import ViewAuthenticate from "./views/ViewAuthenticate/ViewAuthenticate";
 import ViewDashBoard from "./views/admin/ViewDashBoard";
+import ViewCartCheckout from "./views/app/ViewCart/ViewCartCheckout";
 
 const router = createBrowserRouter([
   {
@@ -59,6 +60,10 @@ const router = createBrowserRouter([
       {
         path: "app/cart",
         element: <ViewCart />,
+      },
+      {
+        path: "app/cart-checkout",
+        element: <ViewCartCheckout />,
       },
       {
         path: "app/user/detail",

@@ -25,7 +25,7 @@ const CreditForm = ({ onSubmit }) => {
   };
 
   return (
-    <div>
+    <div className="w-full">
       <Cards {...state} preview />
       <form className="mt-4">
         <CInput
@@ -35,6 +35,7 @@ const CreditForm = ({ onSubmit }) => {
           name="number"
           placeholder="Card Number"
           maxLength={16}
+          className="w-full"
         />
         <CInput
           onChange={handleInputChange}
@@ -43,6 +44,7 @@ const CreditForm = ({ onSubmit }) => {
           name="expiry"
           placeholder="Expiry"
           maxLength={4}
+          className="w-full"
         />
         <CInput
           onChange={handleInputChange}
@@ -51,6 +53,7 @@ const CreditForm = ({ onSubmit }) => {
           name="cvc"
           placeholder="CVC"
           maxLength={3}
+          className="w-full"
         />
         <CInput
           onChange={handleInputChange}
@@ -59,14 +62,15 @@ const CreditForm = ({ onSubmit }) => {
           name="name"
           placeholder="Name"
           maxLength={16}
+          className="w-full"
         />
         <Popconfirm
           title="Agree submit"
           description="Are you sure to agree this submit?"
           onConfirm={() => onSubmit(state)}
         >
-          <CButton type="black" className="px-4 rounded-[50px]">
-            Submit
+          <CButton type="black" className="w-1/2 px-4">
+            Pay with credit
           </CButton>
         </Popconfirm>
       </form>

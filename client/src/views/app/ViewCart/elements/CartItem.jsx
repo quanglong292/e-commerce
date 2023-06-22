@@ -1,8 +1,11 @@
 import { Divider } from "antd";
 import React from "react";
+import { useResolvedPath } from "react-router-dom";
 
 const CartItem = ({ item }) => {
   const { product } = item;
+  const { pathname } = useResolvedPath();
+  const isCheckoutStep = pathname.includes("cart-checkout");
   return (
     <div className="w-full flex gap-4 my-8">
       <img src={product.bannerImage} alt="" className="max-w-[146px]" />
@@ -15,7 +18,11 @@ const CartItem = ({ item }) => {
           <p className="text-gray-500 text-sm">
             Size{" "}
             <span>
-              <input list="size" defaultValue={item.id} />
+              <input
+                disabled={isCheckoutStep}
+                list="size"
+                defaultValue={item.id}
+              />
               <datalist id="size">
                 {product.stocks.map((i) => (
                   <option key={i.name} value={i.name} />
@@ -27,7 +34,12 @@ const CartItem = ({ item }) => {
           <p className="text-gray-500 text-sm">
             Quantity{" "}
             <span>
-              <input type="number" defaultValue={item.count} max={10} />
+              <input
+                disabled={isCheckoutStep}
+                type="number"
+                defaultValue={item.count}
+                max={10}
+              />
             </span>
           </p>
         </div>

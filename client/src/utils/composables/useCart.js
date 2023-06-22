@@ -5,7 +5,7 @@ import formatPrice from "../helpers/formatPrice";
 import { createOrder as createGHNOrder } from "../helpers/ghnFetcher";
 import handleClientError from "../helpers/handleClientError";
 
-export default (cart, { user, token } = {}) => {
+export default (cart = [], { user, token } = {}) => {
   const amounts = generateTotalAmount(cart);
 
   function generateTotalAmount(list) {
@@ -27,7 +27,7 @@ export default (cart, { user, token } = {}) => {
         info: {
           name: product.name,
           image: product.bannerImage,
-          price: Number(product.price),   
+          price: Number(product.price),
         },
       })),
     };
