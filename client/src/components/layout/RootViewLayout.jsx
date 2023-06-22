@@ -38,8 +38,6 @@ const RootViewLayout = () => {
   // Memo
   const isAdmin = useMemo(() => !pathname.includes("app"), [pathname]);
 
-  console.log({ params, location });
-
   // Store
   const { checkToken, handleLogout, user } = useGlobalStore((state) => state);
 

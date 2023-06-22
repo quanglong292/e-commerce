@@ -13,7 +13,6 @@ const useGlobalStore = create((set) => ({
   toggleLoginModal: () => set((state) => ({ showLogin: !state.showLogin })),
   checkToken: () => {
     const token = parseJwt(getToken());
-    // console.log({ token });
 
     if (!token) return false;
 
@@ -21,7 +20,6 @@ const useGlobalStore = create((set) => ({
     return token;
   },
   setToken: () => {
-    console.log({ setToken: parseJwt(getToken()) });
     return set(() => ({ token: parseJwt(getToken()) }));
   },
   handleLogout: () => {

@@ -9,7 +9,6 @@ import useGlobalStore from "../../../store/global.zustand";
 const ViewDashBoard = () => {
   const { user = {} } = useGlobalStore((state) => state);
   const { info } = user ?? { info: {} };
-  console.log({ user });
 
   return (
     <div>

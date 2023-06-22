@@ -8,7 +8,6 @@ export default (cart, { user, token } = {}) => {
   const amounts = generateTotalAmount(cart);
 
   function generateTotalAmount(list) {
-    // console.log({ generateTotalAmount: list });
     const total = list.reduce((sum, i) => sum + i.count * i.product.price, 0);
     const currencyPrice = formatPrice(total);
 

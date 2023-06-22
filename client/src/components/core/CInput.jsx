@@ -5,7 +5,6 @@ import { Radio } from "antd";
 
 const CInput = (props, ref) => {
   const { className, formError, ...rest } = props;
-  // console.log({ rest, formError });
   return (
     <div className="w-full flex justify-center relative pb-6">
       {rest.type === "radio" ? (

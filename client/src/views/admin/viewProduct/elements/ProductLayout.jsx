@@ -32,8 +32,6 @@ const ProductLayout = (props) => {
 
   let [searchParams] = useSearchParams();
   const urlQuery = useMemo(() => searchParams.get("type"), [searchParams]);
-  // console.log({urlQuery});
-
   const [api, contextHolder] = notification.useNotification();
 
   // Static
@@ -304,7 +302,6 @@ const ProductLayout = (props) => {
   };
 
   async function handleConfirmOrder(rec, type = "open") {
-    console.log("vo day", { type });
     try {
       if (["order shipped", "shipping", "cancel"].includes(type)) {
         if (type === "shipping") {

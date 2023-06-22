@@ -44,7 +44,6 @@ const ViewAuthenticate = () => {
     };
   };
   const onSubmit = async (data) => {
-    // console.log({ onSubmit: data });
     if (data.remember) setToken();
 
     delete data.remember;

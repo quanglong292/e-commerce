@@ -57,7 +57,6 @@ const ProductSection = (props) => {
   const handleInit = async () => {
     // if (!categories?.length) fetchInitData();
     const productData = await fetcher(REQUEST_PARAMS.GET_PRODUCT, { id });
-    console.log({ productData });
 
     if (productData) setProduct(productData[0]);
   };
@@ -126,7 +125,6 @@ function DetailSection({ item = {} }) {
       i.id === id ? { ...i, count: i.count + 1 } : i
     );
     setSelected(!selected.length ? [newItem] : map);
-    console.log({ new: !selected.length ? [newItem] : map });
   }
 
   function findSelect(id) {

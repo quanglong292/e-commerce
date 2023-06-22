@@ -3,7 +3,6 @@ import React from "react";
 
 const CartItem = ({ item }) => {
   const { product } = item;
-  console.log({item});
   return (
     <div className="w-full flex gap-4 my-8">
       <img src={product.bannerImage} alt="" className="max-w-[146px]" />
