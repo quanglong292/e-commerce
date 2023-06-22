@@ -4,7 +4,7 @@ import SigninForm from "./elements/SigninForm";
 import SignupForm from "./elements/SignupForm";
 import useGlobalStore from "../../store/global.zustand";
 import { notification } from "antd";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useResolvedPath } from "react-router-dom";
 import { cloneDeep } from "lodash";
 import fetcher from "../../utils/helpers/fetcher";
 import { REQUEST_PARAMS } from "../../utils/constants/urlPath.constant";
@@ -12,6 +12,7 @@ import { checkAccountPermission } from "../../utils/composables/useToken";
 
 const ViewAuthenticate = () => {
   const navigate = useNavigate();
+  const { pathname } = useResolvedPath();
   const { handleLogin, setToken, checkToken } = useGlobalStore(
     (state) => state
   );
@@ -51,8 +52,10 @@ const ViewAuthenticate = () => {
     try {
       if (formType === "signin") {
         await handleLogin({ payload: data }, "ViewAuthenticate");
-        console.log("vo day");
-        navigate("/");
+
+        if (pathname.includes("app")) navigate(-1);
+        else navigate("/");
+
         checkAccountPermission(checkToken, handleLogout);
       } else {
         const validatedForm = validateRegister(data);
