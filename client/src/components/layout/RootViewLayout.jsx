@@ -1,10 +1,4 @@
-import {
-  Outlet,
-  useLocation,
-  useNavigate,
-  useParams,
-  useResolvedPath,
-} from "react-router-dom";
+import { Outlet, useNavigate, useResolvedPath } from "react-router-dom";
 import Navigation from "../core/Navigator/Navigation";
 import { Suspense, useEffect, useMemo } from "react";
 import ComponentLoading from "./ComponentLoading";
@@ -19,21 +13,18 @@ import { checkAccountPermission } from "../../utils/composables/useToken";
 //   SignedOut,
 // } from "@clerk/clerk-react";
 import Footer from "./Footer";
-import Sidebar from "../core/Sidebar";
 import ClientLayout from "./ClientLayout";
 import AdminLayout from "./AdminLayout";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 
-if (!import.meta.env.VITE_REACT_APP_CLERK_PUBLISHABLE_KEY) {
-  throw new Error("Missing Publishable Key");
-}
-const clerkPubKey = import.meta.env.VITE_REACT_APP_CLERK_PUBLISHABLE_KEY;
+// if (!import.meta.env.VITE_REACT_APP_CLERK_PUBLISHABLE_KEY) {
+//   throw new Error("Missing Publishable Key");
+// }
+// const clerkPubKey = import.meta.env.VITE_REACT_APP_CLERK_PUBLISHABLE_KEY;
 
 const RootViewLayout = () => {
   const navigate = useNavigate();
   const { pathname } = useResolvedPath();
-  const params = useParams();
-  const location = useLocation();
 
   // Memo
   const isAdmin = useMemo(() => !pathname.includes("app"), [pathname]);

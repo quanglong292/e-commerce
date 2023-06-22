@@ -1,3 +1,4 @@
+import { notification } from "antd";
 import { REQUEST_PARAMS } from "../constants/urlPath.constant";
 import fetcher from "../helpers/fetcher";
 import formatPrice from "../helpers/formatPrice";
@@ -42,7 +43,9 @@ export default (cart, { user, token } = {}) => {
         REQUEST_PARAMS.ADD_CART,
         generateCartData(shipData)
       );
-
+      notification.success({
+        message: "Create order success, wait for admin approve!",
+      });
       return data;
     } catch (error) {
       handleClientError(error);

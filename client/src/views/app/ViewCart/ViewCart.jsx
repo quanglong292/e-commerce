@@ -12,7 +12,7 @@ import { PayPalButtons } from "@paypal/react-paypal-js";
 
 const ViewCart = () => {
   // Store
-  const { ordersList } = useProductStore((state) => state);
+  const { ordersList, mutateList } = useProductStore((state) => state);
   const { token, user } = useGlobalStore((state) => state);
 
   // States
@@ -25,7 +25,8 @@ const ViewCart = () => {
   });
 
   const handlePayment = async () => {
-    await createPayment();
+    const data = await createPayment();
+    if (data) mutateList("ordersList", [])
   };
 
   return (
