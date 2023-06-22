@@ -27,7 +27,7 @@ export default (cart, { user, token } = {}) => {
         info: {
           name: product.name,
           image: product.bannerImage,
-          price: Number(product.price),
+          price: Number(product.price),   
         },
       })),
     };

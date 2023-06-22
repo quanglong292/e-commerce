@@ -15,6 +15,14 @@ export const UserSchema = new mongoose.Schema({
         mail: String,
         sex: String,
     },
+    address: [
+        {
+            street: String,
+            ward: String,
+            district: String,
+            city: String,
+        }
+    ],
     carts: [String],
     wishs: [String],
     orderHistory: [String],

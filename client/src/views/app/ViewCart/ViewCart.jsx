@@ -9,6 +9,7 @@ import CreditForm from "./elements/CreditForm";
 import WishList from "./elements/WishList";
 import SectionHeader from "../ViewProducts/elements/ViewLanding/elements/SectionHeader";
 import { PayPalButtons } from "@paypal/react-paypal-js";
+import AddressForm from "../../../components/core/AddressForm";
 
 const ViewCart = () => {
   // Store
@@ -17,6 +18,7 @@ const ViewCart = () => {
 
   // States
   const [openPayment, setOpenPayment] = useState(false);
+  const [paymentForm, setPaymentForm] = useState(null);
 
   // Functions
   const { amounts, createPayment } = useCart(ordersList, {
@@ -26,7 +28,7 @@ const ViewCart = () => {
 
   const handlePayment = async () => {
     const data = await createPayment();
-    if (data) mutateList("ordersList", [])
+    if (data) mutateList("ordersList", []);
   };
 
   return (
@@ -64,19 +66,23 @@ const ViewCart = () => {
             <div className="pb-2 border-b-2 border-black text-lg mb-9">
               <section className="w-1/2">Paypal</section>
             </div>
-            {/* <CButton onClick={() => setOpenPayment(true)} type="black">
-              Checkout
-            </CButton> */}
-            <PayPalButtons
-              onApprove={(data, actions) => {
-                return actions.order.capture().then((details) => {
-                  const name = details.payer.name.given_name;
-                  alert(`Transaction completed by ${name}`);
-                  handlePayment();
-                });
-              }}
-              style={{ layout: "horizontal" }}
-            />
+            {!paymentForm ? (
+              <CButton onClick={() => setOpenPayment(true)} type="black">
+                Checkout
+              </CButton>
+            ) : (
+              <PayPalButtons
+                ref={paypalRef}
+                onApprove={(data, actions) => {
+                  return actions.order.capture().then((details) => {
+                    const name = details.payer.name.given_name;
+                    alert(`Transaction completed by ${name}`);
+                    handlePayment();
+                  });
+                }}
+                style={{ layout: "horizontal" }}
+              />
+            )}
           </div>
         </div>
 
@@ -90,7 +96,17 @@ const ViewCart = () => {
         open={openPayment}
         onCancel={() => setOpenPayment(false)}
       >
-        <CreditForm onSubmit={handlePayment} />
+        {/* <CreditForm onSubmit={handlePayment} /> */}
+        <AddressForm
+          onSubmit={(e) => {
+            if (e.paymentMethod === "paypal") {
+              setPaymentForm(e);
+            } else {
+              handlePayment();
+            }
+            setOpenPayment(false);
+          }}
+        />
       </Modal>
     </>
   );
