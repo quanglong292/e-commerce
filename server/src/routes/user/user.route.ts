@@ -58,6 +58,29 @@ router.post("/", async ({ body }: Request, res: Response) => {
   }
 });
 
+router.put("/", async ({ body }: Request, res: Response) => {
+  if (!body) return res.status(404).send('Bad request!');
+
+  const { id, ...rest } = body
+
+  try {
+    const data = await UserModel.findOne({ id: id });
+    const objectData = data?.toObject()
+
+    if (data) {
+      if (rest.address) {
+        data.address = [...objectData?.address ?? [], rest.address]
+      }
+    }
+
+    data?.save()
+
+    res.json(data);
+  } catch (err) {
+    res.status(404).send('Bad request!');
+  }
+});
+
 router.delete("/", async (req: Request, res: Response) => {
   try {
     const data = await UserModel.deleteOne({ id: req?.body?.id ?? "" });

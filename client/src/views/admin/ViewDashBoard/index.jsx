@@ -5,6 +5,7 @@ import AreaChart from "../../../components/layout/AreaChart";
 import SkeletonAvatar from "antd/es/skeleton/Avatar";
 import { UserOutlined } from "@ant-design/icons";
 import useGlobalStore from "../../../store/global.zustand";
+import CAvatar from "../../../components/core/CAvatar";
 
 const ViewDashBoard = () => {
   const { user = {} } = useGlobalStore((state) => state);
@@ -28,7 +29,7 @@ const ViewDashBoard = () => {
           style={{ width: "100%" }}
         >
           <div className="flex items-center gap-4">
-            <Avatar size={64} icon={<UserOutlined />} />
+            <CAvatar size={64} />
             <div className="text-lg">
               <p className="text-gray-500 font-semibold">{info?.name}</p>
               <p>{info?.mail}</p>

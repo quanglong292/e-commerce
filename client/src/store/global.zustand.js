@@ -10,10 +10,10 @@ const useGlobalStore = create((set) => ({
   token: null,
   user: null,
   showLogin: false,
+  mutateData: (field, data) => set((state) => ({ [field]: data })),
   toggleLoginModal: () => set((state) => ({ showLogin: !state.showLogin })),
   checkToken: () => {
     const token = parseJwt(getToken());
-
     if (!token) return false;
 
     set(() => ({ token: parseJwt(getToken()), user: token["0"] }));

@@ -22,6 +22,7 @@ export const REQUEST_PARAMS = {
   // User
   GET_USER: ["user/", "GET"],
   ADD_USER: ["user/", "POST"],
+  UPDATE_USER: ["user/", "PUT"],
   DELETE_USER: ["user/", "DELETE"],
 
   // Cart

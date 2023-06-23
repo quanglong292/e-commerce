@@ -43,7 +43,7 @@ const AddressForm = (props) => {
         </div>
         <div className="flex gap-4">
           <div className="w-full">
-            <label>Ward</label>
+            <label>District</label>
             <CInput
               {...register("district", { required: REQUIRED_MESSAGE })}
               placeholder="District"
@@ -52,7 +52,7 @@ const AddressForm = (props) => {
             />
           </div>
           <div className="w-full">
-            <label>Ward</label>
+            <label>City</label>
             <CInput
               {...register("city", { required: REQUIRED_MESSAGE })}
               placeholder="City"

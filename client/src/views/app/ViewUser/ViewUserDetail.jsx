@@ -1,24 +1,17 @@
 import React, { useEffect } from "react";
 import FormBuilder from "../../../components/core/FormBuilder";
 import { USER_DETAIL_SHCEMA } from "../../../utils/constants/detailUser.constant";
-import { Avatar, Collapse, Divider } from "antd";
-import { UserOutlined } from "@ant-design/icons";
+import { Collapse, Modal } from "antd";
 import UserHistory from "./elements/UserHistory";
 import useGlobalStore from "../../../store/global.zustand";
 import { useNavigate } from "react-router-dom";
 import AddressForm from "../../../components/core/AddressForm";
-
-const text = (
-  <p
-    style={{
-      paddingLeft: 24,
-    }}
-  >
-    A dog is a type of domesticated animal. Known for its loyalty and
-    faithfulness, it can be found as a welcome guest in many households across
-    the world.
-  </p>
-);
+import CAvatar from "../../../components/core/CAvatar";
+import AddressSelectBox from "../../../components/layout/AddressSelectBox";
+import CButton from "../../../components/core/CButton";
+import fetcher from "../../../utils/helpers/fetcher";
+import { REQUEST_PARAMS } from "../../../utils/constants/urlPath.constant";
+import handleClientError from "../../../utils/helpers/handleClientError";
 
 const items = [
   {
@@ -26,27 +19,34 @@ const items = [
     header: "User Information",
     children: <FormBuilder schema={USER_DETAIL_SHCEMA} />,
   },
-  {
-    key: "2",
-    header: "Address",
-    children: <AddressForm />,
-  },
 ];
 
 const ViewUserDetail = () => {
   const navigate = useNavigate();
-  const { token, toggleLoginModal } = useGlobalStore((state) => state);
+  const { user, mutateData } = useGlobalStore((state) => state);
 
-  // useEffect(() => {
-  //   if (!token) {
-  //     toggleLoginModal();
-  //     navigate("/app");
-  //   }
-  // }, []);
+  // State
+
+  const handleUpdateAddress = async (value) => {
+    if (!value || !user) return;
+
+    delete value?.paymentMethod;
+    console.log({ handleUpdateAddress: value });
+    try {
+      const data = await fetcher(REQUEST_PARAMS.UPDATE_USER, {
+        id: user.id,
+        address: value,
+      });
+      console.log({ newUser: data });
+      mutateData("user", data);
+    } catch (error) {
+      handleClientError(error);
+    }
+  };
 
   return (
     <div className="w-full lg:p-12 pt-0">
-      <div className="bg-white shadow-lg rounded-lg p-4">
+      <div className="bg-white drop-shadow-2xl rounded-lg p-8">
         <p className="text-2xl uppercase font-semibold">User detail</p>
         <div className="my-4 flex flex-col-reverse lg:flex-row gap-8">
           <div className="w-full lg:w-1/3">
@@ -56,12 +56,24 @@ const ViewUserDetail = () => {
             </div>
           </div>
           <div className="w-full lg:w-2/3">
-            <Avatar
-              shape="square"
-              size={64}
-              icon={<UserOutlined />}
-              className="mb-4"
-            />
+            <div className="flex items-center gap-4">
+              <CAvatar
+                src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+                shape="square"
+                size={64}
+                className="mb-4"
+              />
+              <div>
+                <p>
+                  Name:{" "}
+                  <span className="font-semibold">{user?.info?.name}</span>
+                </p>
+                <p>
+                  E-mail:{" "}
+                  <span className="font-semibold">{user?.info?.mail}</span>
+                </p>
+              </div>
+            </div>
             <Collapse defaultActiveKey={["1"]} onChange={() => {}} size="large">
               {items.map((i) => {
                 return (
@@ -70,10 +82,19 @@ const ViewUserDetail = () => {
                   </Collapse.Panel>
                 );
               })}
+              <Collapse.Panel key="2" header="Address">
+                <div className="p-4 w-full">
+                  <AddressSelectBox items={user?.address} />
+                  <CButton type="black">Add+</CButton>
+                </div>
+              </Collapse.Panel>
             </Collapse>
           </div>
         </div>
       </div>
+      <Modal footer={<></>}>
+        <AddressForm onSubmit={handleUpdateAddress} />
+      </Modal>
     </div>
   );
 };
