@@ -24,9 +24,7 @@ const AdditionNav = (props) => {
   const { wishList, ordersList, mutateList } = useProductStore(
     (state) => state
   );
-  const { token, toggleLoginModal, handleLogout } = useGlobalStore(
-    (state) => state
-  );
+  const { user, token, handleLogout } = useGlobalStore((state) => state);
   if (!isClientApp)
     return (
       <div className="w-full flex justify-end bg-[#313131] p-1 px-4">
@@ -52,7 +50,7 @@ const AdditionNav = (props) => {
 
   return (
     <div className="w-full flex justify-end bg-[#313131] p-1">
-      <div className="hidden lg:flex gap-4 w-[25%] justify-end items-center">
+      <div className="hidden lg:flex gap-4 w-[25%] justify-end items-center px-24 py-2">
         <Dropdown
           menu={{
             items: wishList.map((i) => ({
@@ -112,8 +110,10 @@ const AdditionNav = (props) => {
                     onClick={() => {
                       if (i.label === "Login") {
                         navigate("auth/app");
-                      } else if (i.label === "Log out") handleLogout();
-                      else navigate(i.path);
+                      } else if (i.label === "Log out") {
+                        handleLogout();
+                        location.reload();
+                      } else navigate(i.path);
                     }}
                   >
                     {i.label}
@@ -129,7 +129,13 @@ const AdditionNav = (props) => {
             ACCOUNT
           </div>
         </Dropdown>
-        <AppsNavigator />
+        {!user ? (
+          <AppsNavigator />
+        ) : user?.permission === "admin" ? (
+          <AppsNavigator />
+        ) : (
+          <></>
+        )}
       </div>
     </div>
   );
