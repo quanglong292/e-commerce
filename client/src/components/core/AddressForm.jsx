@@ -22,32 +22,44 @@ const AddressForm = (props) => {
       <p className="text-lg uppercase">Address</p>
       <div className="p-4">
         <div className="flex gap-4">
-          <CInput
-            {...register("street", { required: REQUIRED_MESSAGE })}
-            placeholder="Street"
-            className="w-full"
-            formError={errors}
-          />
-          <CInput
-            {...register("ward", { required: REQUIRED_MESSAGE })}
-            placeholder="Ward"
-            className="w-full"
-            formError={errors}
-          />
+          <div className="w-full">
+            <label>Street</label>
+            <CInput
+              {...register("street", { required: REQUIRED_MESSAGE })}
+              placeholder="Street"
+              className="w-full"
+              formError={errors}
+            />
+          </div>
+          <div className="w-full">
+            <label>Ward</label>
+            <CInput
+              {...register("ward", { required: REQUIRED_MESSAGE })}
+              placeholder="Ward"
+              className="w-full"
+              formError={errors}
+            />
+          </div>
         </div>
         <div className="flex gap-4">
-          <CInput
-            {...register("district", { required: REQUIRED_MESSAGE })}
-            placeholder="District"
-            className="w-full"
-            formError={errors}
-          />
-          <CInput
-            {...register("city", { required: REQUIRED_MESSAGE })}
-            placeholder="City"
-            className="w-full"
-            formError={errors}
-          />
+          <div className="w-full">
+            <label>Ward</label>
+            <CInput
+              {...register("district", { required: REQUIRED_MESSAGE })}
+              placeholder="District"
+              className="w-full"
+              formError={errors}
+            />
+          </div>
+          <div className="w-full">
+            <label>Ward</label>
+            <CInput
+              {...register("city", { required: REQUIRED_MESSAGE })}
+              placeholder="City"
+              className="w-full"
+              formError={errors}
+            />
+          </div>
         </div>
       </div>
       <p className="text-lg uppercase">Payent method</p>

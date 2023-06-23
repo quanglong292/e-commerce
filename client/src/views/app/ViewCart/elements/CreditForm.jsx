@@ -28,42 +28,54 @@ const CreditForm = ({ onSubmit }) => {
     <div className="w-full">
       <Cards {...state} preview />
       <form className="mt-4">
-        <CInput
-          onChange={handleInputChange}
-          onFocus={handleInputFocus}
-          type="number"
-          name="number"
-          placeholder="Card Number"
-          maxLength={16}
-          className="w-full"
-        />
-        <CInput
-          onChange={handleInputChange}
-          onFocus={handleInputFocus}
-          type="number"
-          name="expiry"
-          placeholder="Expiry"
-          maxLength={4}
-          className="w-full"
-        />
-        <CInput
-          onChange={handleInputChange}
-          onFocus={handleInputFocus}
-          type="password"
-          name="cvc"
-          placeholder="CVC"
-          maxLength={3}
-          className="w-full"
-        />
-        <CInput
-          onChange={handleInputChange}
-          onFocus={handleInputFocus}
-          type="text"
-          name="name"
-          placeholder="Name"
-          maxLength={16}
-          className="w-full"
-        />
+        <div className="w-full">
+          <label>Card Numbe</label>
+          <CInput
+            onChange={handleInputChange}
+            onFocus={handleInputFocus}
+            type="number"
+            name="number"
+            placeholder="Card Number"
+            maxLength={16}
+            className="w-full"
+          />
+        </div>
+        <div className="w-full">
+          <label>Expiry</label>
+          <CInput
+            onChange={handleInputChange}
+            onFocus={handleInputFocus}
+            type="number"
+            name="expiry"
+            placeholder="Expiry"
+            maxLength={4}
+            className="w-full"
+          />
+        </div>
+        <div className="w-full">
+          <label>CVC</label>
+          <CInput
+            onChange={handleInputChange}
+            onFocus={handleInputFocus}
+            type="password"
+            name="cvc"
+            placeholder="CVC"
+            maxLength={3}
+            className="w-full"
+          />
+        </div>
+        <div className="w-full">
+          <label>Name</label>
+          <CInput
+            onChange={handleInputChange}
+            onFocus={handleInputFocus}
+            type="text"
+            name="name"
+            placeholder="Name"
+            maxLength={16}
+            className="w-full"
+          />
+        </div>
         <Popconfirm
           title="Agree submit"
           description="Are you sure to agree this submit?"
