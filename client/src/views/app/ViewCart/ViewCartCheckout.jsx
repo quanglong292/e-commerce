@@ -125,7 +125,7 @@ function PaymentStep({ setCurrentStep, handlePayment }) {
     <>
       <SectionHeader>give me your card</SectionHeader>
       <div className="w-full flex flex-col items-center justify-center gap-4">
-        <CreditForm />
+        <CreditForm onSubmit={(formValue) => handlePayment()} />
         {/* <div className="w-full h-full flex items-center justify-center py-4"> */}
         <PayPalButtons
           onApprove={(data, actions) => {
