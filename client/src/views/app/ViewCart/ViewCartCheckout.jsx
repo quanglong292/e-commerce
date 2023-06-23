@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import AddressForm from "../../../components/core/AddressForm";
+import AddressSelectBox from "../../../components/layout/AddressSelectBox";
 import SectionHeader from "../ViewProducts/elements/ViewLanding/elements/SectionHeader";
 import useProductStore from "../../../store/product.zustand";
 import CartItem from "./elements/CartItem";
@@ -38,7 +39,7 @@ const ViewCartCheckout = () => {
     <div className="flex gap-8">
       <div className="w-1/2">
         {!currentStep ? (
-          <AddressStep setCurrentStep={setCurrentStep} />
+          <AddressStep user={user} setCurrentStep={setCurrentStep} />
         ) : (
           <PaymentStep
             setCurrentStep={setCurrentStep}
@@ -105,10 +106,11 @@ const ViewCartCheckout = () => {
   );
 };
 
-function AddressStep({ setCurrentStep }) {
+function AddressStep({ setCurrentStep, user }) {
   return (
     <div className="w-full">
       <SectionHeader>how you will receive ?</SectionHeader>
+      <AddressSelectBox items={user?.address} />
       <AddressForm
         onSubmit={(e) => {
           if (e.paymentMethod === "paypal") {

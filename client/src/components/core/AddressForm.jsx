@@ -2,6 +2,8 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import CInput from "./CInput";
 import { REQUIRED_MESSAGE } from "../../views/ViewAuthenticate/elements/SignupForm";
+import { QuestionCircleFilled } from "@ant-design/icons";
+import { Tooltip } from "antd";
 
 // street: String,
 //             ward: String,
@@ -19,7 +21,12 @@ const AddressForm = (props) => {
 
   return (
     <form onSubmit={handleSubmit(props.onSubmit)} className="w-full">
-      <p className="text-lg uppercase">Address</p>
+      <div className="flex items-center gap-2">
+        <p className="text-lg uppercase">AddressForm </p>
+        <Tooltip title="Will auto use this address if input in here">
+          <QuestionCircleFilled />
+        </Tooltip>
+      </div>
       <div className="p-4">
         <div className="flex gap-4">
           <div className="w-full">

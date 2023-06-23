@@ -2,6 +2,7 @@ import React, { useId } from "react";
 import AddressCard from "../core/AddressCard";
 
 const AddressSelectBox = ({ items = [] }) => {
+  console.log({ items });
   return (
     <div className="my-4">
       <fieldset className="flex flex-col gap-4">
@@ -16,8 +17,8 @@ const AddressSelectBox = ({ items = [] }) => {
             </AddressCard>
           );
         })}
-        <AddressCard id="qwesad1">Address1</AddressCard>
-        <AddressCard id="qwesad123">Address2</AddressCard>
+        {/* <AddressCard id="qwesad1">Address1</AddressCard>
+        <AddressCard id="qwesad123">Address2</AddressCard> */}
         {/* <ul class="grid w-full gap-6 md:grid-cols-2">
           <li>
             <input
