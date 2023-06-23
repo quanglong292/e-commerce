@@ -27,7 +27,7 @@ const ViewCartCheckout = () => {
 
   const handlePayment = async () => {
     const data = await createPayment();
-    if (data) mutateList("ordersList", { payload: [] });
+    // if (data) mutateList("ordersList", { payload: [] });
   };
 
   useEffect(() => {

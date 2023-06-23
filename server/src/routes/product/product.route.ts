@@ -38,15 +38,11 @@ router.post("/", async ({ body }: Request, res: Response) => {
 
 router.put("/", async ({ body }: Request, res: Response) => {
     const { id, ...restBody } = body
-    console.log({ body });
-
     try {
         const updatedRes = await ProductModel.findOneAndUpdate({ id }, body, { new: true })
 
         res.json(updatedRes)
     } catch (error) {
-        console.log({ updateError: error });
-
         res.status(404)
     }
 })

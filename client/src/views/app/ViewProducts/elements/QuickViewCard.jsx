@@ -26,7 +26,7 @@ const QuickViewCard = memo((props) => {
   function findSelect(id) {
     return selected.find((i) => i.id === id);
   }
-  
+
   const handleAddSelectedItems = (type) => {
     if (!checkToken()) {
       notification.warning({
@@ -70,26 +70,29 @@ const QuickViewCard = memo((props) => {
           <div className="mt-4 text font-semibold">
             <p className="mb-3">Select size</p>
             <div className="grid grid-cols-6 gap-1 gap-y-3">
-              {getSizes(item.stocks)?.map((i) => (
-                <div
-                  key={i.id}
-                  className="p-2 rounded-lg border-[1px] flex justify-center hover:bg-slate-50 cursor-pointer relative"
-                  onClick={() => handleSelect(i.id)}
-                >
-                  {i.name}
-                  {findSelect(i.id) && (
+              {getSizes(item.stocks)?.map((i) => {
+                if (Number(i.value))
+                  return (
                     <div
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setSelected(selected.filter((j) => j.id !== i.id));
-                      }}
-                      className="absolute top-[-12px] right-[-4px] bg-red-400 w-[24px] h-[24px] flex justify-center items-center rounded-full text-white hover:bg-red-300 z-20"
+                      key={i.id}
+                      className="p-2 rounded-lg border-[1px] flex justify-center hover:bg-slate-50 cursor-pointer relative"
+                      onClick={() => handleSelect(i.id)}
                     >
-                      {findSelect(i.id)?.count}
+                      {i.name}
+                      {findSelect(i.id) && (
+                        <div
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setSelected(selected.filter((j) => j.id !== i.id));
+                          }}
+                          className="absolute top-[-12px] right-[-4px] bg-red-400 w-[24px] h-[24px] flex justify-center items-center rounded-full text-white hover:bg-red-300 z-20"
+                        >
+                          {findSelect(i.id)?.count}
+                        </div>
+                      )}
                     </div>
-                  )}
-                </div>
-              ))}
+                  );
+              })}
             </div>
           </div>
           <div className="mt-4 flex gap-2 justify-end">

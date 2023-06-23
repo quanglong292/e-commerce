@@ -136,7 +136,7 @@ function DetailSection({ item = {} }) {
       notification.warning({
         key: 1,
         placement: "bottomLeft",
-        message: <a>Please login!</a>
+        message: <a>Please login!</a>,
       });
       return;
     }
@@ -173,26 +173,29 @@ function DetailSection({ item = {} }) {
           Size: <span className="text-gray-400 mb-2">Please select</span>
         </div>
         <div className="grid grid-cols-6 gap-1 gap-y-3 mt-4 mb-2">
-          {getSizes(item.stocks)?.map((i) => (
-            <div
-              key={i.id}
-              className="p-2 rounded-lg border-[1px] flex justify-center hover:bg-slate-50 cursor-pointer relative"
-              onClick={() => handleSelect(i.id)}
-            >
-              {i.name}
-              {findSelect(i.id) && (
+          {getSizes(item.stocks)?.map((i) => {
+            if (Number(i.value))
+              return (
                 <div
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setSelected(selected.filter((j) => j.id !== i.id));
-                  }}
-                  className="absolute top-[-12px] right-[-4px] bg-red-400 w-[24px] h-[24px] flex justify-center items-center rounded-full text-white hover:bg-red-300 z-20"
+                  key={i.id}
+                  className="p-2 rounded-lg border-[1px] flex justify-center hover:bg-slate-50 cursor-pointer relative"
+                  onClick={() => handleSelect(i.id)}
                 >
-                  {findSelect(i.id)?.count}
+                  {i.name}
+                  {findSelect(i.id) && (
+                    <div
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setSelected(selected.filter((j) => j.id !== i.id));
+                      }}
+                      className="absolute top-[-12px] right-[-4px] bg-red-400 w-[24px] h-[24px] flex justify-center items-center rounded-full text-white hover:bg-red-300 z-20"
+                    >
+                      {findSelect(i.id)?.count}
+                    </div>
+                  )}
                 </div>
-              )}
-            </div>
-          ))}
+              );
+          })}
         </div>
       </div>
       <CButton

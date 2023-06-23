@@ -37,14 +37,14 @@ export default (cart = [], { user, token } = {}) => {
     try {
       if (!user) throw { message: "Please login!" };
       let submitData = generateCartData();
-      const shipData = await createGHNOrder({
-        client_order_code: user?.userName,
-        from_name: user?.userName,
-        to_name: user?.userName,
-        note: "Mike testing!",
-      });
+      // const shipData = await createGHNOrder({
+      //   client_order_code: user?.userName,
+      //   from_name: user?.userName,
+      //   to_name: user?.userName,
+      //   note: "Mike testing!",
+      // });
 
-      submitData.shippingOrderInfo = shipData;
+      // submitData.shippingOrderInfo = shipData;
 
       const data = await fetcher(REQUEST_PARAMS.ADD_CART, submitData);
       notification.success({

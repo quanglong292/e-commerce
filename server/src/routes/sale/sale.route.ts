@@ -31,8 +31,6 @@ router.post("/", async ({ body }: Request, res: Response) => {
 });
 
 router.delete("/", async ({ body }: Request, res: Response) => {
-  console.log({ body });
-
   try {
     const data = await SaleModel.deleteOne({ id: body?.id });
     res.json(data);

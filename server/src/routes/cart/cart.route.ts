@@ -4,6 +4,7 @@ import dayjs from "dayjs";
 import { TIME_FORMAT } from "@/utils/constant";
 import CartModel from "@/models/cart";
 import { handleUserOrderHistory } from "@/controllers/cart.controll";
+import ProductModel from "@/models/product";
 
 const router = Router();
 
@@ -27,6 +28,25 @@ router.post("/", async ({ body }: Request, res: Response) => {
       status: "pending",
     };
     const data = await CartModel.create(body);
+    for (const item of body.products) {
+      const productDoc = await ProductModel.findOne({ id: item.id })
+      const newStocks: any = productDoc?.toObject().stocks.map((stock) => {
+        if (stock.name === item.value) {
+          let updateStock = { ...stock, value: `${stock?.value || 0 >= item.amount ? Number(stock.value) - item.amount : 0}` }
+
+          return updateStock
+        }
+        return stock
+      })
+      const isOutOfStock = !newStocks.find((stock) => Boolean(Number(stock.value)))
+
+      if (productDoc) {
+        productDoc.stocks = newStocks
+        if (isOutOfStock) productDoc.available = false
+      }
+
+      await productDoc?.save()
+    }
 
     res.json(data);
   } catch (error) {

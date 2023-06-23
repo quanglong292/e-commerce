@@ -51,8 +51,6 @@ router.post("/", async ({ body }: Request, res: Response) => {
     };
 
     const data = await UserModel.create(body);
-    console.log({ data });
-
 
     res.json(data);
   } catch (err) {
