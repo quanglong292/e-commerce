@@ -1,6 +1,6 @@
 import React, { memo } from "react";
 
-const AddressCard = ({ children, id }) => {
+const AddressCard = ({ children, id, onClick }) => {
   return (
     <div>
       <input

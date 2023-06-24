@@ -5,12 +5,8 @@ import { REQUIRED_MESSAGE } from "../../views/ViewAuthenticate/elements/SignupFo
 import { QuestionCircleFilled } from "@ant-design/icons";
 import { Tooltip } from "antd";
 
-// street: String,
-//             ward: String,
-//             district: String,
-//             city: String,
-
 const AddressForm = (props) => {
+  const { isRequired } = props;
   const {
     formState: { errors },
     register,
@@ -22,7 +18,7 @@ const AddressForm = (props) => {
   return (
     <form onSubmit={handleSubmit(props.onSubmit)} className="w-full">
       <div className="flex items-center gap-2">
-        <p className="text-lg uppercase">AddressForm </p>
+        <p className="text-lg uppercase">Address Form</p>
         <Tooltip title="Will auto use this address if input in here">
           <QuestionCircleFilled />
         </Tooltip>
@@ -32,7 +28,9 @@ const AddressForm = (props) => {
           <div className="w-full">
             <label>Street</label>
             <CInput
-              {...register("street", { required: REQUIRED_MESSAGE })}
+              {...register("street", {
+                required: isRequired ? REQUIRED_MESSAGE : false,
+              })}
               placeholder="Street"
               className="w-full"
               formError={errors}
@@ -41,7 +39,9 @@ const AddressForm = (props) => {
           <div className="w-full">
             <label>Ward</label>
             <CInput
-              {...register("ward", { required: REQUIRED_MESSAGE })}
+              {...register("ward", {
+                required: isRequired ? REQUIRED_MESSAGE : false,
+              })}
               placeholder="Ward"
               className="w-full"
               formError={errors}
@@ -52,7 +52,9 @@ const AddressForm = (props) => {
           <div className="w-full">
             <label>District</label>
             <CInput
-              {...register("district", { required: REQUIRED_MESSAGE })}
+              {...register("district", {
+                required: isRequired ? REQUIRED_MESSAGE : false,
+              })}
               placeholder="District"
               className="w-full"
               formError={errors}
@@ -61,7 +63,9 @@ const AddressForm = (props) => {
           <div className="w-full">
             <label>City</label>
             <CInput
-              {...register("city", { required: REQUIRED_MESSAGE })}
+              {...register("city", {
+                required: isRequired ? REQUIRED_MESSAGE : false,
+              })}
               placeholder="City"
               className="w-full"
               formError={errors}

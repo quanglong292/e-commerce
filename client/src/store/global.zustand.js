@@ -23,8 +23,8 @@ const useGlobalStore = create((set) => ({
     return set(() => ({ token: parseJwt(getToken()) }));
   },
   handleLogout: () => {
+    set(() => ({ token: null, user: null }));
     logout();
-    return set(() => ({ token: null, user: null }));
   },
   handleRegister: async (body) => {
     try {

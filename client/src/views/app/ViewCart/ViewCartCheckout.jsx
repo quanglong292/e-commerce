@@ -14,7 +14,7 @@ import { useNavigate } from "react-router-dom";
 const ViewCartCheckout = () => {
   const navigate = useNavigate();
   // Stores
-  const { ordersList, mutateList } = useProductStore((state) => state);
+  const { ordersList, checkoutInfo } = useProductStore((state) => state);
   const { token, user } = useGlobalStore((state) => state);
 
   // State
@@ -28,7 +28,10 @@ const ViewCartCheckout = () => {
 
   const handlePayment = async () => {
     const data = await createPayment();
-    // if (data) mutateList("ordersList", { payload: [] });
+    if (data) {
+      mutateList("ordersList", { payload: [] });
+      navigate("/app/user/detail")
+    }
   };
 
   useEffect(() => {
@@ -106,12 +109,27 @@ const ViewCartCheckout = () => {
   );
 };
 
-function AddressStep({ setCurrentStep, user }) {
+function AddressStep({ setCurrentStep }) {
+  const { checkoutInfo, mutateData } = useProductStore((state) => state);
+  const { user } = useGlobalStore((state) => state);
+
+  const handleSelectAddress = (address) => {
+    const updateAddress = { ...checkoutInfo, address };
+    mutateData("checkoutInfo", updateAddress);
+  };
+
+  useEffect(() => {
+    return () => {
+      handleSelectAddress(null);
+    };
+  }, []);
+
   return (
     <div className="w-full">
       <SectionHeader>how you will receive ?</SectionHeader>
-      <AddressSelectBox items={user?.address} />
+      <AddressSelectBox onSelect={handleSelectAddress} items={user?.address} />
       <AddressForm
+        isRequired={!Boolean(checkoutInfo?.address)}
         onSubmit={(e) => {
           if (e.paymentMethod === "paypal") {
             setCurrentStep(1);

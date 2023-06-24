@@ -55,6 +55,7 @@ export default (inputToken) => {
 
   function logout() {
     document.cookie = `${TOKEN_NAME}=;`;
+    // location.reload();
   }
 
   return {

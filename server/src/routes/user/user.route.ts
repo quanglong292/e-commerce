@@ -69,7 +69,7 @@ router.put("/", async ({ body }: Request, res: Response) => {
 
     if (data) {
       if (rest.address) {
-        data.address = [...objectData?.address ?? [], rest.address]
+        data.address = [...objectData?.address ?? [], { ...rest.address, id: v4() }]
       }
     }
 

@@ -29,7 +29,7 @@ const CreditForm = ({ onSubmit }) => {
       <Cards {...state} preview />
       <form className="mt-4">
         <div className="w-full">
-          <label>Card Numbe</label>
+          <label>Card Number</label>
           <CInput
             onChange={handleInputChange}
             onFocus={handleInputFocus}

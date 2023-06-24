@@ -1,15 +1,17 @@
-import React, { useId } from "react";
+import React from "react";
 import AddressCard from "../core/AddressCard";
 
-const AddressSelectBox = ({ items = [] }) => {
-  console.log({ items });
+const AddressSelectBox = ({ items = [], onSelect }) => {
   return (
     <div className="my-4">
-      <fieldset className="flex flex-col gap-4">
-        {items.map((i) => {
-          const id = Math.floor(Math.random() * 9999999) + "";
+      <form
+        onChange={(e) => onSelect(items.find((i) => i.id === e.target.value))}
+        className="flex flex-col gap-4"
+      >
+        {items.map((i, idx) => {
+          const id = i.id;
           return (
-            <AddressCard key={id} id={id} name="AddressSelectBox">
+            <AddressCard key={idx} id={id} name="AddressSelectBox">
               <p className="font-semibold">{i.street}</p>
               <p className="text-sm">
                 {i.ward} - {i.district} - {i.city}
@@ -17,9 +19,10 @@ const AddressSelectBox = ({ items = [] }) => {
             </AddressCard>
           );
         })}
-        {/* <AddressCard id="qwesad1">Address1</AddressCard>
+      </form>
+      {/* <AddressCard id="qwesad1">Address1</AddressCard>
         <AddressCard id="qwesad123">Address2</AddressCard> */}
-        {/* <ul class="grid w-full gap-6 md:grid-cols-2">
+      {/* <ul class="grid w-full gap-6 md:grid-cols-2">
           <li>
             <input
               type="radio"
@@ -84,7 +87,6 @@ const AddressSelectBox = ({ items = [] }) => {
             </label>
           </li>
         </ul> */}
-      </fieldset>
     </div>
   );
 };

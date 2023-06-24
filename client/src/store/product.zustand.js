@@ -42,6 +42,9 @@ const useProductStore = create((set, get) => ({
   wishList: [],
   ordersList: [],
   filterOptions: {},
+  checkoutInfo: {
+    address: null,
+  },
   comments: [],
   mutateList: (listName, { payload }) => {
     const isProduct = ["products"].includes(listName);
@@ -54,6 +57,9 @@ const useProductStore = create((set, get) => ({
 
       return { [listName]: newList };
     });
+  },
+  mutateData: (field, data) => {
+    return set(() => ({ [field]: data }));
   },
   setFilter: async (field, value) => {
     const { filterOptions, fetch } = get();

@@ -21,6 +21,7 @@ export const UserSchema = new mongoose.Schema({
             ward: String,
             district: String,
             city: String,
+            id: String,
         }
     ],
     carts: [String],
