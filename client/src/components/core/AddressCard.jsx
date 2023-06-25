@@ -1,6 +1,6 @@
 import React, { memo } from "react";
 
-const AddressCard = ({ children, id, onClick }) => {
+const AddressCard = ({ children, id, onEdit }) => {
   return (
     <div>
       <input
@@ -12,12 +12,20 @@ const AddressCard = ({ children, id, onClick }) => {
       />
       <label
         for={id}
-        className={"block p-4 border-2 peer-checked:border-sky-500"}
+        className={"block p-4 border-2 peer-checked:border-sky-500 relative"}
       >
         <div className="flex justify-between items-start">
           <div>{children}</div>
-          <a className="text-sky-500">Edit</a>
         </div>
+        <a
+          onClick={(e) => {
+            e.stopPropagation();
+            onEdit();
+          }}
+          className="text-sky-500 absolute top-2 right-3 z-10"
+        >
+          Edit
+        </a>
       </label>
     </div>
   );

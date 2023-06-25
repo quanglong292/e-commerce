@@ -1,3 +1,7 @@
 .CInput {
-  @apply text-black border-gray-400 border-[1px] rounded-md py-1 px-2 text-gray-400 focus:outline-none;
+  @apply text-black border-[#d9d9d9] border-[1px] rounded-md py-1 px-2 text-sm focus:outline-none w-full;
+
+  &[type=submit] {
+    @apply text-white
+  }
 }

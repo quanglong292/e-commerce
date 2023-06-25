@@ -16,6 +16,7 @@ import TextArea from "antd/es/input/TextArea";
 import set from "lodash/set";
 import findPath from "../../utils/helpers/findPath";
 import isEqual from "lodash/isEqual";
+import CInput from "./CInput";
 
 const getNewLineOfArrayFields = (field, idx) => {
   const fields = [
@@ -290,6 +291,9 @@ const FormBuilder = memo((props) => {
                     control={control}
                     rules={i.rules ?? {}}
                     render={({ field }) => {
+                      if (type === "date") {
+                        return <CInput {...field} {...i} className="" />;
+                      }
                       return (
                         <TypeInput
                           {...field}

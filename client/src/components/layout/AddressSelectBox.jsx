@@ -1,17 +1,17 @@
 import React from "react";
 import AddressCard from "../core/AddressCard";
 
-const AddressSelectBox = ({ items = [], onSelect }) => {
+const AddressSelectBox = ({ items = [], onSelect, onEdit }) => {
   return (
     <div className="my-4">
       <form
-        onChange={(e) => onSelect(items.find((i) => i.id === e.target.value))}
+        onChange={(e) => onSelect && onSelect(items.find((i) => i.id === e.target.value))}
         className="flex flex-col gap-4"
       >
         {items.map((i, idx) => {
           const id = i.id;
           return (
-            <AddressCard key={idx} id={id} name="AddressSelectBox">
+            <AddressCard onEdit={() => onEdit(i)} key={idx} id={id} name="AddressSelectBox">
               <p className="font-semibold">{i.street}</p>
               <p className="text-sm">
                 {i.ward} - {i.district} - {i.city}

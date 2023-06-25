@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import FormBuilder from "../../../components/core/FormBuilder";
 import { USER_DETAIL_SHCEMA } from "../../../utils/constants/detailUser.constant";
 import { Collapse, Modal } from "antd";
@@ -12,21 +12,27 @@ import CButton from "../../../components/core/CButton";
 import fetcher from "../../../utils/helpers/fetcher";
 import { REQUEST_PARAMS } from "../../../utils/constants/urlPath.constant";
 import handleClientError from "../../../utils/helpers/handleClientError";
-
-const items = [
-  {
-    key: "1",
-    header: "User Information",
-    children: <FormBuilder schema={USER_DETAIL_SHCEMA} />,
-  },
-];
+import { cloneDeep } from "lodash";
+import dayjs from "dayjs";
+import formatDate from "../../../utils/helpers/formatDate";
 
 const ViewUserDetail = () => {
   const navigate = useNavigate();
   const { user, mutateData } = useGlobalStore((state) => state);
 
   // State
+  const [infoForm, setInfoForm] = useState({});
+  const [openAddressForm, setOpenAddressForm] = useState(false);
+  const [editAddressForm, setEditAddressForm] = useState(null);
 
+  // Functions
+  const handleInitData = () => {
+    if (user) {
+      const info = cloneDeep(user.info);
+      info.birthDate = formatDate(info.birthDate, "YYYY-MM-DD");
+      setInfoForm(info);
+    }
+  };
   const handleUpdateAddress = async (value) => {
     if (!value || !user) return;
 
@@ -43,6 +49,12 @@ const ViewUserDetail = () => {
       handleClientError(error);
     }
   };
+
+  const toggleAddressForm = () => setOpenAddressForm(!openAddressForm);
+
+  useEffect(() => {
+    handleInitData();
+  }, [user]);
 
   return (
     <div className="w-full lg:p-12 pt-0">
@@ -75,25 +87,43 @@ const ViewUserDetail = () => {
               </div>
             </div>
             <Collapse defaultActiveKey={["1"]} onChange={() => {}} size="large">
-              {items.map((i) => {
-                return (
-                  <Collapse.Panel {...i}>
-                    <div className="p-4 w-full">{i.children}</div>
-                  </Collapse.Panel>
-                );
-              })}
+              <Collapse.Panel key="1" header="Information">
+                <div className="p-4 w-full">
+                  <FormBuilder
+                    formValue={infoForm}
+                    schema={USER_DETAIL_SHCEMA}
+                  />
+                </div>
+              </Collapse.Panel>
               <Collapse.Panel key="2" header="Address">
                 <div className="p-4 w-full">
-                  <AddressSelectBox items={user?.address} />
-                  <CButton type="black">Add+</CButton>
+                  <AddressSelectBox
+                    onEdit={(rec) => setEditAddressForm(rec)}
+                    items={user?.address}
+                  />
+                  <CButton onClick={toggleAddressForm} type="black">
+                    Add+
+                  </CButton>
                 </div>
               </Collapse.Panel>
             </Collapse>
           </div>
         </div>
       </div>
-      <Modal footer={<></>}>
-        <AddressForm onSubmit={handleUpdateAddress} />
+      <Modal
+        open={openAddressForm || Boolean(editAddressForm)}
+        footer={<></>}
+        onCancel={() => {
+          if (editAddressForm) {
+            setEditAddressForm(null);
+          } else toggleAddressForm();
+        }}
+      >
+        <AddressForm
+          defaultValues={editAddressForm}
+          isRequired
+          onSubmit={handleUpdateAddress}
+        />
       </Modal>
     </div>
   );

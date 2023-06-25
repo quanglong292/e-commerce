@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import CInput from "./CInput";
 import { REQUIRED_MESSAGE } from "../../views/ViewAuthenticate/elements/SignupForm";
@@ -6,14 +6,32 @@ import { QuestionCircleFilled } from "@ant-design/icons";
 import { Tooltip } from "antd";
 
 const AddressForm = (props) => {
-  const { isRequired } = props;
+  const { isRequired, defaultValues = {} } = props;
   const {
     formState: { errors },
     register,
     handleSubmit,
     control,
     watch,
-  } = useForm();
+    resetField,
+    setValue,
+    getFieldState,
+    getValues,
+  } = useForm({
+    defaultValues,
+  });
+
+  useEffect(() => {
+    if (!defaultValues) {
+      Object.keys(getValues()).forEach((key) => {
+        resetField(key);
+      });
+    } else {
+      Object.entries(defaultValues).forEach(([key, value]) => {
+        setValue(key, value ?? "");
+      });
+    }
+  }, [defaultValues]);
 
   return (
     <form onSubmit={handleSubmit(props.onSubmit)} className="w-full">

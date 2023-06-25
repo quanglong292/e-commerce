@@ -1,9 +1,9 @@
 export const USER_DETAIL_SHCEMA = [
-  "w-full flex flex-wrap gap-4",
+  "w-full",
   {
     label: "Full Name",
     type: "Text",
-    field: "fullName",
+    field: "name",
     rules: {},
     wrapClassName: "",
     className: "flex-col w-full",
@@ -18,8 +18,8 @@ export const USER_DETAIL_SHCEMA = [
   },
   {
     label: "Birth Date",
-    type: "Text",
-    field: "birth",
+    type: "date",
+    field: "birthDate",
     rules: {},
     wrapClassName: "",
     className: "flex-col w-full",
