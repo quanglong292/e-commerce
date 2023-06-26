@@ -15,10 +15,11 @@ import handleClientError from "../../../utils/helpers/handleClientError";
 import { cloneDeep } from "lodash";
 import dayjs from "dayjs";
 import formatDate from "../../../utils/helpers/formatDate";
+import useToken from "../../../utils/composables/useToken";
 
 const ViewUserDetail = () => {
   const navigate = useNavigate();
-  const { user, mutateData } = useGlobalStore((state) => state);
+  const { user, address, handleUpdate } = useGlobalStore((state) => state);
 
   // State
   const [infoForm, setInfoForm] = useState({});
@@ -26,34 +27,28 @@ const ViewUserDetail = () => {
   const [editAddressForm, setEditAddressForm] = useState(null);
 
   // Functions
-  const handleInitData = () => {
+  const handleInitData = (user) => {
     if (user) {
-      const info = cloneDeep(user.info);
-      info.birthDate = formatDate(info.birthDate, "YYYY-MM-DD");
+      const info = cloneDeep(user.info) ?? {};
+      info.birthDate = formatDate(info?.birthDate, "YYYY-MM-DD");
       setInfoForm(info);
     }
   };
-  const handleUpdateAddress = async (value) => {
-    if (!value || !user) return;
+  const handleUpdateAddress = async (value, type) => {
+    if (!value) return;
 
     delete value?.paymentMethod;
-    console.log({ handleUpdateAddress: value });
-    try {
-      const data = await fetcher(REQUEST_PARAMS.UPDATE_USER, {
-        id: user.id,
-        address: value,
-      });
-      console.log({ newUser: data });
-      mutateData("user", data);
-    } catch (error) {
-      handleClientError(error);
-    }
+
+    await handleUpdate({ address: value }, type);
+    setEditAddressForm(null);
   };
 
-  const toggleAddressForm = () => setOpenAddressForm(!openAddressForm);
+  function toggleAddressForm() {
+    return setOpenAddressForm(!openAddressForm);
+  }
 
   useEffect(() => {
-    handleInitData();
+    handleInitData(user);
   }, [user]);
 
   return (
@@ -99,7 +94,7 @@ const ViewUserDetail = () => {
                 <div className="p-4 w-full">
                   <AddressSelectBox
                     onEdit={(rec) => setEditAddressForm(rec)}
-                    items={user?.address}
+                    items={address}
                   />
                   <CButton onClick={toggleAddressForm} type="black">
                     Add+
@@ -124,6 +119,18 @@ const ViewUserDetail = () => {
           isRequired
           onSubmit={handleUpdateAddress}
         />
+        {Boolean(editAddressForm) && (
+          <div className="flex gap-4">
+            <CButton
+              onClick={() => handleUpdateAddress(editAddressForm, "delete")}
+              className="w-full"
+              danger
+            >
+              Delete
+            </CButton>
+            <CButton className="w-full">Close</CButton>
+          </div>
+        )}
       </Modal>
     </div>
   );

@@ -69,12 +69,14 @@ router.put("/", async ({ body }: Request, res: Response) => {
 
     if (data) {
       if (rest.address) {
-        data.address = [...objectData?.address ?? [], { ...rest.address, id: v4() }]
+        if (rest.address.id) {
+          data.address = data.address.map(i => i.id === rest.address.id ? ({ ...i, ...rest.address }) : i)
+        }
+        else data.address = [...objectData?.address ?? [], { ...rest.address, id: v4() }]
       }
     }
 
     data?.save()
-
     res.json(data);
   } catch (err) {
     res.status(404).send('Bad request!');
@@ -86,6 +88,23 @@ router.delete("/", async (req: Request, res: Response) => {
     const data = await UserModel.deleteOne({ id: req?.body?.id ?? "" });
 
     res.json(data);
+  } catch (err) {
+    res.status(404);
+  }
+});
+
+router.delete("/address", async ({ body }: Request, res: Response) => {
+  try {
+    const userAddressDoc = await UserModel.findOne({ id: body?.id });
+    let addressData = userAddressDoc?.toObject()
+
+    if (userAddressDoc) {
+      userAddressDoc.address = addressData?.address?.filter(i => i.id !== body?.address?.id) ?? userAddressDoc.address
+    }
+
+    userAddressDoc?.save()
+
+    res.json(userAddressDoc);
   } catch (err) {
     res.status(404);
   }

@@ -30,7 +30,7 @@ const ViewCartCheckout = () => {
     const data = await createPayment();
     if (data) {
       mutateList("ordersList", { payload: [] });
-      navigate("/app/user/detail")
+      navigate("/app/user/detail");
     }
   };
 
@@ -111,7 +111,7 @@ const ViewCartCheckout = () => {
 
 function AddressStep({ setCurrentStep }) {
   const { checkoutInfo, mutateData } = useProductStore((state) => state);
-  const { user } = useGlobalStore((state) => state);
+  const { address } = useGlobalStore((state) => state);
 
   const handleSelectAddress = (address) => {
     const updateAddress = { ...checkoutInfo, address };
@@ -127,7 +127,7 @@ function AddressStep({ setCurrentStep }) {
   return (
     <div className="w-full">
       <SectionHeader>how you will receive ?</SectionHeader>
-      <AddressSelectBox onSelect={handleSelectAddress} items={user?.address} />
+      <AddressSelectBox onSelect={handleSelectAddress} items={address} />
       <AddressForm
         isRequired={!Boolean(checkoutInfo?.address)}
         onSubmit={(e) => {

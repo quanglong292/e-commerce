@@ -24,6 +24,7 @@ export const REQUEST_PARAMS = {
   ADD_USER: ["user/", "POST"],
   UPDATE_USER: ["user/", "PUT"],
   DELETE_USER: ["user/", "DELETE"],
+  DELETE_USER_ADDRESS: ["user/address", "DELETE"],
 
   // Cart
   GET_CART: ["cart/", "GET"],
