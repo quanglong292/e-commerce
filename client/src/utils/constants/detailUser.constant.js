@@ -1,10 +1,12 @@
+import { REQUIRED_MESSAGE } from "../../views/ViewAuthenticate/elements/SignupForm";
+
 export const USER_DETAIL_SHCEMA = [
   "w-full",
   {
     label: "Full Name",
     type: "Text",
     field: "name",
-    rules: {},
+    rules: { required: REQUIRED_MESSAGE },
     wrapClassName: "",
     className: "flex-col w-full",
   },
@@ -12,7 +14,7 @@ export const USER_DETAIL_SHCEMA = [
     label: "Phone",
     type: "Text",
     field: "phone",
-    rules: {},
+    rules: { required: REQUIRED_MESSAGE },
     wrapClassName: "",
     className: "flex-col w-full",
   },
@@ -20,7 +22,7 @@ export const USER_DETAIL_SHCEMA = [
     label: "Birth Date",
     type: "date",
     field: "birthDate",
-    rules: {},
+    rules: { required: REQUIRED_MESSAGE },
     wrapClassName: "",
     className: "flex-col w-full",
   },
@@ -28,7 +30,7 @@ export const USER_DETAIL_SHCEMA = [
     label: "E-Mail",
     type: "Text",
     field: "mail",
-    rules: {},
+    rules: { required: REQUIRED_MESSAGE },
     wrapClassName: "",
     className: "flex-col w-full",
   },

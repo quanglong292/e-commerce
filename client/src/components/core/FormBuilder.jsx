@@ -292,7 +292,14 @@ const FormBuilder = memo((props) => {
                     rules={i.rules ?? {}}
                     render={({ field }) => {
                       if (type === "date") {
-                        return <CInput {...field} {...i} className="" />;
+                        return (
+                          <CInput
+                            {...field}
+                            {...i}
+                            className=""
+                            formError={errors}
+                          />
+                        );
                       }
                       return (
                         <TypeInput
@@ -310,7 +317,7 @@ const FormBuilder = memo((props) => {
                     }}
                   />
                 </div>
-                {errors[i.field] && (
+                {(errors[i.field] && !["date"].includes(type)) && (
                   <div className="text-xs text-red-500">
                     This field is required
                   </div>

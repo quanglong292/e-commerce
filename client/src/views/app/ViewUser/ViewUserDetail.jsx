@@ -9,13 +9,10 @@ import AddressForm from "../../../components/core/AddressForm";
 import CAvatar from "../../../components/core/CAvatar";
 import AddressSelectBox from "../../../components/layout/AddressSelectBox";
 import CButton from "../../../components/core/CButton";
-import fetcher from "../../../utils/helpers/fetcher";
-import { REQUEST_PARAMS } from "../../../utils/constants/urlPath.constant";
-import handleClientError from "../../../utils/helpers/handleClientError";
 import { cloneDeep } from "lodash";
-import dayjs from "dayjs";
-import formatDate from "../../../utils/helpers/formatDate";
-import useToken from "../../../utils/composables/useToken";
+import formatDate, {
+  formatToSystemDate,
+} from "../../../utils/helpers/formatDate";
 
 const ViewUserDetail = () => {
   const navigate = useNavigate();
@@ -29,6 +26,7 @@ const ViewUserDetail = () => {
   // Functions
   const handleInitData = (user) => {
     if (user) {
+      console.log({ user });
       const info = cloneDeep(user.info) ?? {};
       info.birthDate = formatDate(info?.birthDate, "YYYY-MM-DD");
       setInfoForm(info);
@@ -41,6 +39,11 @@ const ViewUserDetail = () => {
 
     await handleUpdate({ address: value }, type);
     setEditAddressForm(null);
+  };
+  const handleUpdateInfo = async (value) => {
+    if (!value.birthDate) value.birthDate = formatToSystemDate(value.birthDate);
+
+    await handleUpdate({ info: value });
   };
 
   function toggleAddressForm() {
@@ -87,6 +90,7 @@ const ViewUserDetail = () => {
                   <FormBuilder
                     formValue={infoForm}
                     schema={USER_DETAIL_SHCEMA}
+                    onSubmit={handleUpdateInfo}
                   />
                 </div>
               </Collapse.Panel>

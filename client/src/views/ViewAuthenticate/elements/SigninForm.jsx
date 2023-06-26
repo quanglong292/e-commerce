@@ -1,6 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import CInput from "../../../components/core/CInput";
+import { REQUIRED_MESSAGE } from "./SignupForm";
 
 const SigninForm = (props) => {
   const {
@@ -15,18 +16,18 @@ const SigninForm = (props) => {
       className="w-full flex flex-col items-center"
     >
       <CInput
-        {...register("userName", { required: true })}
+        {...register("userName", { required: REQUIRED_MESSAGE })}
         placeholder="Username"
         className="w-full"
-        formError={errors?.username}
+        formError={errors}
         type="text"
       />
       <CInput
-        {...register("password", { required: true })}
+        {...register("password", { required: REQUIRED_MESSAGE })}
         type="password"
         placeholder="Password"
         className="w-full"
-        formError={errors?.password}
+        formError={errors}
       />
       <div className="w-full flex justify-between text-sm">
         <div className="flex gap-2 justify-start items-start text-gray-400">

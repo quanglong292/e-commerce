@@ -3,6 +3,7 @@ import fetcher from "../utils/helpers/fetcher";
 import { REQUEST_PARAMS } from "../utils/constants/urlPath.constant";
 import useToken from "../utils/composables/useToken";
 import handleClientError from "../utils/helpers/handleClientError";
+import { notification } from "antd";
 
 const { parseJwt, logout, getToken } = useToken();
 
@@ -35,7 +36,9 @@ const useGlobalStore = create((set, get) => ({
   },
   handleUpdate: async (body, type) => {
     const { user, handleLogin } = get();
-    if (!body || !user) return;
+    // console.log({ body, user }, { ...body, id: user.id });
+    if (!body || !user || !user?.id) return;
+
     try {
       const request =
         type === "delete"
@@ -53,6 +56,10 @@ const useGlobalStore = create((set, get) => ({
         },
         "ViewAuthenticate"
       );
+      notification.success({
+        key: 1,
+        message: "Update successful!",
+      });
     } catch (error) {
       handleClientError(error);
     }
@@ -67,12 +74,13 @@ const useGlobalStore = create((set, get) => ({
   handleLogin: async ({ payload }, view = "default") => {
     const data = await fetcher(REQUEST_PARAMS.GET_USER, payload);
     document.cookie = JSON.stringify(data.token);
+    const parsedToken = parseJwt(data.token);
 
     return set((state) => {
       if (!["ViewAuthenticate"].includes(view)) state.toggleLoginModal();
       return {
-        token: parseJwt(data.token),
-        user: { ...payload, orderHistory: data.orderHistory },
+        token: parsedToken,
+        user: { ...parsedToken[0], orderHistory: data.orderHistory },
       };
     });
   },

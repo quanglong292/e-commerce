@@ -25,7 +25,7 @@ const CInput = (props, ref) => {
         <input {...rest} ref={ref} className={"CInput " + className} />
       )}
       {formError?.[rest.name] && (
-        <span className="m-0 text-sm text-red-500 absolute bottom-[4px] left-[2px]">
+        <span className="m-0 text-xs text-red-500 absolute bottom-[8px] left-[2px]">
           {formError?.[rest.name] && <p>{formError?.[rest.name]?.message}</p>}
         </span>
       )}
