@@ -1,7 +1,11 @@
 import React, { memo } from "react";
-import CInput from "./CInput";
+import CInput from "../CInput";
 
-const demoFormSchema = [{}];
+const demoFormSchema = [{
+  label: "Test single",
+  type: "text",
+  field: "caa"
+}];
 
 const FormBuilder2 = (props) => {
   const { formSchema } = props;

@@ -17,6 +17,11 @@ import set from "lodash/set";
 import findPath from "../../utils/helpers/findPath";
 import isEqual from "lodash/isEqual";
 import CInput from "./CInput";
+import {
+  resetFormFields,
+  setFormValues,
+} from "../../utils/composables/useFormBuilder";
+import FieldArray from "./FormBuilder/elements/FieldArray";
 
 const getNewLineOfArrayFields = (field, idx) => {
   const fields = [
@@ -103,11 +108,13 @@ const FormBuilder = memo((props) => {
   const {
     handleSubmit,
     getValues,
+    getFieldState,
     control,
     reset,
     setValue,
-    formState: { errors },
+    formState: { errors, ...state },
     watch,
+    resetField,
   } = useForm();
   const [schema, setSchema] = useState(props.schema);
   const [fetchedOptions, setFetchedOptions] = useState({});
@@ -159,8 +166,11 @@ const FormBuilder = memo((props) => {
   };
 
   const handleResetFields = () => {
-    const emptyFieldsForReset = generateEmptyFields(formValue ?? props.schema);
-    reset(emptyFieldsForReset);
+    reset();
+    // const emptyFieldsForReset = generateEmptyFields(formValue ?? props.schema);
+    // reset(emptyFieldsForReset);
+    // console.log({ values: getValues(), fields: getFieldState(), state });
+    // if (formValue) resetFormFields(formValue, resetField);
   };
 
   const handleAddMoreField = (field) => {
@@ -180,10 +190,12 @@ const FormBuilder = memo((props) => {
 
   const handleInitValue = (values) => {
     if (!values) return;
-    handleResetFields();
-    Object.entries(values).forEach(([key, value]) => {
-      setValue(key, value ?? "");
-    });
+    // handleResetFields();
+    // Object.entries(values).forEach(([key, value]) => {
+    //   setValue(key, value ?? "");
+    // });
+    reset();
+    setFormValues(values, setValue);
   };
   const handleFormChange = ({ name = "", value, formValue }) => {
     if (onChange) onChange(name, value, formValue);
@@ -193,6 +205,9 @@ const FormBuilder = memo((props) => {
   useEffect(() => {
     handleFetchOptionValue(props.schema);
     setArrayFields(generateInitArrayFields(props.schema));
+    // return () => {
+    //   reset();
+    // };
   }, [props]);
 
   useEffect(() => {
@@ -201,6 +216,12 @@ const FormBuilder = memo((props) => {
     });
     return () => subscription.unsubscribe();
   }, [watch]);
+
+  // useEffect(() => {
+  //   return () => {
+  //     handleResetFields();
+  //   };
+  // }, []);
 
   return (
     <div className="form-builder">
@@ -230,6 +251,17 @@ const FormBuilder = memo((props) => {
             };
 
             if (type === "Array") {
+              return (
+                <div className="col-span-3 my-2">
+                  <FieldArray
+                    {...i}
+                    errors={errors}
+                    control={control}
+                    formValue={formValue}
+                    reset={reset}
+                  />
+                </div>
+              );
               const fields =
                 arrayFields?.find((k) => k.field === i.field)?.mapData ?? [];
               return (
@@ -317,7 +349,7 @@ const FormBuilder = memo((props) => {
                     }}
                   />
                 </div>
-                {(errors[i.field] && !["date"].includes(type)) && (
+                {errors[i.field] && !["date"].includes(type) && (
                   <div className="text-xs text-red-500">
                     This field is required
                   </div>

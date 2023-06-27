@@ -143,7 +143,10 @@ function AddressStep({ setCurrentStep }) {
 function PaymentStep({ setCurrentStep, handlePayment }) {
   return (
     <>
-      <SectionHeader>give me your card</SectionHeader>
+      <div className="flex justify-between">
+        <SectionHeader>give me your card</SectionHeader>
+        <CButton type="black">Back</CButton>
+      </div>
       <div className="w-full flex flex-col items-center justify-center gap-4">
         <CreditForm onSubmit={(formValue) => handlePayment()} />
         {/* <div className="w-full h-full flex items-center justify-center py-4"> */}
