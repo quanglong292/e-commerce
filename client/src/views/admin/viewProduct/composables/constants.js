@@ -221,6 +221,7 @@ const ADD_NEW_PRODUCT_SCHEMA = [
 export const VIEW_SCHEMAS = {
   group: {
     viewName: "Category Group",
+    sortTable: true,
     schemas: {
       columns: CATEGORY_GROUP_TABLE_COLUMN,
       formSchema: ADD_NEW_GROUP_CATEGORY_SCHEMA,

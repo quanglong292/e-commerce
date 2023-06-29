@@ -15,6 +15,8 @@ import { useSearchParams } from "react-router-dom";
 import ConfirmOrderModal from "./ConfirmOrderModal";
 import { createOrder as createGHNOrder } from "../../../../utils/helpers/ghnFetcher";
 import handleClientError from "../../../../utils/helpers/handleClientError";
+import CSortTable from "../../../../components/core/CSortTable";
+import { arrayMove } from "@dnd-kit/sortable";
 
 const Context = createContext({
   name: "Default",
@@ -22,7 +24,7 @@ const Context = createContext({
 
 const ProductLayout = (props) => {
   const { fetcherHook, data, loading } = useFetch();
-  const { viewName, schemas } = props;
+  const { viewName, sortTable = false, schemas } = props;
   const {
     columns: schemaColumns,
     formSchema: propsFormSchema,
@@ -134,6 +136,11 @@ const ProductLayout = (props) => {
             </div>
           );
         },
+      },
+    ],
+    group: [
+      {
+        key: "sort",
       },
     ],
   };
@@ -324,9 +331,20 @@ const ProductLayout = (props) => {
       } else setOrderToConfirm(rec);
     } catch (error) {
       console.error(error);
-      handleClientError(error)
+      handleClientError(error);
     }
   }
+
+  const onDragEnd = ({ active, over }) => {
+    console.log({ active, over });
+    if (active.id !== over?.id) {
+      setDataSource((prev) => {
+        const activeIndex = prev.findIndex((i) => i.key === active.id);
+        const overIndex = prev.findIndex((i) => i.key === over?.id);
+        return arrayMove(prev, activeIndex, overIndex);
+      });
+    }
+  };
 
   // Effects
   useEffect(() => {
@@ -349,11 +367,22 @@ const ProductLayout = (props) => {
           )}
           {/* <FilterBarController /> */}
         </div>
-        <CTable
-          columns={columns}
-          dataSource={dataSource}
-          loading={loading || localLoading}
-        />
+        {sortTable ? (
+          <CSortTable
+            columns={columns}
+            dataSource={dataSource}
+            loading={loading || localLoading}
+            onDragEnd={onDragEnd}
+            rowKey="key"
+          />
+        ) : (
+          <CTable
+            columns={columns}
+            dataSource={dataSource}
+            loading={loading || localLoading}
+            rowKey="key"
+          />
+        )}
         <Modal
           open={openForm}
           title={(updateCell ? "Update " : "Add new ") + viewName}

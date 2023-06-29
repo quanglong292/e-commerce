@@ -21,7 +21,7 @@ function FieldArray({
   });
 
   const handleInitData = () => {
-    if (formValue[field]?.length) {
+    if (formValue?.[field]?.length) {
       append(formValue[field]);
     } else append(defaultValues[0]);
   };
@@ -34,8 +34,6 @@ function FieldArray({
       reset();
     };
   }, [formValue]);
-
-  console.log({ formValue });
 
   return (
     <div>
