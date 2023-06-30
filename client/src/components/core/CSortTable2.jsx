@@ -62,51 +62,46 @@ const Row = (props) => {
     />
   );
 };
-const CSortTable = ({
-  // onDragEnd,
-  setDataSource,
-  dataSource = [],
-  ...others
-}) => {
-  // const [dataSource, setDataSource] = useState([
-  //   {
-  //     _id: "643b7388b752d53251d73bc9",
-  //     id: "fb4e1888-071e-429f-ae47-9fd148a935e7",
-  //     name: "Women",
-  //     __v: 0,
-  //     key: "1",
-  //   },
-  //   {
-  //     _id: "643b7390b752d53251d73bcc",
-  //     id: "6229565d-d641-4976-899b-e45a2b641f10",
-  //     name: "Kids",
-  //     __v: 0,
-  //     key: "2",
-  //   },
-  //   {
-  //     _id: "643b739ab752d53251d73bcf",
-  //     id: "761fcea4-58b4-4ce9-a4a5-fd5239228047",
-  //     name: "Sale",
-  //     __v: 0,
-  //     key: "3",
-  //   },
-  //   {
-  //     _id: "643b7526b752d53251d73bf5",
-  //     id: "3a576665-6ee2-4592-a05d-9b5b70b47a84",
-  //     name: "Brand",
-  //     __v: 0,
-  //     key: "4",
-  //   },
-  //   {
-  //     _id: "6497c90af9c4b8842b35e6b5",
-  //     id: "ed29be2f-4c37-47d1-a23b-44085cecf91e",
-  //     name: "Men",
-  //     __v: 0,
-  //     key: "5",
-  //   },
-  // ]);
+const CSortTable2 = () => {
+  const [dataSource, setDataSource] = useState([
+    {
+      _id: "643b7388b752d53251d73bc9",
+      id: "fb4e1888-071e-429f-ae47-9fd148a935e7",
+      name: "Women",
+      __v: 0,
+      key: "1",
+    },
+    {
+      _id: "643b7390b752d53251d73bcc",
+      id: "6229565d-d641-4976-899b-e45a2b641f10",
+      name: "Kids",
+      __v: 0,
+      key: "2",
+    },
+    {
+      _id: "643b739ab752d53251d73bcf",
+      id: "761fcea4-58b4-4ce9-a4a5-fd5239228047",
+      name: "Sale",
+      __v: 0,
+      key: "3",
+    },
+    {
+      _id: "643b7526b752d53251d73bf5",
+      id: "3a576665-6ee2-4592-a05d-9b5b70b47a84",
+      name: "Brand",
+      __v: 0,
+      key: "4",
+    },
+    {
+      _id: "6497c90af9c4b8842b35e6b5",
+      id: "ed29be2f-4c37-47d1-a23b-44085cecf91e",
+      name: "Men",
+      __v: 0,
+      key: "5",
+    },
+  ]);
   const onDragEnd = ({ active, over }) => {
-    // console.log({ active, over });
+    console.log({ active, over });
     if (active.id !== over?.id) {
       setDataSource((prev) => {
         const activeIndex = prev.findIndex((i) => i.key === active.id);
@@ -115,7 +110,6 @@ const CSortTable = ({
       });
     }
   };
-  console.log({ dataSource, columns: others.columns });
   return (
     <DndContext modifiers={[restrictToVerticalAxis]} onDragEnd={onDragEnd}>
       <SortableContext
@@ -124,17 +118,17 @@ const CSortTable = ({
         strategy={verticalListSortingStrategy}
       >
         <Table
-          {...others}
-          dataSource={dataSource}
-          // columns={columns}
           components={{
             body: {
               row: Row,
             },
           }}
+          rowKey="key"
+          columns={columns}
+          dataSource={dataSource}
         />
       </SortableContext>
     </DndContext>
   );
 };
-export default CSortTable;
+export default CSortTable2;

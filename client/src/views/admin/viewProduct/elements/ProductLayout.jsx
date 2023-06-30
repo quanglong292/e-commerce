@@ -251,7 +251,8 @@ const ProductLayout = (props) => {
   }
 
   function handleAssignListData(arrayData) {
-    if (arrayData?.length) setDataSource(data);
+    if (arrayData?.length)
+      setDataSource(data.map((item, i) => ({ ...item, key: i + 1 + "" })));
     else setDataSource([]);
   }
 
@@ -382,6 +383,7 @@ const ProductLayout = (props) => {
             dataSource={dataSource}
             loading={loading || localLoading}
             onDragEnd={onDragEnd}
+            setDataSource={setDataSource}
             rowKey="key"
           />
         ) : (

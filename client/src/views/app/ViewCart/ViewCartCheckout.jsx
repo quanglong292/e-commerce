@@ -145,11 +145,10 @@ function PaymentStep({ setCurrentStep, handlePayment }) {
     <>
       <div className="flex justify-between">
         <SectionHeader>give me your card</SectionHeader>
-        <CButton type="black">Back</CButton>
+        <CButton type="">Back</CButton>
       </div>
       <div className="w-full flex flex-col items-center justify-center gap-4">
         <CreditForm onSubmit={(formValue) => handlePayment()} />
-        {/* <div className="w-full h-full flex items-center justify-center py-4"> */}
         <PayPalButtons
           onApprove={(data, actions) => {
             return actions.order.capture().then((details) => {
@@ -160,7 +159,6 @@ function PaymentStep({ setCurrentStep, handlePayment }) {
           }}
           style={{ layout: "horizontal" }}
         />
-        {/* </div> */}
       </div>
     </>
   );
