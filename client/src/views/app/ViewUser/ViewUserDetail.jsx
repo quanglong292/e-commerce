@@ -13,6 +13,7 @@ import { cloneDeep } from "lodash";
 import formatDate, {
   formatToSystemDate,
 } from "../../../utils/helpers/formatDate";
+import { getGHNOrder } from "../../../utils/helpers/ghnFetcher";
 
 const ViewUserDetail = () => {
   const navigate = useNavigate();
@@ -24,11 +25,12 @@ const ViewUserDetail = () => {
   const [editAddressForm, setEditAddressForm] = useState(null);
 
   // Functions
-  const handleInitData = (user) => {
+  const handleInitData = async (user) => {
     if (user) {
-      console.log({ user });
+      // console.log({ user });
       const info = cloneDeep(user.info) ?? {};
       info.birthDate = formatDate(info?.birthDate, "YYYY-MM-DD");
+      // console.log({ info });
       setInfoForm(info);
     }
   };

@@ -45,7 +45,16 @@ const createOrder = async (body) => {
   return data;
 };
 
-export { fetcher, createOrder };
+const getGHNOrder = async (order_code) => {
+  // console.log({ getGHNOrder: order_code });
+  if (!order_code) throw "Missing body";
+
+  const data = await fetcher("detail", { order_code });
+  console.log({ getGHNOrder: order_code, data });
+  return data;
+};
+
+export { fetcher, createOrder, getGHNOrder };
 
 var demoCreateBody = {
   payment_type_id: 2,

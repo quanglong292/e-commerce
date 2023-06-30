@@ -14,7 +14,7 @@ import { useNavigate } from "react-router-dom";
 const ViewCartCheckout = () => {
   const navigate = useNavigate();
   // Stores
-  const { ordersList, checkoutInfo } = useProductStore((state) => state);
+  const { ordersList, mutateList } = useProductStore((state) => state);
   const { token, user } = useGlobalStore((state) => state);
 
   // State

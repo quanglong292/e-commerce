@@ -63,7 +63,7 @@ const Row = (props) => {
     />
   );
 };
-const CSortTable = ({ onDragEnd, ...others }) => {
+const CSortTable = ({ onDragEnd, dataSource = [], ...others }) => {
   //   const [dataSource, setDataSource] = useState([
   //     {
   //       key: "1",
@@ -89,11 +89,12 @@ const CSortTable = ({ onDragEnd, ...others }) => {
     <DndContext modifiers={[restrictToVerticalAxis]} onDragEnd={onDragEnd}>
       <SortableContext
         // rowKey array
-        items={others.dataSource.map((i) => i.id)}
+        items={dataSource?.map((i) => i.id)}
         strategy={verticalListSortingStrategy}
       >
         <Table
           {...others}
+          dataSource={dataSource}
           components={{
             body: {
               row: Row,

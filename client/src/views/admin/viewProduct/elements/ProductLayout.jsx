@@ -17,6 +17,7 @@ import { createOrder as createGHNOrder } from "../../../../utils/helpers/ghnFetc
 import handleClientError from "../../../../utils/helpers/handleClientError";
 import CSortTable from "../../../../components/core/CSortTable";
 import { arrayMove } from "@dnd-kit/sortable";
+import { UNAVAILABLE_ORDER_STATUS } from "../../../../utils/constants/status.constant";
 
 const Context = createContext({
   name: "Default",
@@ -86,7 +87,10 @@ const ProductLayout = (props) => {
         title: "Status",
         dataIndex: "status",
         key: "status",
-        render: (text) => <OrderStatus status={text} />,
+        render: (text) => {
+          console.log({ text });
+          return <OrderStatus status={text} />;
+        },
       },
       {
         title: "Date",
@@ -111,8 +115,7 @@ const ProductLayout = (props) => {
         dataIndex: "confirm",
         key: "confirm",
         render: (_, rec) => {
-          if (["order shipped", "cancel", "shipping"].includes(rec.status))
-            return <></>;
+          if (UNAVAILABLE_ORDER_STATUS.includes(rec.status)) return <></>;
           return (
             <div className="flex gap-2">
               <CButton
@@ -310,7 +313,7 @@ const ProductLayout = (props) => {
 
   async function handleConfirmOrder(rec, type = "open") {
     try {
-      if (["order shipped", "shipping", "cancel"].includes(type)) {
+      if (UNAVAILABLE_ORDER_STATUS.includes(type)) {
         if (type === "shipping") {
           const shipData = await createGHNOrder({
             client_order_code: orderToConfirm.id,
@@ -320,10 +323,16 @@ const ProductLayout = (props) => {
             status: type,
             shippingOrderInfo: shipData,
           });
+          notification.success({
+            message: "Success!",
+          });
         } else {
           await fetcher(REQUEST_PARAMS.CONFIRM_CART, {
             id: orderToConfirm.id,
             status: type,
+          });
+          notification.success({
+            message: "Success!",
           });
         }
         handleInit();
