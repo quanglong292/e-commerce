@@ -6,6 +6,7 @@ const CartSchema = new mongoose.Schema({
   createDate: String,
   totalPrice: Number,
   shippingOrderInfo: Object,
+  user: Object,
   products: [
     {
       amount: Number,

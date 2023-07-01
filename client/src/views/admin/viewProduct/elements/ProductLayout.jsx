@@ -115,6 +115,7 @@ const ProductLayout = (props) => {
         dataIndex: "confirm",
         key: "confirm",
         render: (_, rec) => {
+          console.log({ rec });
           if (UNAVAILABLE_ORDER_STATUS.includes(rec.status)) return <></>;
           return (
             <div className="flex gap-2">
@@ -251,9 +252,9 @@ const ProductLayout = (props) => {
   }
 
   function handleAssignListData(arrayData) {
-    if (arrayData?.length)
-      setDataSource(data.map((item, i) => ({ ...item, key: i + 1 + "" })));
-    else setDataSource([]);
+    if (arrayData?.length) {
+      setDataSource(arrayData.sort((a, b) => Number(a.key) - Number(b.key)));
+    } else setDataSource([]);
   }
 
   const handleClickAdd = () => {
@@ -315,9 +316,32 @@ const ProductLayout = (props) => {
   async function handleConfirmOrder(rec, type = "open") {
     try {
       if (UNAVAILABLE_ORDER_STATUS.includes(type)) {
+        // console.log({ orderToConfirm });
         if (type === "shipping") {
+          const { user, products } = orderToConfirm;
           const shipData = await createGHNOrder({
-            client_order_code: orderToConfirm.id,
+            client_order_code: orderToConfirm.id ?? "test",
+            to_name: user?.info?.name ?? "test",
+            to_phone: user?.info?.phone ?? "test",
+            to_address: user?.address?.[0]?.street ?? "test",
+            to_ward_name: user?.address?.[0]?.ward ?? "test",
+            to_district_name: user?.address?.[0]?.district ?? "test",
+            to_province_name: user?.address?.[0]?.city ?? "test",
+            items: products.map((i) => {
+              const { info } = i ?? {};
+              return {
+                name: info?.name ?? "test",
+                code: i.id,
+                quantity: i.amount,
+                price: i.mount * Number(i.value),
+                length: 12,
+                width: 12,
+                height: 12,
+                category: {
+                  level1: "Sneaker",
+                },
+              };
+            }),
           });
           await fetcher(REQUEST_PARAMS.CONFIRM_CART, {
             id: orderToConfirm.id,
@@ -345,14 +369,20 @@ const ProductLayout = (props) => {
     }
   }
 
-  const onDragEnd = ({ active, over }) => {
-    console.log({ active, over });
-    if (active.id !== over?.id) {
-      setDataSource((prev) => {
-        const activeIndex = prev.findIndex((i) => i.key === active.id);
-        const overIndex = prev.findIndex((i) => i.key === over?.id);
-        return arrayMove(prev, activeIndex, overIndex);
-      });
+  const handleBulkSaveChanges = async () => {
+    const newDataSource = dataSource.map((item, i) => ({
+      ...item,
+      key: i + 1 + "",
+    }));
+    try {
+      const newData = await fetcher(
+        REQUEST_PARAMS.BULK_CATEGORY_GROUP_UPDATE,
+        newDataSource
+      );
+
+      handleAssignListData(newData);
+    } catch (error) {
+      handleClientError(error);
     }
   };
 
@@ -371,9 +401,16 @@ const ProductLayout = (props) => {
       <div className="w-full">
         <div className="flex justify-between">
           {urlQuery !== "orders" && (
-            <CButton onClick={handleClickAdd} type="primary" className={"mb-2"}>
-              Add+
-            </CButton>
+            <>
+              <CButton
+                onClick={handleClickAdd}
+                type="primary"
+                className={"mb-2"}
+              >
+                Add+
+              </CButton>
+              <CButton onClick={handleBulkSaveChanges}>Save All</CButton>
+            </>
           )}
           {/* <FilterBarController /> */}
         </div>
@@ -382,8 +419,7 @@ const ProductLayout = (props) => {
             columns={columns}
             dataSource={dataSource}
             loading={loading || localLoading}
-            onDragEnd={onDragEnd}
-            setDataSource={setDataSource}
+            onFinishDrag={(setDataCB) => setDataSource(setDataCB)}
             rowKey="key"
           />
         ) : (

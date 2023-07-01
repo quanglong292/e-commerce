@@ -81,10 +81,6 @@ router.put("/", async ({ body }: Request, res: Response) => {
       }
     }
 
-    console.log({ data, rest, id });
-
-
-
     data?.save()
     res.json(data);
   } catch (err) {

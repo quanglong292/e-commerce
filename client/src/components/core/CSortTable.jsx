@@ -63,8 +63,7 @@ const Row = (props) => {
   );
 };
 const CSortTable = ({
-  // onDragEnd,
-  setDataSource,
+  onFinishDrag,
   dataSource = [],
   ...others
 }) => {
@@ -108,14 +107,14 @@ const CSortTable = ({
   const onDragEnd = ({ active, over }) => {
     // console.log({ active, over });
     if (active.id !== over?.id) {
-      setDataSource((prev) => {
+      onFinishDrag((prev) => {
         const activeIndex = prev.findIndex((i) => i.key === active.id);
         const overIndex = prev.findIndex((i) => i.key === over?.id);
         return arrayMove(prev, activeIndex, overIndex);
       });
     }
   };
-  console.log({ dataSource, columns: others.columns });
+
   return (
     <DndContext modifiers={[restrictToVerticalAxis]} onDragEnd={onDragEnd}>
       <SortableContext

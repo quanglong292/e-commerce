@@ -20,6 +20,7 @@ export default (cart = [], { user, token } = {}) => {
       creator: user?.userName,
       totalPrice: amounts.price,
       shippingOrderInfo,
+      user,
       products: cart.map(({ product, ...i }) => ({
         id: product.id,
         value: i.id,

@@ -3,14 +3,15 @@ import { v4 as uuidv4 } from 'uuid';
 
 import CategoryGroupModel from "@/models/categoryGroup";
 import Category from "@/models/category";
+import { forIn } from "lodash";
 
 const router = Router()
 
 // CATEGORY
-router.get("/", async (red: Request, res: Response) => {    
+router.get("/", async (red: Request, res: Response) => {
     try {
         const data = await Category.find()
-    
+
         res.json(data)
     } catch (err) {
         res.status(404)
@@ -18,8 +19,8 @@ router.get("/", async (red: Request, res: Response) => {
 })
 
 router.post("/", async (red: Request, res: Response) => {
-    const { body: {name, groups, description, ...restBody} } = red
-    
+    const { body: { name, groups, description, ...restBody } } = red
+
     try {
         if (!groups?.length || !name) throw ""
         const data = await Category.create({
@@ -28,7 +29,7 @@ router.post("/", async (red: Request, res: Response) => {
             groups,
             description: description || "",
         })
-    
+
         res.json(data)
     } catch (err) {
         res.status(404)
@@ -36,26 +37,26 @@ router.post("/", async (red: Request, res: Response) => {
 })
 
 router.delete("/", async (red: Request, res: Response) => {
-    const { body: {id} } = red
+    const { body: { id } } = red
 
     try {
         if (!id) throw ""
         const data = await Category.deleteOne({
             id
         })
-    
+
         res.json(data)
     } catch (err) {
         res.status(404)
     }
 })
 
-router.post("/delMany", async (red: Request, res: Response) => {    
+router.post("/delMany", async (red: Request, res: Response) => {
     try {
         const data = await Category.deleteMany({
             groups: [],
         })
-    
+
         res.json(data)
     } catch (err) {
         res.status(404)
@@ -63,10 +64,10 @@ router.post("/delMany", async (red: Request, res: Response) => {
 })
 
 // CATEGORY GROUP
-router.get("/group", async (red: Request, res: Response) => {    
+router.get("/group", async (red: Request, res: Response) => {
     try {
         const data = await CategoryGroupModel.find()
-    
+
         res.json(data)
     } catch (err) {
         res.status(404)
@@ -75,27 +76,46 @@ router.get("/group", async (red: Request, res: Response) => {
 
 router.post("/group", async (red: Request, res: Response) => {
     const { body } = red
-    
+
     try {
         const data = await CategoryGroupModel.create({
             id: uuidv4(),
             name: body.name
         })
-    
+
         res.json(data)
     } catch (err) {
         res.status(404)
     }
 })
 
+router.post("/group-bulk", async (red: Request, res: Response) => {
+    const { body } = red
+
+    if (!body.length) return res.status(404).send("Missing body!")
+
+    try {
+        for (const item of body) {
+            await CategoryGroupModel.findOneAndUpdate({ id: item.id }, { key: item.key })
+        }
+        const data = await CategoryGroupModel.find()
+
+        res.json(data)
+    } catch (err) {
+        console.log({ err });
+
+        res.status(404)
+    }
+})
+
 router.delete("/group", async (red: Request, res: Response) => {
-    const { body: {id} } = red
+    const { body: { id } } = red
 
     try {
         const data = await CategoryGroupModel.deleteOne({
             id
         })
-    
+
         res.json(data)
     } catch (err) {
         res.status(404)

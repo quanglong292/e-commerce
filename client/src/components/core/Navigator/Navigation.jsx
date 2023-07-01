@@ -2,13 +2,14 @@ import { Divider, Dropdown } from "antd";
 import { MenuOutlined } from "@ant-design/icons";
 import React, { useEffect, useMemo } from "react";
 import Logo from "../../../assets/icons/Logo";
-import {
-  APP_NAVIGATIONS,
-} from "../../../utils/constants/sidebar.constant";
+import { APP_NAVIGATIONS } from "../../../utils/constants/sidebar.constant";
 import { NavLink, useNavigate, useResolvedPath } from "react-router-dom";
 import CButton from "../CButton";
 import useProductStore from "../../../store/product.zustand";
-import { FILTER_OPTIONS, SIDE_BAR_ITEMS } from "../../../utils/constants/navigation.constant";
+import {
+  FILTER_OPTIONS,
+  SIDE_BAR_ITEMS,
+} from "../../../utils/constants/navigation.constant";
 import AdditionNav from "./elements/AdditionNav";
 import AppsNavigator from "./elements/AppsNavigator";
 import MobileNav from "./elements/MobileNav";
@@ -35,11 +36,13 @@ const Navigation = () => {
       ? SIDE_BAR_ITEMS
       : [
           APP_NAVIGATIONS[0],
-          ...categoryGroups?.map((i) => ({
-            ...i,
-            label: i.name,
-            path: `app/${i.name.toLowerCase()}`,
-          })),
+          ...categoryGroups
+            ?.sort((a, b) => Number(a.key) - Number(b.key))
+            ?.map((i) => ({
+              ...i,
+              label: i.name,
+              path: `app/${i.name.toLowerCase()}`,
+            })),
         ];
   }, [pathname, categoryGroups]);
 
@@ -50,7 +53,9 @@ const Navigation = () => {
 
     if (!path) return fetch("all");
 
-    const value = categoryGroups?.find((i) => i.name.toLowerCase() === path)?.id;
+    const value = categoryGroups?.find(
+      (i) => i.name.toLowerCase() === path
+    )?.id;
 
     if (!value) return;
 
