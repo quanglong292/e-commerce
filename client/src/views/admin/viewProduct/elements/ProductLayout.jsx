@@ -409,7 +409,9 @@ const ProductLayout = (props) => {
               >
                 Add+
               </CButton>
-              <CButton onClick={handleBulkSaveChanges}>Save All</CButton>
+              {urlQuery === "group" && (
+                <CButton onClick={handleBulkSaveChanges}>Save All</CButton>
+              )}
             </>
           )}
           {/* <FilterBarController /> */}
