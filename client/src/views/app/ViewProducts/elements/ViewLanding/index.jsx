@@ -1,16 +1,17 @@
 import React, { memo } from "react";
+import { useNavigate } from "react-router-dom";
 import "./viewLanding.scss";
 
 import useProductStore from "../../../../../store/product.zustand";
 import VideoFrame from "./elements/VideoFrame";
 import PopularSection from "./elements/PopularSection";
-import CategorySection from "./elements/CategorySection";
+// import CategorySection from "./elements/CategorySection";s
 import SaleSection from "./elements/SaleSection";
 import MemberSection from "./elements/MemberSection";
 import BigCategory from "./elements/BigCategory";
 import SectionHeader from "./elements/SectionHeader";
 import CButton from "../../../../../components/core/CButton";
-import { useNavigate } from "react-router-dom";
+import CategorySection2 from "./elements/CategorySection2";
 
 const ViewLanding = memo(() => {
   const navigate = useNavigate();
@@ -48,6 +49,7 @@ const ViewLanding = memo(() => {
             type="includeButton"
             buttonType="default px-4 rounded-2xl font-semibold bg-white"
             src="https://static.nike.com/a/images/f_auto/dpr_0.8,cs_srgb/w_906,c_limit/d100098a-3fed-4dcb-9695-b0596af84e72/nike-just-do-it.png"
+            className="w-[525px] h-[445px]"
           />
           <BigCategory
             header=""
@@ -56,10 +58,11 @@ const ViewLanding = memo(() => {
             type="includeButton"
             buttonType="default px-4 rounded-2xl font-semibold bg-white"
             src="https://static.nike.com/a/images/f_auto/dpr_0.8,cs_srgb/w_906,c_limit/f19708e5-4698-4c1d-a6e2-79a562fba1f4/nike-just-do-it.png"
+            className="w-[525px] h-[445px]"
           />
         </div>
       </div>
-      <PopularSection {...state} />
+      <PopularSection items={state.allProducts} loading={state.loading} />
       {/* <CategorySection {...state} /> */}
       <div className="mt-24">
         <SectionHeader>Don't miss this</SectionHeader>
@@ -78,35 +81,7 @@ const ViewLanding = memo(() => {
           </div>
         </div>
       </div>
-      <div className="mt-24">
-        <SectionHeader>The Essentials</SectionHeader>
-        <div className="flex justify-center gap-4 w-full">
-          <BigCategory
-            header=""
-            buttonText="Men's"
-            path="/app/sale"
-            type="includeButton"
-            // buttonType="px-4 rounded-[50px]"
-            src="https://static.nike.com/a/images/f_auto/dpr_0.8,cs_srgb/w_542,c_limit/e9e24aa0-e6f4-4aa9-aadc-67739c70bb77/jordan.png"
-          />
-          <BigCategory
-            header=""
-            buttonText="Women's"
-            path="/app/women"
-            type="includeButton"
-            // buttonType="px-4 rounded-[50px]"
-            src="https://static.nike.com/a/images/f_auto/dpr_0.8,cs_srgb/w_542,c_limit/4d00886e-980c-4e26-8e78-9b08615eda96/jordan.png"
-          />
-          <BigCategory
-            header=""
-            buttonText="Kid's"
-            path="/app/kid"
-            type="includeButton"
-            // buttonType="px-4 rounded-[50px]"
-            src="https://static.nike.com/a/images/f_auto/dpr_0.8,cs_srgb/w_542,c_limit/228adfd4-3a2a-4f6c-b798-1f94330b8f38/jordan.png"
-          />
-        </div>
-      </div>
+      <CategorySection2 items={state.categoryGroups} />
       <SaleSection />
       <MemberSection />
     </div>

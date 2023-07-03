@@ -1,10 +1,8 @@
-import React from "react";
+import React, { memo } from "react";
 import CCarousel from "../../../../../../components/core/CCarousel";
 import SectionHeader from "./SectionHeader";
 
-const PopularSection = (props) => {
-  const { allProducts, loading } = props;
-
+const PopularSection = ({ allProducts, loading }) => {
   return (
     <div className="mt-24">
       <SectionHeader>Popular right now</SectionHeader>
@@ -31,4 +29,4 @@ const PopularSection = (props) => {
   );
 };
 
-export default PopularSection;
+export default memo(PopularSection);

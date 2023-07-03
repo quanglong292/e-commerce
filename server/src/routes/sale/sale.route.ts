@@ -1,6 +1,4 @@
-import product from "@/models/product";
 import SaleModel from "@/models/sale";
-import findManyByIds from "@/utils/helpers/findManyByIds";
 import { Router, Request, Response } from "express";
 import { v4 as uuidv4 } from "uuid";
 

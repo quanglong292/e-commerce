@@ -54,7 +54,6 @@ const ProductLayout = (props) => {
               title="Delete item"
               description="Are you sure to delete this item?"
               onConfirm={() => handleDeleteItem(record.id)}
-              //   onCancel={cancel}
               okText="Yes"
               cancelText="No"
             >
@@ -207,6 +206,7 @@ const ProductLayout = (props) => {
   }
 
   function handleEditCell(record) {
+    console.log({ handleEditCell: record });
     setFormType("edit");
     setOpenForm(true);
     setUpdateCell(record);
@@ -369,6 +369,15 @@ const ProductLayout = (props) => {
     }
   }
 
+  const onFinishDrag = (callback, record) => {
+    if (typeof callback !== "function") {
+      if (!record) throw "Missing record on onFinishDrag";
+      const actionType = callback;
+      if (actionType === "edit") handleEditCell(record);
+      else handleDeleteItem(record.id);
+    } else setDataSource(setDataCB);
+  };
+
   const handleBulkSaveChanges = async () => {
     const newDataSource = dataSource.map((item, i) => ({
       ...item,
@@ -421,7 +430,7 @@ const ProductLayout = (props) => {
             columns={columns}
             dataSource={dataSource}
             loading={loading || localLoading}
-            onFinishDrag={(setDataCB) => setDataSource(setDataCB)}
+            onFinishDrag={onFinishDrag}
             rowKey="key"
           />
         ) : (

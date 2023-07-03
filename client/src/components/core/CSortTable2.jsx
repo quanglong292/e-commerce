@@ -10,20 +10,8 @@ import {
 import { CSS } from "@dnd-kit/utilities";
 import { Table } from "antd";
 import { useState } from "react";
-const columns = [
-  {
-    title: "Name",
-    dataIndex: "name",
-  },
-  {
-    title: "Age",
-    dataIndex: "age",
-  },
-  {
-    title: "Address",
-    dataIndex: "address",
-  },
-];
+import CButton from "./CButton";
+
 const Row = (props) => {
   const {
     attributes,
@@ -63,6 +51,33 @@ const Row = (props) => {
   );
 };
 const CSortTable2 = () => {
+  const columns = [
+    {
+      title: "Name",
+      dataIndex: "name",
+    },
+    {
+      title: "Age",
+      dataIndex: "age",
+    },
+    {
+      title: "Address",
+      dataIndex: "address",
+      render: (text) => {
+        return (
+          <button
+            onClick={(e) => {
+              e.stopPropagation()
+              console.log({ text });
+            }}
+            className="z-[9999999]"
+          >
+            click
+          </button>
+        );
+      },
+    },
+  ];
   const [dataSource, setDataSource] = useState([
     {
       _id: "643b7388b752d53251d73bc9",
@@ -98,6 +113,12 @@ const CSortTable2 = () => {
       name: "Men",
       __v: 0,
       key: "5",
+    },
+    {
+      key: "6",
+      name: "John Brown",
+      age: 32,
+      address: "click",
     },
   ]);
   const onDragEnd = ({ active, over }) => {

@@ -15,6 +15,14 @@ const ADD_NEW_GROUP_CATEGORY_SCHEMA = [
     wrapClassName: "h-[70px]",
     className: "flex-col",
   },
+  {
+    label: "Image",
+    type: "Text",
+    field: "imageUrl",
+    rules: { required: true },
+    wrapClassName: "h-[70px]",
+    className: "flex-col",
+  },
 ];
 
 const ADD_NEW_CATEGORY_SCHEMA = [

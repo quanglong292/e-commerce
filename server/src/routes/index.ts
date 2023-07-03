@@ -14,7 +14,7 @@ import SaleRoutes from './sale/sale.route';
 import authenticateToken from '@/middlewares/authenticateToken';
 
 
-const useRoutes = (app: Express) => {
+const useRoutes = (app: Express): void => {
   // app.use(authenticateToken)
 
   app.use("/auth", AuthenticateRoutes)

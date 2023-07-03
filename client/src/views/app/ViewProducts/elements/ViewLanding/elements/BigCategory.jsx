@@ -8,12 +8,19 @@ const BigCategory = ({
   path = "/app/sale",
   type,
   buttonType = "black",
+  className = "",
 }) => {
   const navigate = useNavigate();
   if (type === "includeButton") {
     return (
       <div className="w-fit relative">
-        <img src={src} className="max-w-full h-full" />
+        <div className={"w-[434px] h-[431px] " + className}>
+          {src ? (
+            <img src={src} className="max-w-full h-full" />
+          ) : (
+            <div className="min-w-full min-h-full bg-gray-300"></div>
+          )}
+        </div>
         <div className="absolute bottom-4 left-4">
           <CButton
             className="px-4 rounded-[50px]"

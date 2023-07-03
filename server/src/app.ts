@@ -17,11 +17,11 @@ tsconfigPaths.register();
 // Composables
 import useRoutes from '@/routes';
 
-// Application initialize
-const app: Express = express();
-
 // Connect DB
 mongoose.connect(process.env.MONGO_CONNECT as string);
+
+// Application initialize
+const app: Express = express();
 
 app.use(bodyParser.json());
 app.use(cors());
@@ -33,7 +33,6 @@ app.use(morgan('tiny'));
 useRoutes(app)
 
 const port = process.env.PORT || 3000;
-
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { DndContext } from "@dnd-kit/core";
 import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
 import {
@@ -9,21 +9,7 @@ import {
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { Table } from "antd";
-import { useState } from "react";
-const columns = [
-  {
-    title: "Name",
-    dataIndex: "name",
-  },
-  {
-    title: "Age",
-    dataIndex: "age",
-  },
-  {
-    title: "Address",
-    dataIndex: "address",
-  },
-];
+// import { useState } from "react";
 const Row = (props) => {
   const {
     attributes,
@@ -62,50 +48,17 @@ const Row = (props) => {
     />
   );
 };
-const CSortTable = ({
-  onFinishDrag,
-  dataSource = [],
-  ...others
-}) => {
-  // const [dataSource, setDataSource] = useState([
-  //   {
-  //     _id: "643b7388b752d53251d73bc9",
-  //     id: "fb4e1888-071e-429f-ae47-9fd148a935e7",
-  //     name: "Women",
-  //     __v: 0,
-  //     key: "1",
-  //   },
-  //   {
-  //     _id: "643b7390b752d53251d73bcc",
-  //     id: "6229565d-d641-4976-899b-e45a2b641f10",
-  //     name: "Kids",
-  //     __v: 0,
-  //     key: "2",
-  //   },
-  //   {
-  //     _id: "643b739ab752d53251d73bcf",
-  //     id: "761fcea4-58b4-4ce9-a4a5-fd5239228047",
-  //     name: "Sale",
-  //     __v: 0,
-  //     key: "3",
-  //   },
-  //   {
-  //     _id: "643b7526b752d53251d73bf5",
-  //     id: "3a576665-6ee2-4592-a05d-9b5b70b47a84",
-  //     name: "Brand",
-  //     __v: 0,
-  //     key: "4",
-  //   },
-  //   {
-  //     _id: "6497c90af9c4b8842b35e6b5",
-  //     id: "ed29be2f-4c37-47d1-a23b-44085cecf91e",
-  //     name: "Men",
-  //     __v: 0,
-  //     key: "5",
-  //   },
-  // ]);
-  const onDragEnd = ({ active, over }) => {
-    // console.log({ active, over });
+
+const CSortTable = ({ onFinishDrag, dataSource = [], columns, ...others }) => {
+  // Functions
+  const onDragEnd = ({ active, over, activatorEvent }) => {
+    const innerText = activatorEvent?.target?.innerText?.toLowerCase();
+    const isClickAction = ["edit", "delete"].includes(innerText);
+
+    if (isClickAction) {
+      const record = dataSource?.find((i) => i.key === active.id);
+      onFinishDrag(innerText, record);
+    }
     if (active.id !== over?.id) {
       onFinishDrag((prev) => {
         const activeIndex = prev.findIndex((i) => i.key === active.id);
@@ -125,6 +78,7 @@ const CSortTable = ({
         <Table
           {...others}
           dataSource={dataSource}
+          columns={columns}
           // columns={columns}
           components={{
             body: {
@@ -136,4 +90,4 @@ const CSortTable = ({
     </DndContext>
   );
 };
-export default CSortTable;
+export default memo(CSortTable);

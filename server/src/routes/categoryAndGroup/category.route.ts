@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import CategoryGroupModel from "@/models/categoryGroup";
 import Category from "@/models/category";
-import { forIn } from "lodash";
+import { forIn, rest } from "lodash";
 
 const router = Router()
 
@@ -71,6 +71,17 @@ router.get("/group", async (red: Request, res: Response) => {
         res.json(data)
     } catch (err) {
         res.status(404)
+    }
+})
+
+router.put("/group", async ({ body }: Request, res: Response) => {
+    if (!body || !body.id) res.status(404).json("Missing body")
+    try {
+        const data = await CategoryGroupModel.findOneAndUpdate({ id: body.id }, body)
+
+        res.json(data)
+    } catch (err) {
+        res.status(404).json("Something wrong")
     }
 })
 
