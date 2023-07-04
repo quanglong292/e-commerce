@@ -11,10 +11,9 @@ import BreadCrum from "../../../../components/core/BreadCrum";
 import useGlobalStore from "../../../../store/global.zustand";
 import { notification } from "antd";
 
-const ProductSection = (props) => {
+const ProductSection = () => {
   const { pathname } = useResolvedPath();
   const { id } = useParams();
-  const { categories, fetchInitData } = useProductStore((state) => state);
 
   // State
   const [product, setProduct] = useState({});
@@ -28,34 +27,7 @@ const ProductSection = (props) => {
     return raw;
   }, [pathname, product]);
 
-  // Functions
-  // const getSaleInfo = (categories, product) => {
-  //   console.log({ categories });
-  //   const saleCates = categories.filter((i) => {
-  //     return (
-  //       // i.name.toLowerCase().includes("sale") ||
-  //       i.groups?.includes("761fcea4-58b4-4ce9-a4a5-fd5239228047")
-  //     );
-  //   });
-  //   const foundSaleInfo = saleCates.find((i) =>
-  //     product.category.includes(i.id)
-  //   );
-  //   console.log({ saleCates });
-  //   console.log({ foundSaleInfo, product });
-  //   if (foundSaleInfo) {
-  //     const saleValue = foundSaleInfo.description.split("_")[0];
-  //     let salePrice = 0;
-  //     if (saleValue.includes("%")) {
-  //       salePrice = (product.price * Number(saleValue.split("%")[0])) / 100;
-  //     } else salePrice = product.price - Number(saleValue);
-  //     const description = foundSaleInfo?.description?.split("_")?.[1] || "";
-
-  //     setSaleInfo({ salePrice, description });
-  //   }
-  // };
-
   const handleInit = async () => {
-    // if (!categories?.length) fetchInitData();
     const productData = await fetcher(REQUEST_PARAMS.GET_PRODUCT, { id });
 
     if (productData) setProduct(productData[0]);
@@ -67,10 +39,6 @@ const ProductSection = (props) => {
     });
     handleInit();
   }, [id]);
-
-  // useEffect(() => {
-  //   // if (categories.length && product.id) getSaleInfo(categories, product);
-  // }, [categories, product]);
 
   return (
     <>
