@@ -1,11 +1,10 @@
-import React, { memo, useMemo } from "react";
-import { useNavigate, useParams, useResolvedPath } from "react-router-dom";
+import React, { memo } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 // Components
 import ProductSection from "./elements/ProductSection";
 import AdditionInfoSection from "./elements/AdditionInfoSection";
 import SuggestSection from "./elements/SuggestSection";
-import Footer from "../../../components/layout/Footer";
 
 const ViewProductDetail = memo(() => {
   const { id } = useParams();
