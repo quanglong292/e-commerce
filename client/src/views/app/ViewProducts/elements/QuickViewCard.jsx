@@ -8,8 +8,11 @@ import useGlobalStore from "../../../../store/global.zustand";
 
 const QuickViewCard = memo((props) => {
   const { item, isShow, onCancel } = props;
-  const { mutateList } = useProductStore((state) => state);
+  const { mutateList, categoryGroups } = useProductStore((state) => state);
   const { checkToken } = useGlobalStore((state) => state);
+
+  const category =
+    categoryGroups.find((i) => i.id === item?.group?.[0])?.name ?? "";
 
   // local state
   const [selected, setSelected] = useState([]);
@@ -50,7 +53,7 @@ const QuickViewCard = memo((props) => {
       width="80%"
       className="quick-view-card max-w-[1600px] p-0"
     >
-      <div className="w-full h-full lg:flex">
+      <div className="w-full h-full p-4 lg:flex">
         <div className="h-1/2 lg:h-auto lg:w-1/2 flex justify-center p-4">
           <img
             src={item.bannerImage}
@@ -58,7 +61,8 @@ const QuickViewCard = memo((props) => {
           />
         </div>
         <div className="max-h-1/2 overflow-y-auto lg:h-auto lg:w-1/2 p-3">
-          <h1 className="text-xl font-semibold">{item.name}</h1>
+          <h1 className="text-2xl font-bold">{item.name}</h1>
+          <div className="">{`${category}'s`}</div>
           <h3 className="text-base">{item.shortName}</h3>
           <h3 className="text-base mt-2">
             {new Intl.NumberFormat("en-IN", {
@@ -67,8 +71,15 @@ const QuickViewCard = memo((props) => {
               style: "currency",
             }).format(item.price)}
           </h3>
+          <div className="text-sm mt-4">
+            4 interest-free payments of $45.00 with{" "}
+            <span className="font-semibold">Klarna</span>.{" "}
+            <span className="underline">Learn More</span>
+          </div>
           <div className="mt-4 text font-semibold">
-            <p className="mb-3">Select size</p>
+            <div className="mb-4">
+              Size: <span className="text-gray-400">Please select</span>
+            </div>
             <div className="grid grid-cols-6 gap-1 gap-y-3">
               {getSizes(item.stocks)?.map((i) => {
                 if (Number(i.value))
@@ -98,7 +109,7 @@ const QuickViewCard = memo((props) => {
           <div className="mt-4 flex gap-2 justify-end">
             <CButton>Add to cart</CButton>
             <CButton
-              type="primary"
+              type="black"
               onClick={() => {
                 handleAddSelectedItems("ordersList");
               }}
@@ -109,7 +120,7 @@ const QuickViewCard = memo((props) => {
               onClick={() => {
                 handleAddSelectedItems("wishList");
               }}
-              type="primary"
+              type="black"
             >
               Add to whish list
             </CButton>

@@ -2,9 +2,11 @@ import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import CInput from "./CInput";
 import { REQUIRED_MESSAGE } from "../../views/ViewAuthenticate/elements/SignupForm";
-import { QuestionCircleFilled } from "@ant-design/icons";
-import { Tooltip } from "antd";
-import { resetFormFields, setFormValues } from "../../utils/composables/useFormBuilder";
+import {
+  resetFormFields,
+  setFormValues,
+} from "../../utils/composables/useFormBuilder";
+import CTooltip from "./CTooltip";
 
 const AddressForm = (props) => {
   const { isRequired, defaultValues = {} } = props;
@@ -29,9 +31,7 @@ const AddressForm = (props) => {
     <form onSubmit={handleSubmit(props.onSubmit)} className="w-full">
       <div className="flex items-center gap-2">
         <p className="text-lg uppercase">Address Form</p>
-        <Tooltip title="Will auto use this address if input in here">
-          <QuestionCircleFilled />
-        </Tooltip>
+        <CTooltip text="Will take this address if fully fill in" />
       </div>
       <div className="p-4">
         <div className="flex gap-4">

@@ -2,7 +2,7 @@ import React, { memo } from "react";
 import CCarousel from "../../../../../../components/core/CCarousel";
 import SectionHeader from "./SectionHeader";
 
-const PopularSection = ({ allProducts, loading }) => {
+const PopularSection = ({ items, loading }) => {
   return (
     <div className="mt-24">
       <SectionHeader>Popular right now</SectionHeader>
@@ -22,7 +22,7 @@ const PopularSection = ({ allProducts, loading }) => {
               />
             </div>
           )}
-          items={allProducts?.filter((i, idx) => idx < 5)}
+          items={items?.filter((i, idx) => idx < 5)}
         />
       )}
     </div>

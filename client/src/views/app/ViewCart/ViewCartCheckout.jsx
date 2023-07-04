@@ -10,6 +10,10 @@ import useGlobalStore from "../../../store/global.zustand";
 import CreditForm from "./elements/CreditForm";
 import { PayPalButtons } from "@paypal/react-paypal-js";
 import { useNavigate } from "react-router-dom";
+import CTooltip from "../../../components/core/CTooltip";
+import CInput from "../../../components/core/CInput";
+import { Radio } from "antd";
+import { ArrowLeftOutlined } from "@ant-design/icons";
 
 const ViewCartCheckout = () => {
   const navigate = useNavigate();
@@ -55,8 +59,9 @@ const ViewCartCheckout = () => {
           <SectionHeader>SUMMARY</SectionHeader>
           <div className="flex items-start justify-between pb-2 border-b-2 border-black mb-4 text-lg">
             <section className="w-1/2">Total</section>
-            <section className="w-1/2 text-right">
+            <section className="w-1/2 text-right flex justify-end items-center gap-1">
               {amounts?.currencyPrice}
+              <CTooltip text="Sẽ được trả giá nếu là khách sỉ" />
             </section>
           </div>
           <div className="flex items-start justify-between pb-2 border-b-2 border-black mb-4 text-lg">
@@ -66,9 +71,6 @@ const ViewCartCheckout = () => {
           <div className="flex items-start justify-between pb-2 border-b-2 border-black text-lg mb-9">
             <section className="w-1/2">Estimated Delivery & Handling</section>
             <section className="w-1/2 text-right">Free</section>
-          </div>
-          <div className="pb-2 border-b-2 border-black text-lg mb-9">
-            <section className="w-1/2">Paypal</section>
           </div>
           {/* {!paymentForm ? (
             <CButton
@@ -126,7 +128,20 @@ function AddressStep({ setCurrentStep }) {
 
   return (
     <div className="w-full">
-      <SectionHeader>how you will receive ?</SectionHeader>
+      <SectionHeader>Information</SectionHeader>
+      <div className="flex items-start gap-4 text-lg mb-8 mt-8">
+        <p className="text-lg uppercase">You are whole sale ?</p>
+        <Radio.Group
+          options={[
+            { label: "Yes", value: "yes" },
+            { label: "No", value: "no" },
+          ]}
+          // onChange={onChange4}
+          // value={value4}
+          optionType="button"
+          buttonStyle="solid"
+        />
+      </div>
       <AddressSelectBox onSelect={handleSelectAddress} items={address} />
       <AddressForm
         isRequired={!Boolean(checkoutInfo?.address)}
@@ -143,9 +158,18 @@ function AddressStep({ setCurrentStep }) {
 function PaymentStep({ setCurrentStep, handlePayment }) {
   return (
     <>
-      <div className="flex justify-between">
+      <div className="flex justify-between items-center">
         <SectionHeader>give me your card</SectionHeader>
-        <CButton type="">Back</CButton>
+        <div className="w-fit">
+          <CButton
+            onClick={() => setCurrentStep(0)}
+            type="black"
+            className="px-4 rounded-xl flex items-center gap-4"
+          >
+            <ArrowLeftOutlined />
+            <span>Back</span>
+          </CButton>
+        </div>
       </div>
       <div className="w-full flex flex-col items-center justify-center gap-4">
         <CreditForm onSubmit={(formValue) => handlePayment()} />

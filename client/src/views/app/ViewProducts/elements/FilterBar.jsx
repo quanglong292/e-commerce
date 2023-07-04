@@ -1,10 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  useNavigate,
-  useParams,
-  useResolvedPath,
-  useSearchParams,
-} from "react-router-dom";
+import { useResolvedPath, useSearchParams } from "react-router-dom";
 import FormBuilder from "../../../../components/core/FormBuilder";
 import { Collapse } from "antd";
 import { FILTER_INPUT_SCHEMA } from "./constants";
@@ -18,23 +13,16 @@ const { Panel } = Collapse;
 
 const FilterBar = () => {
   const { pathname } = useResolvedPath();
-  const navigate = useNavigate();
 
   // Store
-  const {
-    allProducts,
-    products,
-    categoryGroups,
-    categories,
-    filterOptions,
-    mutateList,
-  } = useProductStore((state) => state);
+  const { allProducts, categoryGroups, categories, mutateList } =
+    useProductStore((state) => state);
 
   // Route State
   let [searchParams, setSearchParams] = useSearchParams();
 
   // State
-  const [filter, setFilter] = useState({});
+  const [_, setFilter] = useState({});
   const [filterSchema, setFilterSchema] = useState([]);
 
   // Functions

@@ -4,7 +4,7 @@ import ProductCard from "../../ViewProducts/elements/ProductCard";
 import { useParams } from "react-router-dom";
 
 const SuggestSection = () => {
-  const { products } = useProductStore((state) => state);
+  const allProducts = useProductStore((state) => state.allProducts);
   const { id } = useParams();
   return (
     <div className="border-2 p-4 mt-4">
@@ -12,7 +12,7 @@ const SuggestSection = () => {
         Commonly Bought Together
       </div>
       <div className="flex gap-4">
-        {products
+        {allProducts
           ?.filter((_, idx) => idx < 5)
           ?.filter((i) => i.id !== id)
           ?.map((i) => (

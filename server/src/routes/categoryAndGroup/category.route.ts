@@ -36,6 +36,18 @@ router.post("/", async (red: Request, res: Response) => {
     }
 })
 
+router.put("/", async ({ body }: Request, res: Response) => {
+    if (!body || !body.id) res.status(404).json("Missing body")
+    const { id, name, groups, description, ...rest } = body
+    try {
+        const data = await Category.findOneAndUpdate({ id: id }, { name, groups, description })
+
+        res.json(data)
+    } catch (err) {
+        res.status(404).json("Something wrong")
+    }
+})
+
 router.delete("/", async (red: Request, res: Response) => {
     const { body: { id } } = red
 

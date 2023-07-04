@@ -88,6 +88,7 @@ const useProductStore = create((set, get) => ({
     if (isHasFilter || type === "all") {
       const options = type ? {} : filterOptions;
       toggleLoading();
+      console.log({ options, filterOptions });
       const response = await fetcher(REQUEST_PARAMS.GET_PRODUCT, options);
       toggleLoading();
       if (type) {
