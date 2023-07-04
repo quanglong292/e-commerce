@@ -1,7 +1,6 @@
 import React, { Suspense, lazy, useEffect, useMemo, useState } from "react";
 import { Outlet, useResolvedPath } from "react-router-dom";
 import FilterBarController from "../elements/FilterBarController";
-import Footer from "../../../../components/layout/Footer";
 import ComponentLoading from "../../../../components/layout/ComponentLoading";
 import FilterBar from "../elements/FilterBar";
 import useGlobalStore from "../../../../store/global.zustand";
@@ -45,7 +44,9 @@ const ViewAppProductLayout = () => {
             clickShowFilter={() => setIsShowFilter(!isShowFilter)}
           />
           <div className="flex">
-            {isShowFilter && <FilterBar />}
+            <div className={isShowFilter ? "hidden" : ""}>
+              <FilterBar />
+            </div>
             <Suspense fallback={<ComponentLoading />}>
               <Outlet />
             </Suspense>

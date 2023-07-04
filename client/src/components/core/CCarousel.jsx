@@ -3,7 +3,7 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 
 const CCarousel = memo((props) => {
-  const { items, renderItem, responsive = [4, 2, 1] } = props;
+  const { items = [], renderItem, responsive = [4, 2, 1] } = props;
 
   const [desktop, tablet, mobile] = responsive;
 

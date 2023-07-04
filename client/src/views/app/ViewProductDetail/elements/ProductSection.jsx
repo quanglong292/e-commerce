@@ -119,12 +119,21 @@ function DetailSection({ item = {} }) {
   const [selected, setSelected] = useState([]);
 
   function handleSelect(id) {
+    const selectedCount = selected.find((i) => item.id === i.product.id)?.count;
+    const stockLimit = Number(
+      item.stocks.find((i) => i.name === id)?.value ?? 0
+    );
+    const isOutOfStock = selectedCount === stockLimit;
+
+    if (isOutOfStock) return;
+
     const newItem = { id, count: 1, product: item };
     if (!findSelect(id)) return setSelected([...selected, newItem]);
-    const map = selected.map((i) =>
-      i.id === id ? { ...i, count: i.count + 1 } : i
+    setSelected(
+      !selected.length
+        ? [newItem]
+        : selected.map((i) => (i.id === id ? { ...i, count: i.count + 1 } : i))
     );
-    setSelected(!selected.length ? [newItem] : map);
   }
 
   function findSelect(id) {
