@@ -5,6 +5,7 @@ import { REQUEST_PARAMS } from "../../../../utils/constants/urlPath.constant";
 import ComponentLoading from "../../../../components/layout/ComponentLoading";
 import UserHistory from "../../../app/ViewUser/elements/UserHistory";
 import formatPrice from "../../../../utils/helpers/formatPrice";
+import CInput from "../../../../components/core/CInput";
 
 const ConfirmOrderModal = (props) => {
   const { visible, item, onCancel, onConfirmOrder } = props;
@@ -51,6 +52,42 @@ const ConfirmOrderModal = (props) => {
           );
         })}
       </div>
+      {item?.isWholeSale && (
+        <div className="my-4">
+          <section className="pb-4 border-b-2">
+            <div className="flex items-center justify-between">
+              <label htmlFor="fixPrice" className="min-w-fit font-semibold">
+                Origin Total:
+              </label>
+              <div className="w-1/2 flex gap-2 items-center">
+                {formatPrice(100)}
+              </div>
+            </div>
+            <div className="flex items-center justify-between my-2">
+              <label htmlFor="fixPrice" className="min-w-fit font-semibold">
+                Fix price:
+              </label>
+              <div className="w-1/2 flex gap-2 items-center">
+                <span>₫</span>
+                <CInput
+                  id="fixPrice"
+                  type="number"
+                  min={1000}
+                  className="pb-0"
+                />
+              </div>
+            </div>
+            <div className="flex items-center justify-between">
+              <label htmlFor="fixPrice" className="min-w-fit font-semibold">
+                After Fix:
+              </label>
+              <div className="w-1/2 flex gap-2 items-center">
+                {formatPrice(100)}
+              </div>
+            </div>
+          </section>
+        </div>
+      )}
       <div className="flex gap-4 mt-4">
         <Button
           onClick={() => onConfirmOrder(null, "shipping")}

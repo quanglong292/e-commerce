@@ -5,33 +5,29 @@ import useGlobalStore from "../../../store/global.zustand";
 import { Modal } from "antd";
 import CartItem from "./elements/CartItem";
 import useCart from "../../../utils/composables/useCart";
-import CreditForm from "./elements/CreditForm";
 import WishList from "./elements/WishList";
 import SectionHeader from "../ViewProducts/elements/ViewLanding/elements/SectionHeader";
-import { PayPalButtons } from "@paypal/react-paypal-js";
 import AddressForm from "../../../components/core/AddressForm";
 import { useNavigate } from "react-router-dom";
 
 const ViewCart = () => {
   const navigate = useNavigate();
   // Store
-  const { ordersList, mutateList } = useProductStore((state) => state);
-  const { token, user } = useGlobalStore((state) => state);
+  const { ordersList } = useProductStore((state) => state);
+  const { user } = useGlobalStore((state) => state);
 
   // States
   const [openPayment, setOpenPayment] = useState(false);
-  const [paymentForm, setPaymentForm] = useState(null);
 
   // Functions
-  const { amounts, createPayment } = useCart(ordersList, {
+  const { amounts } = useCart(ordersList, {
     user,
-    token,
   });
 
-  const handlePayment = async () => {
-    const data = await createPayment();
-    if (data) mutateList("ordersList", []);
-  };
+  // const handlePayment = async () => {
+  //   const data = await createPayment();
+  //   if (data) mutateList("ordersList", []);
+  // };
 
   return (
     <>
@@ -68,29 +64,15 @@ const ViewCart = () => {
             <div className="pb-2 border-b-2 border-black text-lg mb-9">
               <section className="w-1/2">Paypal</section>
             </div>
-            {!paymentForm ? (
-              <CButton
-                onClick={() => {
-                  // setOpenPayment(true)
-                  navigate("/app/cart-checkout");
-                }}
-                type="black"
-              >
-                Checkout
-              </CButton>
-            ) : (
-              <PayPalButtons
-                ref={paypalRef}
-                onApprove={(data, actions) => {
-                  return actions.order.capture().then((details) => {
-                    const name = details.payer.name.given_name;
-                    alert(`Transaction completed by ${name}`);
-                    handlePayment();
-                  });
-                }}
-                style={{ layout: "horizontal" }}
-              />
-            )}
+            <CButton
+              onClick={() => {
+                // setOpenPayment(true)
+                navigate("/app/cart-checkout");
+              }}
+              type="black"
+            >
+              Checkout
+            </CButton>
           </div>
         </div>
 
@@ -108,9 +90,9 @@ const ViewCart = () => {
         <AddressForm
           onSubmit={(e) => {
             if (e.paymentMethod === "paypal") {
-              setPaymentForm(e);
+              // setPaymentForm(e);
             } else {
-              handlePayment();
+              // handlePayment();
             }
             setOpenPayment(false);
           }}

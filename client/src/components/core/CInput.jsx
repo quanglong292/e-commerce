@@ -6,7 +6,7 @@ import { Radio } from "antd";
 const CInput = (props, ref) => {
   const { className, formError, ...rest } = props;
   return (
-    <div className="w-full flex justify-center relative pb-6">
+    <div className={"w-full flex justify-center relative pb-6 " + className}>
       {rest.type === "radio" ? (
         <Controller
           {...rest}
@@ -22,7 +22,7 @@ const CInput = (props, ref) => {
           }}
         />
       ) : (
-        <input {...rest} ref={ref} className={"CInput " + className} />
+        <input {...rest} ref={ref} className={"CInput "} />
       )}
       {formError?.[rest.name] && (
         <span className="m-0 text-xs text-red-500 absolute bottom-[8px] left-[2px]">

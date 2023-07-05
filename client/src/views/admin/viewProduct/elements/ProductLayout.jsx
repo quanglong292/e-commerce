@@ -107,7 +107,7 @@ const ProductLayout = (props) => {
         title: "Quantity",
         dataIndex: "products",
         key: "products",
-        render: (_, record) => <a>{record.products.length}</a>,
+        render: (_, record) => <a>{record.products?.length}</a>,
       },
       {
         title: "",
@@ -128,7 +128,7 @@ const ProductLayout = (props) => {
               <Popconfirm
                 title="Delete item"
                 description="Are you sure to delete this item?"
-                onConfirm={() => handleDeleteItem(record.id)}
+                onConfirm={() => handleDeleteItem(rec.id)}
                 okText="Yes"
                 cancelText="No"
               >
@@ -153,11 +153,11 @@ const ProductLayout = (props) => {
   const [formType, setFormType] = useState("");
   const [dataSource, setDataSource] = useState([]);
   const [updateCell, setUpdateCell] = useState(null);
-  const [columns, setColumns] = useState([
+  const columns = [
     ...schemaColumns,
     ...(additionColumns?.[viewName] ?? []),
     additionColumns.action[viewName] ?? additionColumns.action.default,
-  ]);
+  ];
   const [formSchema, setFormSchema] = useState(propsFormSchema);
   const [localLoading, setLocalLoading] = useState(false);
   const [userDetail, setUserDetail] = useState();
@@ -193,13 +193,16 @@ const ProductLayout = (props) => {
   }
 
   async function handleDeleteItem(id) {
+    // console.log({ handleDeleteItem: id});
     try {
       await fetcher(DELETE_TABLE_ITEM, { id });
-      setDataSource(mapData(DELETE_TABLE_ITEM[1], id));
+      // console.log({ dataSource });
+      // setDataSource(mapData(DELETE_TABLE_ITEM[1], id));
+      await handleInit();
       msg();
     } catch (error) {
       console.error(error.message);
-      msg(error.message, "error");
+      handleClientError(error);
     } finally {
       // toggleForm();
     }
@@ -236,6 +239,7 @@ const ProductLayout = (props) => {
 
   function mapData(type, val) {
     let newData = dataSource;
+    console.log({ newData });
 
     if (type === "DELETE") newData = newData.filter((i) => i.id !== val);
     if (type === "POST") newData = [...newData, val];
@@ -262,8 +266,8 @@ const ProductLayout = (props) => {
     setFormType("new");
   };
 
-  function handleInit() {
-    fetcherHook(requets.GET_TABLE_ITEMS);
+  async function handleInit() {
+    await fetcherHook(requets.GET_TABLE_ITEMS);
   }
 
   async function handleClickUserDetail(creator) {

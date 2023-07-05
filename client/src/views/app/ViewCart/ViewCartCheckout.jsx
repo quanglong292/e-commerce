@@ -18,7 +18,9 @@ import { ArrowLeftOutlined } from "@ant-design/icons";
 const ViewCartCheckout = () => {
   const navigate = useNavigate();
   // Stores
-  const { ordersList, mutateList } = useProductStore((state) => state);
+  const { ordersList, mutateList, checkoutInfo } = useProductStore(
+    (state) => state
+  );
   const { token, user } = useGlobalStore((state) => state);
 
   // State
@@ -27,7 +29,7 @@ const ViewCartCheckout = () => {
   // Functions
   const { amounts, createPayment } = useCart(ordersList, {
     user,
-    token,
+    checkoutInfo,
   });
 
   const handlePayment = async () => {
@@ -120,11 +122,11 @@ function AddressStep({ setCurrentStep }) {
     mutateData("checkoutInfo", updateAddress);
   };
 
-  useEffect(() => {
-    return () => {
-      handleSelectAddress(null);
-    };
-  }, []);
+  // useEffect(() => {
+  //   return () => {
+  //     // handleSelectAddress(null);
+  //   };
+  // }, []);
 
   return (
     <div className="w-full">
@@ -133,10 +135,15 @@ function AddressStep({ setCurrentStep }) {
         <p className="text-lg uppercase">You are whole sale ?</p>
         <Radio.Group
           options={[
-            { label: "Yes", value: "yes" },
-            { label: "No", value: "no" },
+            { label: "Yes", value: true },
+            { label: "No", value: false },
           ]}
-          // onChange={onChange4}
+          onChange={({ target }) => {
+            mutateData("checkoutInfo", {
+              ...checkoutInfo,
+              isWholeSale: target.value,
+            });
+          }}
           // value={value4}
           optionType="button"
           buttonStyle="solid"

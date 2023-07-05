@@ -1,13 +1,9 @@
 import React from "react";
 import ScatterChart from "../../../components/layout/ScatterChart";
-import { Avatar, Card } from "antd";
+import { Card } from "antd";
 import AreaChart from "../../../components/layout/AreaChart";
-import SkeletonAvatar from "antd/es/skeleton/Avatar";
-import { UserOutlined } from "@ant-design/icons";
 import useGlobalStore from "../../../store/global.zustand";
 import CAvatar from "../../../components/core/CAvatar";
-import CSortTable from "../../../components/core/CSortTable";
-import CSortTable2 from "../../../components/core/CSortTable2";
 
 const ViewDashBoard = () => {
   const { user = {} } = useGlobalStore((state) => state);
@@ -15,7 +11,7 @@ const ViewDashBoard = () => {
 
   return (
     <div>
-      <CSortTable2 />
+      {/* <CSortTable2 /> */}
       <section className="mb-4 shadow-lg">
         <Card title="Sales report" style={{ width: "100%" }}>
           <section className="w-full grid grid-cols-3 gap-4">
