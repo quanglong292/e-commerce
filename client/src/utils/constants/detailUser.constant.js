@@ -25,6 +25,7 @@ export const USER_DETAIL_SHCEMA = [
     rules: { required: REQUIRED_MESSAGE },
     wrapClassName: "",
     className: "flex-col w-full",
+    inputClassName: "px-2 py-1 rounded-md"
   },
   {
     label: "E-Mail",

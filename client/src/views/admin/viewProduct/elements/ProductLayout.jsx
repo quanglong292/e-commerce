@@ -87,7 +87,6 @@ const ProductLayout = (props) => {
         dataIndex: "status",
         key: "status",
         render: (text) => {
-          console.log({ text });
           return <OrderStatus status={text} />;
         },
       },
@@ -114,7 +113,6 @@ const ProductLayout = (props) => {
         dataIndex: "confirm",
         key: "confirm",
         render: (_, rec) => {
-          console.log({ rec });
           if (UNAVAILABLE_ORDER_STATUS.includes(rec.status)) return <></>;
           return (
             <div className="flex gap-2">
@@ -402,7 +400,7 @@ const ProductLayout = (props) => {
   // Effects
   useEffect(() => {
     handleInit();
-  }, []);
+  }, [viewName]);
 
   useEffect(() => {
     handleAssignListData(data);

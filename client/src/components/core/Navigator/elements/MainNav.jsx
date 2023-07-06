@@ -46,7 +46,7 @@ const MainNav = ({ schema }) => {
                   : "hover:text-blue-400 cursor-pointer text-sm ease-out duration-300"
               }
             >
-              {i.label}
+              {i?.shortLabel || i.label}
             </NavLink>
           ))}
         </div>

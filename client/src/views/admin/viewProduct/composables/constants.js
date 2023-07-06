@@ -357,16 +357,18 @@ export const tabItems = [
   //   key: "brands",
   //   label: `Brand`,
   // },
-  {
-    key: "products",
-    label: `Product`,
-  },
-  {
-    key: "user",
-    label: `User`,
-  },
-  {
-    key: "orders",
-    label: `Orders`,
-  },
+  // {
+  //   key: "products",
+  //   label: `Product`,
+  // },
+  // {
+  //   key: "user",
+  //   label: `User`,
+  // },
+  // {
+  //   key: "orders",
+  //   label: `Orders`,
+  // },
 ];
+
+export const SINGLE_MANAGEMENT_VIEWS = ["/user", "/orders"] 

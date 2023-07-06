@@ -26,6 +26,7 @@ const SignupForm = (props) => {
     >
       <CInput
         {...register("fullName", { required: REQUIRED_MESSAGE })}
+        inputClassName="px-2 py-2"
         placeholder="Full name"
         className="w-full"
         formError={errors}
@@ -33,12 +34,14 @@ const SignupForm = (props) => {
       <CInput
         {...register("dateOfBirth", { required: REQUIRED_MESSAGE })}
         type="date"
+        inputClassName="px-2 py-2"
         placeholder="Date of birth"
         formError={errors}
         className="w-full"
       />
       <CInput
         {...register("userName", { required: REQUIRED_MESSAGE })}
+        inputClassName="px-2 py-2"
         placeholder="Username"
         className="w-full"
         formError={errors}
@@ -56,6 +59,7 @@ const SignupForm = (props) => {
           },
         })}
         type="password"
+        inputClassName="px-2 py-2"
         placeholder="Password"
         formError={errors}
         className="w-full"
@@ -67,6 +71,7 @@ const SignupForm = (props) => {
             value === password.current || "The passwords do not match",
         })}
         type="password"
+        inputClassName="px-2 py-2"
         placeholder="Confirm Password"
         formError={errors}
         className="w-full"
@@ -76,12 +81,14 @@ const SignupForm = (props) => {
           required: REQUIRED_MESSAGE,
         })}
         type="email"
+        inputClassName="px-2 py-2"
         placeholder="E-Mail@mail.com"
         formError={errors}
         className="w-full"
       />
       <CInput
         {...register("phone", { required: REQUIRED_MESSAGE })}
+        inputClassName="px-2 py-2"
         placeholder="Phone"
         className="w-full"
         formError={errors}
@@ -105,6 +112,8 @@ const SignupForm = (props) => {
       <CInput
         type="submit"
         className="bg-black text-white cursor-pointer font-semibold font-mono uppercase w-full py-2 text-center hover:bg-gray-800"
+        style={{ padding: 0 }}
+        inputClassName="py-2 uppercase font-semibold"
       />
     </form>
   );

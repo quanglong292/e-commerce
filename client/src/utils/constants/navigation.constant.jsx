@@ -26,21 +26,38 @@ export const ACCOUNT_OPTIONS = [
 
 export const SIDE_BAR_ITEMS = [
   {
-    label: "Dashboard",
+    label: "Setting",
+    shortLabel: "Setting",
     path: "",
     key: "",
-    icon: <AppstoreOutlined />,
+    icon: <SettingOutlined />,
   },
   {
-    label: "Sale",
+    label: "Sale Management",
+    shortLabel: "Sale",
     path: "sale",
     key: "sale",
     icon: <AppstoreOutlined />,
   },
   {
-    label: "Product",
-    path: "product",
-    key: "product",
-    icon: <SettingOutlined />,
+    label: "User Management",
+    shortLabel: "User",
+    path: "user",
+    key: "user",
+    icon: <AppstoreOutlined />,
+  },
+  {
+    label: "Order Management",
+    shortLabel: "Order",
+    path: "orders",
+    key: "orders",
+    icon: <AppstoreOutlined />,
+  },
+  {
+    label: "Category Management",
+    shortLabel: "Category",
+    path: "category",
+    key: "category",
+    icon: <AppstoreOutlined />,
   },
 ];

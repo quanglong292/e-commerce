@@ -35,6 +35,7 @@ const CreditForm = ({ onSubmit }) => {
             onFocus={handleInputFocus}
             type="number"
             name="number"
+            inputClassName="px-2 py-1"
             placeholder="Card Number"
             maxLength={16}
             className="w-full"
@@ -47,6 +48,7 @@ const CreditForm = ({ onSubmit }) => {
             onFocus={handleInputFocus}
             type="number"
             name="expiry"
+            inputClassName="px-2 py-1"
             placeholder="Expiry"
             maxLength={4}
             className="w-full"
@@ -59,6 +61,7 @@ const CreditForm = ({ onSubmit }) => {
             onFocus={handleInputFocus}
             type="password"
             name="cvc"
+            inputClassName="px-2 py-1"
             placeholder="CVC"
             maxLength={3}
             className="w-full"
@@ -71,6 +74,7 @@ const CreditForm = ({ onSubmit }) => {
             onFocus={handleInputFocus}
             type="text"
             name="name"
+            inputClassName="px-2 py-1"
             placeholder="Name"
             maxLength={16}
             className="w-full"

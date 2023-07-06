@@ -46,6 +46,21 @@ const router = createBrowserRouter([
         isAdmin: true,
         element: <ViewRootProducts />,
       },
+      {
+        path: "user",
+        isAdmin: true,
+        element: <ViewRootProducts />,
+      },
+      {
+        path: "orders",
+        isAdmin: true,
+        element: <ViewRootProducts />,
+      },
+      {
+        path: "category",
+        isAdmin: true,
+        element: <ViewRootProducts />,
+      },
       // APP routes
       {
         path: "app/",

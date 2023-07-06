@@ -69,6 +69,7 @@ router.post("/confirm", async ({ body }: Request, res: Response) => {
 });
 
 router.delete("/", async (red: Request, res: Response) => {
+  if (!red?.body?.id) res.status(404).json("Missing id to delete")
   try {
     const data = await CartModel.deleteOne({ id: red?.body?.id });
 

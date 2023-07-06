@@ -19,6 +19,7 @@ const SigninForm = (props) => {
         {...register("userName", { required: REQUIRED_MESSAGE })}
         placeholder="Username"
         className="w-full"
+        inputClassName="px-2 py-2"
         formError={errors}
         type="text"
       />
@@ -27,6 +28,7 @@ const SigninForm = (props) => {
         type="password"
         placeholder="Password"
         className="w-full"
+        inputClassName="px-2 py-2"
         formError={errors}
       />
       <div className="w-full flex justify-between text-sm">
@@ -45,6 +47,8 @@ const SigninForm = (props) => {
       <CInput
         type="submit"
         className="bg-black text-white cursor-pointer font-semibold font-mono uppercase w-full py-2 text-center hover:bg-gray-800"
+        inputClassName="py-2 uppercase font-semibold"
+        style={{ padding: 0 }}
       />
     </form>
   );

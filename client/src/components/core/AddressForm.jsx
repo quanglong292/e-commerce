@@ -41,6 +41,7 @@ const AddressForm = (props) => {
               {...register("street", {
                 required: isRequired ? REQUIRED_MESSAGE : false,
               })}
+              inputClassName="px-2 py-2"
               placeholder="Street"
               className="w-full"
               formError={errors}
@@ -52,6 +53,7 @@ const AddressForm = (props) => {
               {...register("ward", {
                 required: isRequired ? REQUIRED_MESSAGE : false,
               })}
+              inputClassName="px-2 py-2"
               placeholder="Ward"
               className="w-full"
               formError={errors}
@@ -65,6 +67,7 @@ const AddressForm = (props) => {
               {...register("district", {
                 required: isRequired ? REQUIRED_MESSAGE : false,
               })}
+              inputClassName="px-2 py-2"
               placeholder="District"
               className="w-full"
               formError={errors}
@@ -76,6 +79,7 @@ const AddressForm = (props) => {
               {...register("city", {
                 required: isRequired ? REQUIRED_MESSAGE : false,
               })}
+              inputClassName="px-2 py-2"
               placeholder="City"
               className="w-full"
               formError={errors}
@@ -100,6 +104,8 @@ const AddressForm = (props) => {
       <CInput
         type="submit"
         className="bg-black text-white cursor-pointer font-semibold font-mono uppercase w-full py-2 text-center hover:bg-gray-800"
+        style={{ padding: 0 }}
+        inputClassName="py-2 uppercase font-semibold"
       />
     </form>
   );

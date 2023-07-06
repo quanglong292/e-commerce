@@ -20,6 +20,7 @@ const CartSchema = new mongoose.Schema({
     },
   ],
   status: String,
+  isWholeSale: Boolean,
 });
 
 export default mongoose.model("Carts", CartSchema);

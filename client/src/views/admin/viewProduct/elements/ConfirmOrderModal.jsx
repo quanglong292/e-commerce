@@ -74,6 +74,8 @@ const ConfirmOrderModal = (props) => {
                   type="number"
                   min={1000}
                   className="pb-0"
+                  inputClassName="px-2 py-1"
+                  style={{ padding: 0 }}
                 />
               </div>
             </div>

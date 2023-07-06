@@ -16,6 +16,7 @@ import Footer from "./Footer";
 import ClientLayout from "./ClientLayout";
 import AdminLayout from "./AdminLayout";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
+import { SINGLE_MANAGEMENT_VIEWS } from "../../views/admin/viewProduct/composables/constants";
 
 // if (!import.meta.env.VITE_REACT_APP_CLERK_PUBLISHABLE_KEY) {
 //   throw new Error("Missing Publishable Key");
@@ -34,7 +35,7 @@ const RootViewLayout = () => {
 
   // Function
   const handleValidateAuth = () => {
-    if (["/", "/sale", "/product"].includes(pathname)) {
+    if (["/", "/sale", "/product", ...SINGLE_MANAGEMENT_VIEWS].includes(pathname)) {
       if (!checkToken()) navigate("auth/admin");
       else {
         checkAccountPermission(checkToken, handleLogout, {

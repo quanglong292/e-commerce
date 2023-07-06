@@ -6,6 +6,7 @@ import useGlobalStore from "../../store/global.zustand";
 
 const AdminLayout = () => {
   const user = useGlobalStore((state) => state.user);
+  console.log({ user });
   return (
     <div className="flex w-full min-h-[90vh]">
       {user && <Sidebar />}

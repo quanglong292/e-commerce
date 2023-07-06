@@ -4,9 +4,12 @@ import { Controller } from "react-hook-form";
 import { Radio } from "antd";
 
 const CInput = (props, ref) => {
-  const { className, formError, ...rest } = props;
+  const { className, style, inputClassName, formError, ...rest } = props;
   return (
-    <div className={"w-full flex justify-center relative pb-6 " + className}>
+    <div
+      className={"w-full flex justify-center relative pb-6 " + className}
+      style={style}
+    >
       {rest.type === "radio" ? (
         <Controller
           {...rest}
@@ -22,7 +25,7 @@ const CInput = (props, ref) => {
           }}
         />
       ) : (
-        <input {...rest} ref={ref} className={"CInput "} />
+        <input {...rest} ref={ref} className={"CInput " + inputClassName} />
       )}
       {formError?.[rest.name] && (
         <span className="m-0 text-xs text-red-500 absolute bottom-[8px] left-[2px]">
