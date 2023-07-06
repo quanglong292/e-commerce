@@ -31,7 +31,7 @@ const MainNav = ({ schema }) => {
   return (
     <div className="w-full h-[56px] shadow-md bg-white mb-2 px-4 py-2 flex justify-between items-center">
       <div className="cursor-pointer w-fit" onClick={handleClickLogo}>
-        {setting ? <img src={setting.logo} alt="logo" className="w-[40px] h-[40px]" /> : <ComponentLoading />}
+        {setting ? <img src={setting.logo} alt="logo" className="w-[40px] h-[40px]" /> : "Admin Portal"}
       </div>
       <div className="w-[50%] flex justify-end gap-6">
         <div className="min-w-fit hidden lg:flex gap-4 items-center font-roboto uppercase font-semibold">

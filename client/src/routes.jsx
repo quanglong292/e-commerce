@@ -20,6 +20,7 @@ import ViewSale from "./views/admin/ViewSale";
 import ViewAuthenticate from "./views/ViewAuthenticate/ViewAuthenticate";
 import ViewDashBoard from "./views/admin/ViewDashBoard";
 import ViewCartCheckout from "./views/app/ViewCart/ViewCartCheckout";
+import ViewSetting from "./views/admin/ViewSetting";
 
 const router = createBrowserRouter([
   {
@@ -34,7 +35,7 @@ const router = createBrowserRouter([
       {
         path: "",
         isAdmin: true,
-        element: <ViewDashBoard />,
+        element: <ViewSetting />,
       },
       {
         path: "sale",

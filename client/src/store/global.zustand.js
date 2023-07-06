@@ -91,7 +91,6 @@ const useGlobalStore = create((set, get) => ({
 
     try {
       const data = await fetcher(REQUEST_PARAMS.GET_SETTING);
-      console.log({ data });
       set({ setting: data });
 
       return data;
