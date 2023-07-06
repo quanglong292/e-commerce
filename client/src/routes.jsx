@@ -2,7 +2,7 @@ import { lazy } from "react";
 import { createBrowserRouter } from "react-router-dom";
 
 // Components
-import RootViewLayout from "./components/layout/RootViewLayout";
+import RootLayout from "./components/layout/RootLayout";
 import ErrorPage from "./views/ErrorPage";
 import ViewAppProductLayout from "./views/app/ViewProducts/root/ViewAppProductLayout";
 const ViewRootProducts = lazy(() =>
@@ -24,7 +24,7 @@ import ViewCartCheckout from "./views/app/ViewCart/ViewCartCheckout";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <RootViewLayout />,
+    element: <RootLayout />,
     errorElement: <ErrorPage />,
     children: [
       {

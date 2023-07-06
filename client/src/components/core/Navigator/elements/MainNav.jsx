@@ -6,11 +6,12 @@ import { Button, Input, Tooltip } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import CButton from "../../CButton";
 import useGlobalStore from "../../../../store/global.zustand";
+import ComponentLoading from "../../../layout/ComponentLoading";
 
 const MainNav = ({ schema }) => {
   const navigate = useNavigate();
   const { pathname } = useResolvedPath();
-  const { handleLogout, token } = useGlobalStore((state) => state);
+  const { handleLogout, token, setting } = useGlobalStore((state) => state);
 
   // Functions
   const handleClickLogo = () => {
@@ -30,7 +31,7 @@ const MainNav = ({ schema }) => {
   return (
     <div className="w-full h-[56px] shadow-md bg-white mb-2 px-4 py-2 flex justify-between items-center">
       <div className="cursor-pointer w-fit" onClick={handleClickLogo}>
-        <Logo />
+        {setting ? <img src={setting.logo} alt="logo" className="w-[40px] h-[40px]" /> : <ComponentLoading />}
       </div>
       <div className="w-[50%] flex justify-end gap-6">
         <div className="min-w-fit hidden lg:flex gap-4 items-center font-roboto uppercase font-semibold">

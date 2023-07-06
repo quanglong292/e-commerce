@@ -47,4 +47,8 @@ export const REQUEST_PARAMS = {
   GET_SALE: ["sale/", "GET"],
   ADD_SALE: ["sale/", "POST"],
   DELETE_SALE: ["sale/", "DELETE"],
+
+  // Setting
+  GET_SETTING: ["setting/", "GET"],
+  UPDATE_SETTING: ["setting/", "PUT"],
 };

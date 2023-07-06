@@ -13,6 +13,7 @@ const useGlobalStore = create((set, get) => ({
   user: null,
   showLogin: false,
   address: [],
+  setting: null,
   mutateData: (field, data) => set(() => ({ [field]: data })),
   toggleLoginModal: () => set((state) => ({ showLogin: !state.showLogin })),
   checkToken: () => {
@@ -83,6 +84,20 @@ const useGlobalStore = create((set, get) => ({
         user: { ...parsedToken[0], orderHistory: data.orderHistory },
       };
     });
+  },
+  hadnleGetSetting: async () => {
+    const state = get();
+    if (state.setting) return;
+
+    try {
+      const data = await fetcher(REQUEST_PARAMS.GET_SETTING);
+      console.log({ data });
+      set({ setting: data });
+
+      return data;
+    } catch (error) {
+      handleClientError(error);
+    }
   },
 }));
 

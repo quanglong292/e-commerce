@@ -80,7 +80,7 @@ export default ProductSection;
 // Sub-components
 function DetailSection({ item = {} }) {
   const { categoryGroups, mutateList } = useProductStore((state) => state);
-  const { checkToken } = useGlobalStore((state) => state);
+  const { checkToken, setting } = useGlobalStore((state) => state);
   const category =
     categoryGroups.find((i) => i.id === item?.group?.[0])?.name ?? "";
 
@@ -149,6 +149,7 @@ function DetailSection({ item = {} }) {
         <div>
           Size: <span className="text-gray-400 mb-2">Please select</span>
         </div>
+        <a href={setting?.sizeChart} target="_blank" className="underline">Size chart</a>
         <div className="grid grid-cols-6 gap-1 gap-y-3 mt-4 mb-2">
           {getSizes(item.stocks)?.map((i) => {
             if (Number(i.value))

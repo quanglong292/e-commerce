@@ -9,7 +9,7 @@ import useGlobalStore from "../../../../store/global.zustand";
 const QuickViewCard = memo((props) => {
   const { item, isShow, onCancel } = props;
   const { mutateList, categoryGroups } = useProductStore((state) => state);
-  const { checkToken } = useGlobalStore((state) => state);
+  const { checkToken, setting } = useGlobalStore((state) => state);
 
   const category =
     categoryGroups.find((i) => i.id === item?.group?.[0])?.name ?? "";
@@ -80,6 +80,7 @@ const QuickViewCard = memo((props) => {
             <div className="mb-4">
               Size: <span className="text-gray-400">Please select</span>
             </div>
+            <a href={setting?.sizeChart} target="_blank" className="underline">Size chart</a>
             <div className="grid grid-cols-6 gap-1 gap-y-3">
               {getSizes(item.stocks)?.map((i) => {
                 if (Number(i.value))
