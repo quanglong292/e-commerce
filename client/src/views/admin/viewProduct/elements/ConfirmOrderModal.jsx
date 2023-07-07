@@ -40,7 +40,7 @@ const ConfirmOrderModal = (props) => {
             <div key={info.name} className="flex gap-4 pb-4 border-b-2">
               <img src={info.image} className="max-w-[20%]" />
               <div>
-                <p key={info.name} className="font-mono font-semibold">
+                <p key={info.name} className=" font-semibold">
                   {info.name}
                 </p>
                 <p>

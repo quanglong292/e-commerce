@@ -1,7 +1,6 @@
 import React, { useRef } from "react";
 import CInput from "../../../components/core/CInput";
-import { useForm, Controller } from "react-hook-form";
-import { Radio } from "antd";
+import { useForm } from "react-hook-form";
 
 export const REQUIRED_MESSAGE = {
   value: true,
@@ -111,7 +110,7 @@ const SignupForm = (props) => {
       {/* SUBMIT */}
       <CInput
         type="submit"
-        className="bg-black text-white cursor-pointer font-semibold font-mono uppercase w-full py-2 text-center hover:bg-gray-800"
+        className="bg-black text-white cursor-pointer font-semibold uppercase w-full py-2 text-center hover:bg-gray-800"
         style={{ padding: 0 }}
         inputClassName="py-2 uppercase font-semibold"
       />

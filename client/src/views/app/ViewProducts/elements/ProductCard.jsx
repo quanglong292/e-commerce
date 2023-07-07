@@ -127,8 +127,8 @@ const ProductCard = (props) => {
           <HeartTwoTone
             twoToneColor={
               wishList.find((i) => i.product?.name === item.name)
-                ? "#eb2f96"
-                : "#5b5b5c"
+                ? "#cf1537"
+                : "#c7c5c5"
             }
           />
         </div>

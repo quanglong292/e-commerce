@@ -81,13 +81,13 @@ const ChangePasswordForm = memo(() => {
       />
       <CInput
         type="submit"
-        className="bg-black text-white cursor-pointer font-semibold font-mono uppercase w-full py-2 text-center hover:bg-gray-800"
+        className="bg-black text-white cursor-pointer font-semibold uppercase w-full py-2 text-center hover:bg-gray-800"
         inputClassName="py-2 uppercase font-semibold"
         style={{ padding: 0 }}
         value="Cập nhật mật khẩu"
       />
       <CButton
-        className="w-full mt-4 uppercase font-mono font-semibold"
+        className="w-full mt-4 uppercase font-semibold"
         onClick={() => {
           resetFormFields(getValues(), resetField);
         }}

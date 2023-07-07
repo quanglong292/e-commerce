@@ -8,7 +8,7 @@ const CButton = memo(({ children, ...props }) => {
       <div
         {...props}
         className={
-          "bg-black text-white cursor-pointer font-semibold font-mono uppercase w-full py-2 text-center hover:bg-gray-800 " +
+          "bg-black text-white cursor-pointer font-semibold uppercase w-full py-2 text-center hover:bg-gray-800 " +
           props.className
         }
       >
