@@ -20,9 +20,9 @@ const UserHistory = (props) => {
 
   // Functions
   const handleInitHistory = async () => {
-    const user = checkToken()["0"];
-    if (!user || historyList.length || props.historyList?.length) return;
-
+    const user = props?.user || checkToken()["0"];
+    console.log({ user, historyList });
+    if (!user || (historyList.length && !props.user)) return;
     setLoading(true);
     const data = await fetcher(REQUEST_PARAMS.GET_CART_HISTORY, {
       creator: user.userName,
@@ -39,6 +39,10 @@ const UserHistory = (props) => {
   useEffect(() => {
     handleInitHistory();
   }, []);
+
+  useEffect(() => {
+    if (props?.user) handleInitHistory();
+  }, [props?.user]);
 
   return (
     <>

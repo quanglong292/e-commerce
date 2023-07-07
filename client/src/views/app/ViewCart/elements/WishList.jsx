@@ -20,10 +20,10 @@ const WishList = () => {
   );
 };
 
-function CardItem({ item }) {
+export function CardItem({ item, type = "" }) {
   const { product } = item;
   return (
-    <div className="flex gap-4">
+    <div className={"flex gap-4 " + (type === "horizontal" ? "" : "flex-col")}>
       <img src={product.bannerImage} className="max-w-[30%] pr-2" />
       <div className="flex flex-col gap-2 w-[70%]">
         <div className="flex justify-between font-semibold">

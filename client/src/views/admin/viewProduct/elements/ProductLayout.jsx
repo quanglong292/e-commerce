@@ -18,6 +18,8 @@ import handleClientError from "../../../../utils/helpers/handleClientError";
 import CSortTable from "../../../../components/core/CSortTable";
 import { arrayMove } from "@dnd-kit/sortable";
 import { UNAVAILABLE_ORDER_STATUS } from "../../../../utils/constants/status.constant";
+import ViewUserDetail from "../../../app/ViewUser/ViewUserDetail";
+import UserDetail from "./UserDetail";
 
 const Context = createContext({
   name: "Default",
@@ -68,7 +70,7 @@ const ProductLayout = (props) => {
     },
     user: [
       {
-        title: "Detail orders",
+        title: "User detail",
         dataIndex: "detail",
         key: "detail",
         render: (text, record) => (
@@ -76,7 +78,7 @@ const ProductLayout = (props) => {
             onClick={() => handleClickUserDetail(record.userName)}
             className="text-blue-400"
           >
-            Click
+            Click to show
           </a>
         ),
       },
@@ -269,12 +271,15 @@ const ProductLayout = (props) => {
   }
 
   async function handleClickUserDetail(creator) {
-    setLocalLoading(true);
-    const data = await fetcher(REQUEST_PARAMS.GET_CART_HISTORY, {
-      creator,
-    });
-    setLocalLoading(false);
-    setUserDetail(data);
+    console.log({ creator, dataSource });
+    // setLocalLoading(true);
+    const user = dataSource.find((i) => i.userName === creator);
+    // const data = await fetcher(REQUEST_PARAMS.GET_CART_HISTORY, {
+    //   creator,
+    // });
+    // console.log({ data });
+    // setLocalLoading(false);
+    setUserDetail(user);
   }
 
   const onFormChange = (name, value, formValue) => {
@@ -472,7 +477,7 @@ const ProductLayout = (props) => {
           width={"90%"}
           className="max-w-[1600px]"
         >
-          <UserHistory historyList={userDetail} actions={[]} />
+          <UserDetail user={userDetail} address={userDetail?.address ?? []} />
         </Modal>
 
         <ConfirmOrderModal

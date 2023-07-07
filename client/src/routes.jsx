@@ -21,6 +21,7 @@ import ViewAuthenticate from "./views/ViewAuthenticate/ViewAuthenticate";
 import ViewDashBoard from "./views/admin/ViewDashBoard";
 import ViewCartCheckout from "./views/app/ViewCart/ViewCartCheckout";
 import ViewSetting from "./views/admin/ViewSetting";
+import ViewWishList from "./views/app/ViewWishList";
 
 const router = createBrowserRouter([
   {
@@ -80,6 +81,10 @@ const router = createBrowserRouter([
       {
         path: "app/cart-checkout",
         element: <ViewCartCheckout />,
+      },
+      {
+        path: "app/wish-list",
+        element: <ViewWishList />,
       },
       {
         path: "app/user/detail",

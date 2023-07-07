@@ -51,7 +51,7 @@ const AdditionNav = (props) => {
   return (
     <div className="w-full flex justify-end bg-[#313131] p-1">
       <div className="hidden lg:flex gap-4 w-[25%] justify-end items-center px-24 py-2">
-        <Dropdown
+        {/* <Dropdown
           menu={{
             items: wishList.map((i) => ({
               label: (
@@ -90,7 +90,15 @@ const AdditionNav = (props) => {
               WISH
             </div>
           </Badge>
-        </Dropdown>
+        </Dropdown> */}
+        <Badge count={wishList?.length}>
+          <div
+            onClick={() => navigate("/app/wish-list")}
+            className="font-semibold text-[#a1a1a1] hover:underline cursor-pointer text-sm"
+          >
+            WISH
+          </div>
+        </Badge>
         <Badge count={sumAmount(ordersList)}>
           <div
             onClick={() => {
