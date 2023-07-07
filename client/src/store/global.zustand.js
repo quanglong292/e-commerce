@@ -85,9 +85,9 @@ const useGlobalStore = create((set, get) => ({
       };
     });
   },
-  hadnleGetSetting: async () => {
+  hadnleGetSetting: async (type) => {
     const state = get();
-    if (state.setting) return;
+    if (state.setting && !type) return;
 
     try {
       const data = await fetcher(REQUEST_PARAMS.GET_SETTING);

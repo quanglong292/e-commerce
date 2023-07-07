@@ -69,17 +69,21 @@ router.put("/", async ({ body }: Request, res: Response) => {
 
     if (data) {
       if (rest.address) {
-        console.log("vo day");
-        
+
         if (rest.address.id) {
           data.address = data.address.map(i => i.id === rest.address.id ? ({ ...i, ...rest.address }) : i)
         }
         else data.address = [...objectData?.address ?? [], { ...rest.address, id: v4() }]
       } else {
         const key = Object.keys(rest)[0]
+        console.log({ data, rest, key });
+
         data[key] = rest[key]
       }
     }
+
+    console.log({ data });
+
 
     data?.save()
     res.json(data);

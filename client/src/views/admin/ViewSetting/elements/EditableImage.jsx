@@ -1,7 +1,7 @@
 import React, { memo } from "react";
 import CButton from "../../../../components/core/CButton";
 
-const EditableImage = memo(({ src, className }) => {
+const EditableImage = memo(({ src, className, onEdit }) => {
   return (
     <div
       className={
@@ -11,10 +11,7 @@ const EditableImage = memo(({ src, className }) => {
     >
       <img src={src} className="max-w-full" />
       <div className="w-full h-full bg-slate-500/50 absolute z-10 hidden group-hover:flex justify-center items-center">
-        <CButton
-          type="primary"
-          className=""
-        >
+        <CButton type="primary" className="" onClick={onEdit}>
           Edit
         </CButton>
       </div>

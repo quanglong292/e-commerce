@@ -28,7 +28,7 @@ router.get("/", async (red: Request, res: Response) => {
 // });
 
 router.put("/", async ({ body }: Request, res: Response) => {
-    if (!body?.logo || !body?.sizeChart) return res.status(404).json("Bad request!")
+    if (!body) return res.status(404).json("Bad request!")
 
     try {
         const data = await SettingModel.findOneAndUpdate({ id: SETTING_ID }, body);
