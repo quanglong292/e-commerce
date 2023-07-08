@@ -5,6 +5,7 @@ import CButton from "../../../../components/core/CButton";
 import useProductStore from "../../../../store/product.zustand";
 import { getSizes } from "../../../../utils/composables/useProduct";
 import useGlobalStore from "../../../../store/global.zustand";
+import CModal from "../../../../components/core/CModal";
 
 const QuickViewCard = memo((props) => {
   const { item, isShow, onCancel } = props;
@@ -46,7 +47,7 @@ const QuickViewCard = memo((props) => {
   };
 
   return (
-    <Modal
+    <CModal
       open={Boolean(isShow)}
       onCancel={onCancel}
       footer={<></>}
@@ -128,7 +129,7 @@ const QuickViewCard = memo((props) => {
           </div>
         </div>
       </div>
-    </Modal>
+    </CModal>
   );
 });
 

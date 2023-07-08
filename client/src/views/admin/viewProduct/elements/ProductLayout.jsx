@@ -1,4 +1,4 @@
-import { Modal, notification, Popconfirm, Tag } from "antd";
+import { notification, Popconfirm } from "antd";
 import { createContext, memo, useEffect, useMemo, useState } from "react";
 import CButton from "../../../../components/core/CButton";
 import CTable from "../../../../components/core/CTable";
@@ -6,9 +6,7 @@ import FormBuilder from "../../../../components/core/FormBuilder";
 import fetcher from "../../../../utils/helpers/fetcher";
 import useFetch from "../../../../utils/hooks/useFetch";
 import { REQUEST_PARAMS } from "../../../../utils/constants/urlPath.constant";
-import UserHistory, {
-  OrderStatus,
-} from "../../../app/ViewUser/elements/UserHistory";
+import { CartDetail } from "../../../app/ViewUser/elements/UserHistory";
 import formatPrice from "../../../../utils/helpers/formatPrice";
 import formatDate from "../../../../utils/helpers/formatDate";
 import { useSearchParams } from "react-router-dom";
@@ -16,10 +14,9 @@ import ConfirmOrderModal from "./ConfirmOrderModal";
 import { createOrder as createGHNOrder } from "../../../../utils/helpers/ghnFetcher";
 import handleClientError from "../../../../utils/helpers/handleClientError";
 import CSortTable from "../../../../components/core/CSortTable";
-import { arrayMove } from "@dnd-kit/sortable";
 import { UNAVAILABLE_ORDER_STATUS } from "../../../../utils/constants/status.constant";
-import ViewUserDetail from "../../../app/ViewUser/ViewUserDetail";
 import UserDetail from "./UserDetail";
+import CModal from "../../../../components/core/CModal";
 
 const Context = createContext({
   name: "Default",
@@ -85,11 +82,15 @@ const ProductLayout = (props) => {
     ],
     orders: [
       {
-        title: "Status",
-        dataIndex: "status",
-        key: "status",
-        render: (text) => {
-          return <OrderStatus status={text} />;
+        title: "Details",
+        dataIndex: "detail",
+        key: "detail",
+        render: (_, rec) => {
+          return (
+            <a onClick={() => setOrderDetail(rec)} className="text-blue-500">
+              Click to show
+            </a>
+          );
         },
       },
       {
@@ -162,6 +163,7 @@ const ProductLayout = (props) => {
   const [localLoading, setLocalLoading] = useState(false);
   const [userDetail, setUserDetail] = useState();
   const [orderToConfirm, setOrderToConfirm] = useState();
+  const [orderDetail, setOrderDetail] = useState(null);
 
   const contextValue = useMemo(
     () => ({
@@ -177,6 +179,7 @@ const ProductLayout = (props) => {
     setUpdateCell(null);
   }
   async function handleOk(e) {
+    console.log("vo day");
     const [path, method] = ADD_TABLE_ITEM;
     try {
       if (formType === "new") validateDataBeforeCallAPI(e);
@@ -321,6 +324,9 @@ const ProductLayout = (props) => {
   };
 
   async function handleConfirmOrder(rec, type = "open") {
+    const { user, products } = orderToConfirm;
+
+    // return
     try {
       if (UNAVAILABLE_ORDER_STATUS.includes(type)) {
         // console.log({ orderToConfirm });
@@ -328,19 +334,19 @@ const ProductLayout = (props) => {
           const { user, products } = orderToConfirm;
           const shipData = await createGHNOrder({
             client_order_code: orderToConfirm.id ?? "test",
-            to_name: user?.info?.name ?? "test",
-            to_phone: user?.info?.phone ?? "test",
-            to_address: user?.address?.[0]?.street ?? "test",
-            to_ward_name: user?.address?.[0]?.ward ?? "test",
-            to_district_name: user?.address?.[0]?.district ?? "test",
-            to_province_name: user?.address?.[0]?.city ?? "test",
+            to_name: user?.name ?? "test",
+            // to_phone: user?.phone ?? "0909999999",
+            // to_address: user?.address?.street ?? "test",
+            // to_ward_name: user?.address?.ward ?? "test",
+            // to_district_name: user?.address?.district ?? "test",
+            // to_province_name: user?.address?.city ?? "test",
             items: products.map((i) => {
               const { info } = i ?? {};
               return {
                 name: info?.name ?? "test",
                 code: i.id,
                 quantity: i.amount,
-                price: i.mount * Number(i.value),
+                price: i.amount * Number(i.value),
                 length: 12,
                 width: 12,
                 height: 12,
@@ -448,7 +454,7 @@ const ProductLayout = (props) => {
             rowKey="key"
           />
         )}
-        <Modal
+        <CModal
           open={openForm}
           title={(updateCell ? "Update " : "Add new ") + viewName}
           onCancel={handleCancel}
@@ -464,10 +470,10 @@ const ProductLayout = (props) => {
             loading={loading}
             onChange={onFormChange}
           />
-        </Modal>
+        </CModal>
 
         {/* USER DETAIL ORDERS */}
-        <Modal
+        <CModal
           open={Boolean(userDetail)}
           title={
             <p className="uppercase">{viewName + " " + "detail orders"}</p>
@@ -478,7 +484,7 @@ const ProductLayout = (props) => {
           className="max-w-[1600px]"
         >
           <UserDetail user={userDetail} address={userDetail?.address ?? []} />
-        </Modal>
+        </CModal>
 
         <ConfirmOrderModal
           item={orderToConfirm}
@@ -486,6 +492,8 @@ const ProductLayout = (props) => {
           onConfirmOrder={handleConfirmOrder}
           onCancel={() => setOrderToConfirm(null)}
         />
+
+        <CartDetail item={orderDetail} onCancel={() => setOrderDetail(null)} />
       </div>
     </Context.Provider>
   );

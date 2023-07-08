@@ -6,6 +6,7 @@ import ComponentLoading from "../../../../components/layout/ComponentLoading";
 import UserHistory from "../../../app/ViewUser/elements/UserHistory";
 import formatPrice from "../../../../utils/helpers/formatPrice";
 import CInput from "../../../../components/core/CInput";
+import CModal from "../../../../components/core/CModal";
 
 const ConfirmOrderModal = (props) => {
   const { visible, item, onCancel, onConfirmOrder } = props;
@@ -26,7 +27,7 @@ const ConfirmOrderModal = (props) => {
   }, [item]);
 
   return (
-    <Modal
+    <CModal
       title={"Confirm order"}
       open={visible}
       footer={<></>}
@@ -110,7 +111,7 @@ const ConfirmOrderModal = (props) => {
           Close
         </Button>
       </div>
-    </Modal>
+    </CModal>
   );
 };
 

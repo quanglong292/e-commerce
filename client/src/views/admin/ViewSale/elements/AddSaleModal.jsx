@@ -6,6 +6,7 @@ import CTable from "../../../../components/core/CTable";
 import useProductStore from "../../../../store/product.zustand";
 import { formatToSystemDate } from "../../../../utils/helpers/formatDate";
 import handleClientError from "../../../../utils/helpers/handleClientError";
+import CModal from "../../../../components/core/CModal";
 
 const AddSaleModal = (props) => {
   const { visible, edittingCell, onCancel, onSubmit } = props;
@@ -126,7 +127,7 @@ const AddSaleModal = (props) => {
   }, [edittingCell, allProducts]);
 
   return (
-    <Modal
+    <CModal
       title={"Sale products"}
       open={visible}
       footer={<></>}
@@ -196,7 +197,7 @@ const AddSaleModal = (props) => {
           />
         </div>
       </div>
-    </Modal>
+    </CModal>
   );
 };
 

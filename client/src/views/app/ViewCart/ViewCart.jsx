@@ -9,6 +9,8 @@ import WishList from "./elements/WishList";
 import SectionHeader from "../ViewProducts/elements/ViewLanding/elements/SectionHeader";
 import AddressForm from "../../../components/core/AddressForm";
 import { useNavigate } from "react-router-dom";
+import CModal from "../../../components/core/CModal";
+import FreeDelivery from "./elements/FreeDelivery";
 
 const ViewCart = () => {
   const navigate = useNavigate();
@@ -35,6 +37,7 @@ const ViewCart = () => {
         <div className="lg:flex justify-between gap-4 pb-24 border-b-2">
           {/* ITEMS */}
           <div className="lg:w-2/3 mb-4">
+            <FreeDelivery />
             <SectionHeader>BAG</SectionHeader>
             {!ordersList.length ? (
               <p className="text-sm text-gray-500 font-semibold">
@@ -48,12 +51,6 @@ const ViewCart = () => {
           <div className="w-full lg:w-1/3 p-4">
             <SectionHeader>PAYMENT DETAIL</SectionHeader>
             <div className="flex items-start justify-between pb-2 border-b-2 border-black mb-4 text-lg">
-              <section className="w-1/2">Total</section>
-              <section className="w-1/2 text-right">
-                {amounts?.currencyPrice}
-              </section>
-            </div>
-            <div className="flex items-start justify-between pb-2 border-b-2 border-black mb-4 text-lg">
               <section className="w-1/2">Subtotal</section>
               <section className="w-1/2 text-right">-</section>
             </div>
@@ -61,8 +58,11 @@ const ViewCart = () => {
               <section className="w-1/2">Estimated Delivery & Handling</section>
               <section className="w-1/2 text-right">Free</section>
             </div>
-            <div className="pb-2 border-b-2 border-black text-lg mb-9">
-              <section className="w-1/2">Paypal</section>
+            <div className="flex items-start justify-between pb-2 border-b-2 border-black mb-4 text-lg">
+              <section className="w-1/2">Total</section>
+              <section className="w-1/2 text-right">
+                {amounts?.currencyPrice}
+              </section>
             </div>
             <CButton
               onClick={() => {
@@ -71,7 +71,7 @@ const ViewCart = () => {
               }}
               type="black"
             >
-              Checkout
+              member Checkout
             </CButton>
           </div>
         </div>
@@ -79,7 +79,7 @@ const ViewCart = () => {
         <WishList />
       </div>
       {/* MODAL PAYMENT */}
-      <Modal
+      <CModal
         width={"50%"}
         footer={<></>}
         title={"Log payment"}
@@ -97,7 +97,7 @@ const ViewCart = () => {
             setOpenPayment(false);
           }}
         />
-      </Modal>
+      </CModal>
     </>
   );
 };

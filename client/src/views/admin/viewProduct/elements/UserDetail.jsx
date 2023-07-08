@@ -12,6 +12,7 @@ import formatDate, {
 import useGlobalStore from "../../../../store/global.zustand";
 import FormBuilder from "../../../../components/core/FormBuilder";
 import { USER_DETAIL_SHCEMA } from "../../../../utils/constants/detailUser.constant";
+import CModal from "../../../../components/core/CModal";
 
 const UserDetail = memo(({ user, address }) => {
   const handleUpdate = useGlobalStore((state) => state.handleUpdate);
@@ -106,7 +107,7 @@ const UserDetail = memo(({ user, address }) => {
           </div>
         </div>
       </div>
-      <Modal
+      <CModal
         open={openAddressForm || Boolean(editAddressForm)}
         footer={<></>}
         onCancel={() => {
@@ -132,7 +133,7 @@ const UserDetail = memo(({ user, address }) => {
             <CButton className="w-full">Close</CButton>
           </div>
         )}
-      </Modal>
+      </CModal>
     </>
   );
 });

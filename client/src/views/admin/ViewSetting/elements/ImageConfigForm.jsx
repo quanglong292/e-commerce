@@ -4,6 +4,7 @@ import CButton from "../../../../components/core/CButton";
 import CInput from "../../../../components/core/CInput";
 import { Modal } from "antd";
 import handleClientError from "../../../../utils/helpers/handleClientError";
+import CModal from "../../../../components/core/CModal";
 
 const ImageConfigForm = memo(({ src, field, onSave, onChange }) => {
   const [previewImage, setPreviewImage] = useState({});
@@ -44,7 +45,7 @@ const ImageConfigForm = memo(({ src, field, onSave, onChange }) => {
           </div>
         </div>
       </div>
-      <Modal
+      <CModal
         onOk={() => {
           handleClickOk();
         }}
@@ -67,7 +68,7 @@ const ImageConfigForm = memo(({ src, field, onSave, onChange }) => {
         {(!previewImage?.target?.validity?.patternMismatch || src) && (
           <img src={previewImage.target?.value || src} className="max-w-full" />
         )}
-      </Modal>
+      </CModal>
     </>
   );
 });

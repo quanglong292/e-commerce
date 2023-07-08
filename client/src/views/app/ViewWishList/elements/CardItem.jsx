@@ -2,7 +2,6 @@ import { memo } from "react";
 import formatPrice from "../../../../utils/helpers/formatPrice";
 import CButton from "../../../../components/core/CButton";
 import { DeleteOutlined } from "@ant-design/icons";
-import { useProduct } from "../../../../utils/composables/useProduct";
 import useProductStore from "../../../../store/product.zustand";
 
 function CardItem({ item }) {

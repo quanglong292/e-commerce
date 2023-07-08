@@ -1,26 +1,13 @@
-import {
-  Button,
-  Checkbox,
-  DatePicker,
-  Input,
-  Radio,
-  Select,
-  Switch,
-} from "antd";
+import { Button, Checkbox, Input, Select, Switch } from "antd";
 import React, { memo, useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import CButton from "./CButton";
 import "../../assets/styles/formBuilder.scss";
 import fetcher from "../../utils/helpers/fetcher";
-import TextArea from "antd/es/input/TextArea";
 import set from "lodash/set";
 import findPath from "../../utils/helpers/findPath";
-import isEqual from "lodash/isEqual";
 import CInput from "./CInput";
-import {
-  resetFormFields,
-  setFormValues,
-} from "../../utils/composables/useFormBuilder";
+import { setFormValues } from "../../utils/composables/useFormBuilder";
 import FieldArray from "./FormBuilder/elements/FieldArray";
 
 const getNewLineOfArrayFields = (field, idx) => {
@@ -217,11 +204,9 @@ const FormBuilder = memo((props) => {
     return () => subscription.unsubscribe();
   }, [watch]);
 
-  // useEffect(() => {
-  //   return () => {
-  //     handleResetFields();
-  //   };
-  // }, []);
+  useEffect(() => {
+    console.log({ errors });
+  }, [errors]);
 
   return (
     <div className="form-builder">
@@ -361,10 +346,10 @@ const FormBuilder = memo((props) => {
 
         {isShowSubmit && (
           <div className="w-full flex items-center gap-4 mt-8">
-            <CButton type="primary" htmlType="submit" loading={loading}>
+            <CButton type="black" htmlType="submit" loading={loading}>
               Submit
             </CButton>
-            <CButton type="default" onClick={handleResetFields}>
+            <CButton type="black" onClick={handleResetFields}>
               Clear
             </CButton>
           </div>

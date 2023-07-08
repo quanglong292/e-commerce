@@ -19,6 +19,10 @@ export const ORDER_STATUS = {
     text: "Đang lấy hàng",
     color: "orange",
   },
+  shipping: {
+    text: "Đang giao",
+    color: "orange",
+  },
   picked: {
     text: "Lấy hàng thành công",
     color: "orange",

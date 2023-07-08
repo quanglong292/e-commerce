@@ -27,7 +27,7 @@ const Footer = () => {
                 <div
                   onClick={() => navigate(`/app/${i.name.toLowerCase()}`)}
                   key={i.name}
-                  className="w-fit uppercase cursor-pointer hover:text-slate-300"
+                  className="w-fit uppercase cursor-pointer hover:text-slate-300 text-sm"
                 >
                   {i.name}
                 </div>
@@ -40,7 +40,7 @@ const Footer = () => {
               return (
                 <div
                   key={i}
-                  className="w-fit text-sm capitalize cursor-pointer text-gray-300 hover:text-slate-300"
+                  className="w-fit uppercase cursor-pointer hover:text-slate-300 text-sm"
                 >
                   {i}
                 </div>

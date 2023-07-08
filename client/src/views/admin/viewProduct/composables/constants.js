@@ -357,10 +357,10 @@ export const tabItems = [
   //   key: "brands",
   //   label: `Brand`,
   // },
-  // {
-  //   key: "products",
-  //   label: `Product`,
-  // },
+  {
+    key: "products",
+    label: `Product`,
+  },
   // {
   //   key: "user",
   //   label: `User`,

@@ -14,6 +14,7 @@ import CTooltip from "../../../components/core/CTooltip";
 import CInput from "../../../components/core/CInput";
 import { Radio } from "antd";
 import { ArrowLeftOutlined } from "@ant-design/icons";
+import FreeDelivery from "./elements/FreeDelivery";
 
 const ViewCartCheckout = () => {
   const navigate = useNavigate();
@@ -60,19 +61,19 @@ const ViewCartCheckout = () => {
         <div className="w-full">
           <SectionHeader>SUMMARY</SectionHeader>
           <div className="flex items-start justify-between pb-2 border-b-2 border-black mb-4 text-lg">
-            <section className="w-1/2">Total</section>
-            <section className="w-1/2 text-right flex justify-end items-center gap-1">
-              {amounts?.currencyPrice}
-              <CTooltip text="Sẽ được trả giá nếu là khách sỉ" />
-            </section>
-          </div>
-          <div className="flex items-start justify-between pb-2 border-b-2 border-black mb-4 text-lg">
             <section className="w-1/2">Subtotal</section>
             <section className="w-1/2 text-right">-</section>
           </div>
           <div className="flex items-start justify-between pb-2 border-b-2 border-black text-lg mb-9">
             <section className="w-1/2">Estimated Delivery & Handling</section>
             <section className="w-1/2 text-right">Free</section>
+          </div>
+          <div className="flex items-start justify-between pb-2 border-b-2 border-black mb-4 text-lg">
+            <section className="w-1/2">Total</section>
+            <section className="w-1/2 text-right flex justify-end items-center gap-1">
+              {amounts?.currencyPrice}
+              <CTooltip text="Sẽ được trả giá nếu là khách sỉ" />
+            </section>
           </div>
           {/* {!paymentForm ? (
             <CButton
@@ -114,6 +115,7 @@ const ViewCartCheckout = () => {
 };
 
 function AddressStep({ setCurrentStep }) {
+  const navigate = useNavigate();
   const { checkoutInfo, mutateData } = useProductStore((state) => state);
   const { address } = useGlobalStore((state) => state);
 
@@ -130,7 +132,20 @@ function AddressStep({ setCurrentStep }) {
 
   return (
     <div className="w-full">
-      <SectionHeader>Information</SectionHeader>
+      <FreeDelivery />
+      <div className="flex justify-between items-center">
+        <SectionHeader>Information</SectionHeader>
+        <div className="w-fit">
+          <CButton
+            onClick={() => navigate("/app/cart")}
+            type="black"
+            className="px-4 text-sm rounded-xl flex items-center gap-4"
+          >
+            <ArrowLeftOutlined />
+            <span>Back</span>
+          </CButton>
+        </div>
+      </div>
       <div className="flex items-start gap-4 text-lg mb-8 mt-8">
         <p className="text-lg uppercase">You are whole sale ?</p>
         <Radio.Group
@@ -165,13 +180,14 @@ function AddressStep({ setCurrentStep }) {
 function PaymentStep({ setCurrentStep, handlePayment }) {
   return (
     <>
+      <FreeDelivery />
       <div className="flex justify-between items-center">
         <SectionHeader>give me your card</SectionHeader>
         <div className="w-fit">
           <CButton
             onClick={() => setCurrentStep(0)}
             type="black"
-            className="px-4 rounded-xl flex items-center gap-4"
+            className="px-4 text-sm rounded-xl flex items-center gap-4"
           >
             <ArrowLeftOutlined />
             <span>Back</span>

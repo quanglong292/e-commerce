@@ -42,6 +42,8 @@ async function fetcher(method, body) {
 const createOrder = async (body) => {
   const data = await fetcher("create", { ...demoCreateBody, ...body });
 
+  if (data?.code >= 400) throw { message: data.code_message_value };
+
   return data;
 };
 
@@ -50,7 +52,9 @@ const getGHNOrder = async (order_code) => {
   if (!order_code) throw "Missing body";
 
   const data = await fetcher("detail", { order_code });
-  console.log({ getGHNOrder: order_code, data });
+  if (data?.code >= 400) throw { message: data.code_message_value };
+
+  // console.log({ getGHNOrder: order_code, data });
   return data;
 };
 

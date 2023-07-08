@@ -8,6 +8,7 @@ import formatDate from "../../../../utils/helpers/formatDate";
 import { getGHNOrder } from "../../../../utils/helpers/ghnFetcher";
 import { ORDER_STATUS } from "../../../../utils/constants/status.constant";
 import ComponentLoading from "../../../../components/layout/ComponentLoading";
+import CModal from "../../../../components/core/CModal";
 
 const UserHistory = (props) => {
   // Store
@@ -86,9 +87,7 @@ const UserHistory = (props) => {
   );
 };
 
-export default UserHistory;
-
-export function OrderStatus({ status }) {
+function OrderStatus({ status }) {
   const { text, color } = ORDER_STATUS?.[status] ?? {
     text: "status",
     color: "",
@@ -120,8 +119,9 @@ function CartDetail({ item, onCancel }) {
   }, [item]);
 
   return (
-    <Modal
+    <CModal
       onCancel={onCancel}
+      onOk={onCancel}
       open={Boolean(item)}
       title={
         <div>
@@ -160,6 +160,9 @@ function CartDetail({ item, onCancel }) {
           </div>
         </>
       )}
-    </Modal>
+    </CModal>
   );
 }
+
+export { OrderStatus, CartDetail };
+export default UserHistory;

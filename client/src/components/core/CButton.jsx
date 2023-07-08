@@ -5,15 +5,19 @@ import "../../assets/styles/button.scss";
 const CButton = memo(({ children, ...props }) => {
   if (props.type === "black")
     return (
-      <div
+      <button
         {...props}
         className={
           "bg-black text-white cursor-pointer font-semibold uppercase w-full py-2 text-center hover:bg-gray-800 " +
           props.className
         }
+        onClick={(e) => {
+          e.preventDefault();
+          props.onClick(e);
+        }}
       >
         {children}
-      </div>
+      </button>
     );
 
   return <Button {...props}>{children}</Button>;

@@ -14,6 +14,7 @@ import formatDate, {
   formatToSystemDate,
 } from "../../../utils/helpers/formatDate";
 import { getGHNOrder } from "../../../utils/helpers/ghnFetcher";
+import CModal from "../../../components/core/CModal";
 
 const ViewUserDetail = () => {
   const navigate = useNavigate();
@@ -111,7 +112,7 @@ const ViewUserDetail = () => {
           </div>
         </div>
       </div>
-      <Modal
+      <CModal
         open={openAddressForm || Boolean(editAddressForm)}
         footer={<></>}
         onCancel={() => {
@@ -137,7 +138,7 @@ const ViewUserDetail = () => {
             <CButton className="w-full">Close</CButton>
           </div>
         )}
-      </Modal>
+      </CModal>
     </div>
   );
 };

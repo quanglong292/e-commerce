@@ -31,11 +31,11 @@ const RootViewLayout = () => {
   const isAdmin = useMemo(() => !pathname.includes("app"), [pathname]);
 
   // Store
-  const { checkToken, handleLogout, user } = useGlobalStore((state) => state);
+  const { checkToken, handleLogout, user, hadnleGetSetting } = useGlobalStore((state) => state);
 
   // Function
   const handleValidateAuth = () => {
-    if (["/", "/sale", "/product", ...SINGLE_MANAGEMENT_VIEWS].includes(pathname)) {
+    if (["/", "/sale", "/product", "/category", ...SINGLE_MANAGEMENT_VIEWS].includes(pathname)) {
       if (!checkToken()) navigate("auth/admin");
       else {
         checkAccountPermission(checkToken, handleLogout, {
@@ -52,6 +52,7 @@ const RootViewLayout = () => {
 
   useEffect(() => {
     handleValidateAuth();
+    hadnleGetSetting();
   }, [pathname]);
 
   return (

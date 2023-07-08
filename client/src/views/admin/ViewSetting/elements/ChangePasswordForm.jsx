@@ -11,7 +11,7 @@ import CButton from "../../../../components/core/CButton";
 import { resetFormFields } from "../../../../utils/composables/useFormBuilder";
 
 const ChangePasswordForm = memo(() => {
-  const { id = "" } = useGlobalStore((state) => state.user);
+  const { id = "" } = useGlobalStore((state) => state.user) ?? {};
   const {
     formState: { errors },
     register,
