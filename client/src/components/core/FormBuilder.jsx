@@ -346,9 +346,14 @@ const FormBuilder = memo((props) => {
 
         {isShowSubmit && (
           <div className="w-full flex items-center gap-4 mt-8">
-            <CButton type="black" htmlType="submit" loading={loading}>
+            <button
+              className="bg-black text-white cursor-pointer font-semibold uppercase w-full py-2 text-center hover:bg-gray-800 "
+              type="black"
+              htmlType="submit"
+              loading={loading}
+            >
               Submit
-            </CButton>
+            </button>
             <CButton type="black" onClick={handleResetFields}>
               Clear
             </CButton>

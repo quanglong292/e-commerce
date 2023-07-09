@@ -18,7 +18,8 @@ tsconfigPaths.register();
 import useRoutes from '@/routes';
 
 // Connect DB
-mongoose.connect(process.env.MONGO_CONNECT as string);
+const DB_URL: string = process.env.MONGO_CONNECT || ""
+mongoose.connect(DB_URL);
 
 // Application initialize
 const app: Express = express();
@@ -27,7 +28,7 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use(helmet());
 app.use(compression());
-app.use(morgan('tiny')); 
+app.use(morgan('combined')); 
 
 // Registering routes
 useRoutes(app)
@@ -36,3 +37,5 @@ const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
+
+export default app

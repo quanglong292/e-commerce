@@ -3,6 +3,7 @@ import React, { memo } from "react";
 import "../../assets/styles/button.scss";
 
 const CButton = memo(({ children, ...props }) => {
+  console.log({ props }); 
   if (props.type === "black")
     return (
       <button
@@ -13,7 +14,7 @@ const CButton = memo(({ children, ...props }) => {
         }
         onClick={(e) => {
           e.preventDefault();
-          props.onClick(e);
+          if (props.onClick) props?.onClick(e);
         }}
       >
         {children}
