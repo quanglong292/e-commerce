@@ -2,8 +2,9 @@
 module.exports = {
   preset: "ts-jest",
   testEnvironment: "node",
-  resolver: undefined,
   moduleNameMapper: {
-    "/^@/(.*)$/": "/src/$1",
+    // "/^@/(.*)$/": "<rootDir>/src/$1",
+    '^@/(.*)$': '<rootDir>/src/$1',
   },
+  resolver: undefined,
 };
