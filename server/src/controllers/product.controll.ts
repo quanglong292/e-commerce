@@ -14,7 +14,7 @@ export const handleGetProduct = async (query: IFilterOptions | any) => {
     if (query.name) query.name = { $regex: new RegExp(query.name, "i") }
     const sortQuery = cloneDeep(query)?.sortBy
     delete query?.sortBy
-    const isGetSaleProducts = query?.group === "761fcea4-58b4-4ce9-a4a5-fd5239228047"
+    const isGetSaleProducts = query?.group === "45545f89-1b9d-4c10-a0c1-c7aae362d080"
     const saleData = await SaleModel.find()
     const productData = await ProductModel.find(isGetSaleProducts ? { id: uniq(saleData.map(i => i.products).flat()) } : query)
     let combineSaleData = productData.map(i => {
