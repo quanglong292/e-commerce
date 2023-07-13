@@ -124,7 +124,7 @@ const QuickViewCard = memo((props) => {
               }}
               type="black"
             >
-              Add to whish list
+              Add to wish list
             </CButton>
           </div>
         </div>

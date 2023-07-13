@@ -75,22 +75,24 @@ const ProductCard = (props) => {
           {isHover && (
             <div className="w-full h-full absolute top-0 left-0 bg-slate-300/50 rounded-md">
               <div className="w-full h-full flex flex-col justify-center items-center gap-2">
-                <CButton
-                  type="primary"
-                  className="w-[114px]"
-                  onMouseEnter={toggle}
-                  onClick={() => navigate(`/app/product/detail/${item.id}`)}
-                >
-                  Detail
-                </CButton>
-                <CButton
-                  type="primary"
-                  className="w-[114px]"
-                  onMouseEnter={toggle}
-                  onClick={() => setQuickViewId(item.id)}
-                >
-                  Quick view
-                </CButton>
+                <div className="w-1/2 flex flex-col gap-4">
+                  <CButton
+                    type="black"
+                    // className="w-[114px]"
+                    onMouseEnter={toggle}
+                    onClick={() => navigate(`/app/product/detail/${item.id}`)}
+                  >
+                    Detail
+                  </CButton>
+                  <CButton
+                    type="black"
+                    // className="w-[114px]"
+                    onMouseEnter={toggle}
+                    onClick={() => setQuickViewId(item.id)}
+                  >
+                    Quick view
+                  </CButton>
+                </div>
               </div>
             </div>
           )}

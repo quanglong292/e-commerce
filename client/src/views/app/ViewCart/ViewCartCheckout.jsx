@@ -49,7 +49,11 @@ const ViewCartCheckout = () => {
     <div className="flex gap-8">
       <div className="w-1/2">
         {!currentStep ? (
-          <AddressStep user={user} setCurrentStep={setCurrentStep} />
+          <AddressStep
+            user={user}
+            setCurrentStep={setCurrentStep}
+            handlePayment={handlePayment}
+          />
         ) : (
           <PaymentStep
             setCurrentStep={setCurrentStep}
@@ -114,7 +118,7 @@ const ViewCartCheckout = () => {
   );
 };
 
-function AddressStep({ setCurrentStep }) {
+function AddressStep({ setCurrentStep, handlePayment }) {
   const navigate = useNavigate();
   const { checkoutInfo, mutateData } = useProductStore((state) => state);
   const { address } = useGlobalStore((state) => state);
@@ -146,7 +150,7 @@ function AddressStep({ setCurrentStep }) {
           </CButton>
         </div>
       </div>
-      <div className="flex items-start gap-4 text-lg mb-8 mt-8">
+      <div className="flex items-start gap-4 text-lg mb-8 mt-8 hidden">
         <p className="text-lg uppercase">You are whole sale ?</p>
         <Radio.Group
           options={[
@@ -170,7 +174,7 @@ function AddressStep({ setCurrentStep }) {
         onSubmit={(e) => {
           if (e.paymentMethod === "paypal") {
             setCurrentStep(1);
-          }
+          } else handlePayment();
         }}
       />
     </div>

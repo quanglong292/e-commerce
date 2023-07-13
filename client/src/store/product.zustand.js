@@ -44,6 +44,7 @@ const useProductStore = create((set, get) => ({
   filterOptions: {},
   checkoutInfo: {
     address: null,
+    isWholeSale: false,
   },
   comments: [],
   mutateList: (listName, { payload }) => {

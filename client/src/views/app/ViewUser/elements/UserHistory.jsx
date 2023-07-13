@@ -9,6 +9,7 @@ import { getGHNOrder } from "../../../../utils/helpers/ghnFetcher";
 import { ORDER_STATUS } from "../../../../utils/constants/status.constant";
 import ComponentLoading from "../../../../components/layout/ComponentLoading";
 import CModal from "../../../../components/core/CModal";
+import CTooltip from "../../../../components/core/CTooltip";
 
 const UserHistory = (props) => {
   // Store
@@ -22,7 +23,6 @@ const UserHistory = (props) => {
   // Functions
   const handleInitHistory = async () => {
     const user = props?.user || checkToken()["0"];
-    console.log({ user, historyList });
     if (!user || (historyList.length && !props.user)) return;
     setLoading(true);
     const data = await fetcher(REQUEST_PARAMS.GET_CART_HISTORY, {
@@ -106,10 +106,14 @@ function CartDetail({ item, onCancel }) {
 
   const handleInitData = async (item) => {
     const findShippingInfo = item?.shippingOrderInfo;
-    if (!findShippingInfo) return;
+    if (!findShippingInfo) {
+      setShipData(null)
+      return
+    };
 
     setLoading(true);
     const shippingData = await getGHNOrder(findShippingInfo?.data?.order_code);
+    console.log({ shippingData });
     setShipData(shippingData.data);
     setLoading(false);
   };
@@ -157,6 +161,31 @@ function CartDetail({ item, onCancel }) {
                 </div>
               );
             })}
+          </div>
+          <div className="flex items-start justify-between pb-2 border-b-2 my-2">
+            Fullname: <span className="text-right">{shipData?.to_name}</span>
+          </div>
+          <div className="flex items-start justify-between pb-2 border-b-2 my-2">
+            Phone: <span className="text-right">{shipData?.to_phone}</span>
+          </div>
+          <div className="flex items-start justify-between pb-2 border-b-2 my-2">
+            Address: <span className="text-right">{shipData?.to_address}</span>
+          </div>
+          <div className="flex items-start justify-between pb-2 border-b-2 my-2">
+            <section className="w-1/2">Subtotal</section>
+            <section className="w-1/2 text-right">-</section>
+          </div>
+          <div className="flex items-start justify-between pb-2 border-b-2 my-2">
+            <section className="w-1/2">Estimated Delivery & Handling</section>
+            <section className="w-1/2 text-right">
+              {formatPrice(shipData?.cod_amount)}
+            </section>
+          </div>
+          <div className="flex items-start justify-between pb-2 my-2 font-semibold text-lg">
+            <section className="w-1/2 ">Total Fee</section>
+            <section className="w-1/2 text-right flex justify-end items-center gap-1">
+              {formatPrice(shipData?.cod_amount)}
+            </section>
           </div>
         </>
       )}
