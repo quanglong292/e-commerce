@@ -324,8 +324,6 @@ const ProductLayout = (props) => {
   };
 
   async function handleConfirmOrder(rec, type = "open") {
-    const { user, products } = orderToConfirm;
-
     // return
     try {
       if (UNAVAILABLE_ORDER_STATUS.includes(type)) {
