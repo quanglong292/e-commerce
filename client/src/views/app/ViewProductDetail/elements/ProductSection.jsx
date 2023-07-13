@@ -50,7 +50,7 @@ const ProductSection = () => {
               renderItem={(i) => {
                 return (
                   <img
-                    src={i?.name || ""}
+                    src={i?.value || ""}
                     alt=""
                     className="mx-auto max-w-full"
                   />
