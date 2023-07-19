@@ -170,7 +170,21 @@ function CartDetail({ item, onCancel }) {
             Phone: <span className="text-right">{item?.user?.phone}</span>
           </div>
           <div className="flex items-start justify-between pb-2 border-b-2 my-2">
-            Address: <span className="text-right">{shipData?.to_address || item?.user?.street}</span>
+            Address:{" "}
+            <div>
+              <p className="text-right">Street {item?.user?.address?.street}</p>
+              <div className="flex gap-2">
+                <span className="text-right">
+                  Ward {item?.user?.address?.ward} -
+                </span>
+                <span className="text-right">
+                  District {item?.user?.address?.district} -
+                </span>
+                <span className="text-right">
+                  City {item?.user?.address?.city}
+                </span>
+              </div>
+            </div>
           </div>
           <div className="flex items-start justify-between pb-2 border-b-2 my-2">
             <section className="w-1/2">Subtotal</section>

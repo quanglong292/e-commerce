@@ -10,6 +10,7 @@ import CButton from "../../../../components/core/CButton";
 import BreadCrum from "../../../../components/core/BreadCrum";
 import useGlobalStore from "../../../../store/global.zustand";
 import { notification } from "antd";
+import ProductPrice from "../../../../components/core/ProductPrice";
 
 const ProductSection = () => {
   const { pathname } = useResolvedPath();
@@ -127,17 +128,8 @@ function DetailSection({ item = {} }) {
     <div className="w-[30%] bg-white p-4">
       <div className="text-2xl font-bold">{item.name}</div>
       <div className="">{`${category}'s`}</div>
-      <div className="text-lg mt-6 flex gap-2">
-        <span
-          className={item?.finalPrice !== item?.price ? "line-through" : ""}
-        >
-          {formatPrice(item.price)}
-        </span>
-        <span className="text-red-500 font-semibold">
-          {item?.finalPrice !== item?.price
-            ? `-> ${formatPrice(item?.finalPrice)}`
-            : ""}
-        </span>
+      <div className="mt-6">
+        <ProductPrice item={item} />
       </div>
       <div className="text-red-500 font-semibold">{item?.saleInfo?.title}</div>
       <div className="text-sm">
@@ -149,7 +141,9 @@ function DetailSection({ item = {} }) {
         <div>
           Size: <span className="text-gray-400 mb-2">Please select</span>
         </div>
-        <a href={setting?.sizeChart} target="_blank" className="underline">Size chart</a>
+        <a href={setting?.sizeChart} target="_blank" className="underline">
+          Size chart
+        </a>
         <div className="grid grid-cols-6 gap-1 gap-y-3 mt-4 mb-2">
           {getSizes(item.stocks)?.map((i) => {
             if (Number(i.value))

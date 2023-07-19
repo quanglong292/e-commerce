@@ -1,12 +1,13 @@
 import React, { memo } from "react";
 import CCarousel from "../../../../../../components/core/CCarousel";
 import SectionHeader from "./SectionHeader";
+import ProductCard from "../../ProductCard";
 
-const PopularSection = ({ items, loading }) => {
+const PopularSection = ({ items }) => {
   return (
     <div className="mt-24">
       <SectionHeader>Popular right now</SectionHeader>
-      {loading ? (
+      {/* {loading ? (
         "..."
       ) : (
         <CCarousel
@@ -24,7 +25,14 @@ const PopularSection = ({ items, loading }) => {
           )}
           items={items?.filter((i, idx) => idx < 5)}
         />
-      )}
+      )} */}
+      <div className="flex gap-4">
+        {items
+          ?.filter((_, idx) => idx < 4)
+          ?.map((i) => (
+            <ProductCard key={i.name} item={i} />
+          ))}
+      </div>
     </div>
   );
 };

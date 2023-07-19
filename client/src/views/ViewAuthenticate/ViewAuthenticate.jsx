@@ -13,7 +13,7 @@ import { checkAccountPermission } from "../../utils/composables/useToken";
 const ViewAuthenticate = () => {
   const navigate = useNavigate();
   const { pathname } = useResolvedPath();
-  const { handleLogin, setToken, checkToken } = useGlobalStore(
+  const { handleLogin, setToken, checkToken, setting } = useGlobalStore(
     (state) => state
   );
 
@@ -74,7 +74,11 @@ const ViewAuthenticate = () => {
     <>
       <div className="h-full w-full flex justify-center pt-24">
         <div className="w-[24%] flex flex-col items-center gap-4">
-          <Logo />
+          {setting ? (
+            <img src={setting.logo} alt="logo" className="w-[40px] h-[40px]" />
+          ) : (
+            "Admin Portal"
+          )}
           <p className="w-[80%] text-center uppercase font-bold text-2xl">
             {formType === "signin"
               ? "your account for everything nike"

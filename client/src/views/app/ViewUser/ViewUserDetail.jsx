@@ -127,7 +127,7 @@ const ViewUserDetail = () => {
           onSubmit={handleUpdateAddress}
         />
         {Boolean(editAddressForm) && (
-          <div className="flex gap-4">
+          <div className="flex gap-4 mt-4">
             <CButton
               onClick={() => handleUpdateAddress(editAddressForm, "delete")}
               className="w-full"

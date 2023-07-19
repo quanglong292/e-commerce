@@ -7,9 +7,11 @@ import {
   setFormValues,
 } from "../../utils/composables/useFormBuilder";
 import CTooltip from "./CTooltip";
+import { useResolvedPath } from "react-router-dom";
 
 const AddressForm = (props) => {
   const { isRequired, defaultValues = {} } = props;
+  const { pathname } = useResolvedPath();
   const {
     formState: { errors },
     register,
@@ -21,6 +23,10 @@ const AddressForm = (props) => {
   } = useForm({
     defaultValues,
   });
+
+  const isViewCheckoutCart = pathname.includes("cart-checkout");
+
+  // console.log({ pathname });
 
   useEffect(() => {
     if (!defaultValues) resetFormFields(getValues(), resetField);
@@ -87,20 +93,24 @@ const AddressForm = (props) => {
           </div>
         </div>
       </div>
-      <p className="text-lg uppercase">Payent method</p>
-      <div className="p-4 w-fit">
-        <CInput
-          type="radio"
-          name={"paymentMethod"}
-          control={control}
-          rules={{ required: REQUIRED_MESSAGE }}
-          options={[
-            { label: "Paypal", value: "paypal" },
-            { label: "COD", value: "cod" },
-          ]}
-          formError={errors}
-        />
-      </div>
+      {isViewCheckoutCart && (
+        <>
+          <p className="text-lg uppercase">Payent method</p>
+          <div className="p-4 w-fit">
+            <CInput
+              type="radio"
+              name={"paymentMethod"}
+              control={control}
+              rules={{ required: REQUIRED_MESSAGE }}
+              options={[
+                { label: "Paypal", value: "paypal" },
+                { label: "COD", value: "cod" },
+              ]}
+              formError={errors}
+            />
+          </div>
+        </>
+      )}
       <CInput
         type="submit"
         className="bg-black text-white cursor-pointer font-semibold uppercase w-full py-2 text-center hover:bg-gray-800"

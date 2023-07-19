@@ -6,6 +6,7 @@ import { HeartTwoTone } from "@ant-design/icons";
 import useProductStore from "../../../../store/product.zustand";
 import useGlobalStore from "../../../../store/global.zustand";
 import { notification } from "antd";
+import ProductPrice from "../../../../components/core/ProductPrice";
 
 const QuickViewCard = lazy(() => import("./QuickViewCard"));
 
@@ -99,15 +100,9 @@ const ProductCard = (props) => {
         </div>
         <div className="w-full mt-2">
           <p className="font-semibold">{item.name}</p>
-          <div className="flex gap-2 items-end">
-            {item?.finalPrice !== item.price ? (
-              <p className="uppercase text-red-500 font-semibold">
-                SALE: {formatPrice(item.finalPrice)}
-              </p>
-            ) : (
-              <p>{formatPrice(item.price)}</p>
-            )}
-            <p>-</p>
+          <div className="flex items-center gap-2">
+            <ProductPrice item={item} />
+            <span>-</span>
             <p
               className={
                 "italic text-sm " +
