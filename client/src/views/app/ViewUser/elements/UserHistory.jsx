@@ -104,12 +104,13 @@ function CartDetail({ item, onCancel }) {
   const [loading, setLoading] = useState(false);
   const [shipData, setShipData] = useState(null);
 
+  console.log({ item });
   const handleInitData = async (item) => {
     const findShippingInfo = item?.shippingOrderInfo;
     if (!findShippingInfo) {
-      setShipData(null)
-      return
-    };
+      setShipData(null);
+      return;
+    }
 
     setLoading(true);
     const shippingData = await getGHNOrder(findShippingInfo?.data?.order_code);
@@ -163,13 +164,13 @@ function CartDetail({ item, onCancel }) {
             })}
           </div>
           <div className="flex items-start justify-between pb-2 border-b-2 my-2">
-            Fullname: <span className="text-right">{shipData?.to_name}</span>
+            Fullname: <span className="text-right">{item?.user?.name}</span>
           </div>
           <div className="flex items-start justify-between pb-2 border-b-2 my-2">
-            Phone: <span className="text-right">{shipData?.to_phone}</span>
+            Phone: <span className="text-right">{item?.user?.phone}</span>
           </div>
           <div className="flex items-start justify-between pb-2 border-b-2 my-2">
-            Address: <span className="text-right">{shipData?.to_address}</span>
+            Address: <span className="text-right">{shipData?.to_address || item?.user?.street}</span>
           </div>
           <div className="flex items-start justify-between pb-2 border-b-2 my-2">
             <section className="w-1/2">Subtotal</section>
@@ -178,13 +179,13 @@ function CartDetail({ item, onCancel }) {
           <div className="flex items-start justify-between pb-2 border-b-2 my-2">
             <section className="w-1/2">Estimated Delivery & Handling</section>
             <section className="w-1/2 text-right">
-              {formatPrice(shipData?.cod_amount)}
+              {formatPrice(item?.totalPrice || 0)}
             </section>
           </div>
           <div className="flex items-start justify-between pb-2 my-2 font-semibold text-lg">
             <section className="w-1/2 ">Total Fee</section>
             <section className="w-1/2 text-right flex justify-end items-center gap-1">
-              {formatPrice(shipData?.cod_amount)}
+              {formatPrice((item?.totalPrice || 0) + 30000)}
             </section>
           </div>
         </>

@@ -2,17 +2,19 @@ import React, { memo } from "react";
 
 const AddressCard = ({ children, id, onEdit }) => {
   return (
-    <div>
+    <div className="relative">
       <input
         id={id}
         value={id}
-        className={"hidden peer"}
+        className={"peer absolute top-2 left-2 z-1"}
         type="radio"
         name="AddressSelectBox"
       />
       <label
         for={id}
-        className={"block p-4 border-2 peer-checked:border-sky-500 relative"}
+        className={
+          "block p-4 pt-6 border-2 peer-checked:border-sky-500 relative"
+        }
       >
         <div className="flex justify-between items-start">
           <div>{children}</div>
@@ -20,7 +22,7 @@ const AddressCard = ({ children, id, onEdit }) => {
         <a
           onClick={(e) => {
             e.stopPropagation();
-            onEdit();
+            if (onEdit) onEdit();
           }}
           className="text-sky-500 absolute top-2 right-3 z-10"
         >

@@ -64,6 +64,27 @@ const ProductLayout = (props) => {
         ),
       },
       orders: {},
+      user: {
+        title: "Action",
+        dataIndex: "action",
+        key: "action",
+        width: "120px",
+        render: (_, record) => (
+          <div className="flex gap-2">
+            <Popconfirm
+              title="Delete item"
+              description="Are you sure to delete this item?"
+              onConfirm={() => handleDeleteItem(record.id)}
+              okText="Yes"
+              cancelText="No"
+            >
+              <CButton type="primary" size="small" danger>
+                Delete
+              </CButton>
+            </Popconfirm>
+          </div>
+        ),
+      },
     },
     user: [
       {
