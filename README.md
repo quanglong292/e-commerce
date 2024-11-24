@@ -8,7 +8,7 @@
 ### How to run this source locally:
 
 **Server**: 
- - Technologies: **ExpressJS, MongoDB, Redis, TypeScript, ESlint**
+ - Technologies: **ExpressJS, MongoDB, Mongoose, Redis, TypeScript, ESlint**
  - Testing: **Jest (Unit, Integration)**
  - Run the source: `localhost:5555` 
 ```
@@ -18,7 +18,7 @@
 ```
 
 **Client**:
- - Technologies: **React.18, JS, Antd, SASS, react-hook-form, lodash, ESlint**
+ - Technologies: **React.18, JS, Zustand, TailwindCSS, Antd, SASS, react-hook-form, lodash, ESlint**
  - Testing: **Cypress (E2E, Unit)**
  - Run the source: `localhost:<random>` 
 ```
