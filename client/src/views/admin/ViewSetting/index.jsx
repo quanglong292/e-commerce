@@ -44,6 +44,7 @@ const ViewSetting = () => {
             onSave={handleSaveConfig}
             field="logo"
             src={editForm?.["logo"] || setting?.logo}
+            header="Logo"
           />
           <Divider />
           <ImageConfigForm
@@ -51,6 +52,7 @@ const ViewSetting = () => {
             onSave={handleSaveConfig}
             field="sizeChart"
             src={editForm?.["sizeChart"] || setting?.sizeChart}
+            header="Size chart"
           />
         </div>
         <ChangePasswordForm />

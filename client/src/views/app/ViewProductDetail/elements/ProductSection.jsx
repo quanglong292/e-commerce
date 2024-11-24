@@ -18,6 +18,7 @@ const ProductSection = () => {
 
   // State
   const [product, setProduct] = useState({});
+  const [isLoadDetailImageError, setIsLoadDetailImageError] = useState(false);
 
   const breadCrumItems = useMemo(() => {
     const raw =
@@ -46,7 +47,7 @@ const ProductSection = () => {
       <BreadCrum items={breadCrumItems} />
       <div className="bg-gray-100 p-2 flex">
         <div className="w-[40%] m-auto">
-          {product.detailImages?.length ? (
+          {product.detailImages?.length && !isLoadDetailImageError ? (
             <CCarousel
               renderItem={(i) => {
                 return (
@@ -54,10 +55,11 @@ const ProductSection = () => {
                     src={i?.value || ""}
                     alt=""
                     className="mx-auto max-w-full"
+                    onError={() => setIsLoadDetailImageError(true)}
                   />
                 );
               }}
-              items={product.detailImages.filter(
+              items={product.detailImages?.filter(
                 (i) => (i?.name && i?.value) || i
               )}
               responsive={[1, 1, 1]}

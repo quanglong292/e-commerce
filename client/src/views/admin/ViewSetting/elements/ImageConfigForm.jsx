@@ -6,7 +6,7 @@ import { Modal } from "antd";
 import handleClientError from "../../../../utils/helpers/handleClientError";
 import CModal from "../../../../components/core/CModal";
 
-const ImageConfigForm = memo(({ src, field, onSave, onChange }) => {
+const ImageConfigForm = memo(({ src, field, header, onSave, onChange }) => {
   const [previewImage, setPreviewImage] = useState({});
   const [openEdit, setOpenEdit] = useState(false);
 
@@ -21,6 +21,7 @@ const ImageConfigForm = memo(({ src, field, onSave, onChange }) => {
 
   return (
     <>
+      <h1 className="text-xl mb-4 font-semibold">{header}</h1>
       <div className="flex gap-4 mb-8">
         <EditableImage
           onEdit={() => setOpenEdit(!openEdit)}

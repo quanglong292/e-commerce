@@ -70,6 +70,7 @@ const useProductStore = create((set, get) => ({
     set(() => {
       return { filterOptions: updateFilter };
     });
+    // Re-fetch the list
     fetch();
   },
   toggleLoading: () => set((state) => ({ loading: !state.loading })),
@@ -89,7 +90,6 @@ const useProductStore = create((set, get) => ({
     if (isHasFilter || type === "all") {
       const options = type ? {} : filterOptions;
       toggleLoading();
-      console.log({ options, filterOptions });
       const response = await fetcher(REQUEST_PARAMS.GET_PRODUCT, options);
       toggleLoading();
       if (type) {
