@@ -3,7 +3,7 @@
 
 - **Admin ERP**: CRUD manage categories, products, users, tracking user history behavior, data visualation.
 - **Distribution**: Browse products, manage cart/whish list, view order history, tracking shipping status, Paypal payment, product comment (review).
-- **CRM**: Create order, build, payment, print build, search stock, manage warehouse for business. [pending]
+- **POS**: Create order, build, payment, print build, search stock, manage warehouse for business. [pending]
 
 ### How to run this source locally:
 
