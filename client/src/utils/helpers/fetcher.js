@@ -24,7 +24,7 @@ export default async function (requestParams, body) {
       ? "?" + new URLSearchParams(validateParams(body))
       : "";
 
-  console.log({ searchParam, full: BASE_URL + urlPath + searchParam, method });
+  // console.log({ searchParam, full: BASE_URL + urlPath + searchParam, method });
 
   try {
     const response = await fetch(BASE_URL + urlPath + searchParam, {
