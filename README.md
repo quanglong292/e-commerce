@@ -9,7 +9,7 @@
 
 **Server**: 
  - Technologies: **ExpressJS, MongoDB, Mongoose, Redis, TypeScript, ESlint**
- - Testing: **Jest (Unit, Integration)**
+ - Testing: **Jest, SuperTest (Unit, Integration)**
  - Run the source: `localhost:5555` 
 ```
   cd server
