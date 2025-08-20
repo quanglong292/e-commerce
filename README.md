@@ -48,3 +48,12 @@ with existing diagram` and select the diagram attach in this source (`flow_diagr
 
 <img width="1920" height="380" alt="20250820-164341" src="https://github.com/user-attachments/assets/639ef0bc-1601-4b0f-8193-5e5a6696ddfa" />
 
+
+<img width="92" height="34" alt="Original" src="https://github.com/user-attachments/assets/c7701101-445d-4279-bc36-029798b14e12" />
+<img width="92" height="34" alt="Rectangle" src="https://github.com/user-attachments/assets/30a3e5aa-20c7-47fd-899f-4f5c4812127d" />
+<img width="92" height="34" alt="PG" src="https://github.com/user-attachments/assets/590c9b93-0363-463d-9c7a-8b67b1c3101a" />
+<img width="92" height="34" alt="Tada Gaming" src="https://github.com/user-attachments/assets/567cb215-44b9-4c4b-b4bc-e7f50552ecb3" />
+<img width="92" height="34" alt="Pragmatic Play" src="https://github.com/user-attachments/assets/68bfc658-0c9c-4fc4-bed0-ffaf6abb74fe" />
+
+
+
