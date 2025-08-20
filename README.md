@@ -37,4 +37,14 @@
 ### How to read this source:
 **Diagram**: _Included how DB models reference, how to read routes in client side, ..etc_
  - Go to https://app.diagrams.net/
- - Choose option `open with existing diagram` and select the diagram attach in this source (`flow_diagram.drawio`)
+ - Choose option `open
+with existing diagram` and select the diagram attach in this source (`flow_diagram.drawio`)
+
+<img width="92" height="34" alt="Original" src="https://github.com/user-attachments/assets/bc23efdd-7f83-469a-b2b2-d58786464af3" />
+<img width="92" height="34" alt="Rectangle" src="https://github.com/user-attachments/assets/7fb39a54-a217-4678-a2d0-6e6c8b06a8ae" />
+<img width="92" height="34" alt="PG" src="https://github.com/user-attachments/assets/ab550b22-6036-4599-bad8-d1eb300c631c" />
+<img width="92" height="34" alt="Tada Gaming" src="https://github.com/user-attachments/assets/56dfc5f9-4ae1-4f9b-ab49-3d61591d65c2" />
+<img width="92" height="34" alt="Pragmatic Play" src="https://github.com/user-attachments/assets/ab54f608-8341-42bc-b71d-776bee7e1399" />
+
+<img width="1920" height="380" alt="20250820-164341" src="https://github.com/user-attachments/assets/639ef0bc-1601-4b0f-8193-5e5a6696ddfa" />
+
